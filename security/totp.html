@@ -1,0 +1,15 @@
+<html>
+<body>
+<a href="../index.html">D. Štrbac</a>
+
+<h1>TOTP2</h1>
+<p>
+The core issue with the current implementation of TOTP (Time-based One-Time Password) is its primary focus on authenticating only one side of the equation: the user to the application. This leaves a significant vulnerability, especially when considering the potential threats posed by phishing and man-in-the-middle attacks. What's missing here is the recognition of the equally crucial aspect of authentication: verifying the legitimacy of the service or application to the user.
+</p>
+<p>
+TOTP2 (TOTP "duo") introduces two one-time codes. One code is intended to confirm the application's authenticity to the user, while the other code is designed to validate the user's identity to the application. This approach offers a more comprehensive and robust security strategy, requiring both parties involved in the authentication process to establish their authenticity.
+</p>
+<p>The IETF RFC draft is at <a href="https://datatracker.ietf.org/doc/draft-strbac-totp2/">https://datatracker.ietf.org/doc/draft-strbac-totp2/</a>
+</p>
+</body>
+</html>
