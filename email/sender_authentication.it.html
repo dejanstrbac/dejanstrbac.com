@@ -1,4 +1,8 @@
 <html>
+<head>
+  <link rel="stylesheet" type="text/css" href="../styles.css">
+  <title>Dejan Štrbac - Autenticazione del Mittente</title>
+</head>
 <body>
 <a href="../index.html">D. Štrbac</a>
 
@@ -13,9 +17,7 @@ Tuttavia, man mano che la popolarità della posta elettronica cresceva e si este
 Una delle caratteristiche più critiche e ancora mancanti dell'e-mail oggi è la capacità di identificare inconfutabilmente il mittente. L'e-mail, essendo un sistema aperto, permette virtualmente a chiunque di inviare messaggi a qualcun altro, a patto di avere l'indirizzo email del destinatario. Ciò che è particolarmente preoccupante è che all'interno di questo sistema, le persone possono facilmente presentarsi come qualcun altro. Sia l'indirizzo "Da" visualizzato nelle intestazioni email (quello che i client email mostrano agli utenti) che l'indirizzo della busta (utilizzato per la gestione del protocollo) possono essere liberamente impostati dal mittente. Sebbene tecnologie come SPF (Sender Policy Framework) e DMARC (Domain-based Message Authentication, Reporting, and Conformance) siano state sviluppate per limitare l'uso del dominio, esistono diversi metodi per aggirare queste misure, che vengono ora sfruttate pesantemente dai malintenzionati. Alcuni attaccanti possono usare il dominio esatto, mentre altri registrano domini simili con leggere variazioni o addirittura usano caratteri Unicode difficili da rilevare a colpo d'occhio.
 </p>
 <p>
-<em>
 Finché l'email rimarrà un protocollo push-based, continuerà ad essere vulnerabile agli attacchi di phishing. Non ci sono soluzioni efficaci per questi difetti intrinseci nell'attuale concetto di email.
-</em>
 </p>
 <p>
 Questo problema ha paralleli nel mondo fisico. Quando basiamo concetti digitali sul mondo fisico, come è stato fatto con l'email, ereditiamo i limiti fisici. Così come un messaggio fisico lasciato nella nostra casella di posta può provenire da chiunque finga di essere qualsiasi cosa, lo stesso vale per l'email. Ciò significa che le e-mail che si presumono fatture provenienti da agenzie governative, banche o altre fonti ufficiali non sono automaticamente affidabili. Quando abbiamo dubbi sulla provenienza di un messaggio, la nostra tendenza naturale è quella di rivolgerci direttamente alla fonte, piuttosto che affidarci esclusivamente alle informazioni contenute nel messaggio. Ad esempio, se riceviamo un'e-mail dalla polizia riguardante un'infrazione stradale, potremmo visitare la stazione di polizia per verificarne l'autenticità.

@@ -1,0 +1,32 @@
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="../styles.css">
+  <title>Dejan Štrbac - Localized Email Addresses and Unicode</title>
+</head>
+<body>
+<a href="../index.html">D. Štrbac</a>
+<h1>Localized Email Addresses and Unicode</h1>
+
+<p>
+Email addresses should possess clarity, universality, and unambiguous meaning. Additionally, they should be easy for users around the world to input.
+</p>
+<p>
+Across the globe, every computer system universally supports ASCII, which represents the Latin alphabet. The reasons behind this phenomenon, whether political or historical, are not our concern; it's a simple reality we must acknowledge. This shared alphabet plays a pivotal role in enabling global communication.
+</p>
+<p>
+Email functions as a common denominator for communication between parties. Using localized alphabets runs counter to this principle, towards isolation.
+</p>
+<p>
+Consider a possible local part, for instance, дејан@. If you lack knowledge of Cyrillic script or lack a device capable of entering it, you would encounter difficulties contacting me if I were to choose such an email address. Furthermore, observe the Cyrillic letter "a," which differs from the Latin "a." Unicode includes numerous intricacies that render it unsuitable for addressing purposes. It incorporates numerous "invisible" characters and characters that can easily be confused with ASCII characters.
+</p>
+<p>
+For localizing hostnames within an email address, Punycode encoding is often employed. However, this encoding renders email addresses appear convoluted, and for security reasons, most email clients display unencoded addresses.
+</p>
+<p>
+In practice, the primary legitimate uses of Unicode (and <a target="_blank" href="https://datatracker.ietf.org/doc/html/rfc3492">Punycode</a>) are either related to fraudulent activities, phishing attempts, or security services deploying them.
+</p>
+<p>
+While Unicode holds importance in messaging, it has no place in addressing. Its introduction introduces complexity, insecurity, and confusion for all parties involved.
+</p>
+</body>
+</html>

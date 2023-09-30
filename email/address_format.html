@@ -1,0 +1,35 @@
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="../styles.css">
+  <title>Dejan Štrbac - Email Address Format</title>
+</head>
+<body>
+<a href="../index.html">D. Štrbac</a>
+
+<h1>Email Address Format</h1>
+<p>
+Email addresses carry a legacy of outdated conventions, cruft, making their validation a notoriously complex task, despite many deprecated features like address literals and source routes. The regular expression pattern for this purpose can be <a target="_blank" href="http://www.ex-parrot.com/~pdw/Mail-RFC822-Address.html">incredibly intricate</a>.
+</p>
+<p>
+The prevailing email address format used by the majority of systems today is remarkably straightforward. There exists an unspoken contemporary standard for email addresses, one that has organically evolved and been embraced by email users themselves.
+</p>
+<p>
+An email address comprises two segments: the local part, situated to the left of the "@" symbol, and the hostname, positioned on the right side of it.
+</p>
+<p>
+The local part permits the use of alphanumeric characters and certain specific symbols, namely ".", "-", "+", and "_". It's crucial to emphasize that the local part must not start or end with a special character, and consecutive special characters are not allowed. These special characters are frequently employed as word separators (e.g., name.surname) and, in some instances, serve functional purposes, such as facilitating sorting or filtering. The specific interpretation of these characters is beyond the scope of our discussion here.
+</p>
+<p>
+The hostname, on the other hand, can be any valid DNS hostname. IP addresses are not accepted as a substitute for hostnames.
+</p>
+<p>
+In summary, the simplified regular expression pattern provided below has proven more than adequate for the vast majority of cases:
+<p>
+<pre>
+^(?i)[a-z0-9]+([._+-]?[a-z0-9]+)*@[a-z0-9]+([.-]?[a-z0-9]+)*\.[a-z]{2,}$
+</pre>
+<p>
+I have yet to encounter a scenario where the aforementioned format fails to meet the requirements.
+</p>
+</body>
+</html>
