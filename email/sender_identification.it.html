@@ -1,0 +1,29 @@
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="../styles.css">
+  <title>Dejan Štrbac - Autenticazione del Mittente</title>
+</head>
+<body>
+<a href="../index.html">D. Štrbac</a>
+
+<h1>Identificazione del Mittente</h1>
+<p>
+Le origini dell'e-mail riflettono un'epoca in cui è stata concepita per uno scopo specifico, non per un uso diffuso da parte del grande pubblico. Inizialmente, si trattava di un semplice concetto di file sharing utilizzato principalmente tra colleghi e collaboratori che si conoscevano. In questo ambiente limitato e controllato, la necessità di una solida autenticazione del mittente, protezione dallo spam, verifica dell'identità e controlli di autenticità non era evidente.
+</p>
+<p>
+Tuttavia, man mano che la popolarità della posta elettronica cresceva e si estendeva oltre i suoi confini originali, non si poteva più tornare indietro. Il compito monumentale di aggiornare tutti i server e i client di posta elettronica in tutto il mondo, contemporaneamente e in modo completo, divenne un'impossibilità logistica. Invece, i cambiamenti dovevano essere introdotti in modo incrementale tramite le RFC (Request for Comments) e gradualmente implementati su diversi server e client. Il protocollo, originariamente inadatto al panorama in evoluzione, richiedeva continue patch e adattamenti per affrontare le sfide emergenti.
+</p>
+<p>
+Una delle caratteristiche più critiche e ancora mancanti dell'e-mail oggi è la capacità di identificare inconfutabilmente il mittente. L'e-mail, essendo un sistema aperto, permette virtualmente a chiunque di inviare messaggi a qualcun altro, a patto di avere l'indirizzo email del destinatario. Ciò che è particolarmente preoccupante è che all'interno di questo sistema, le persone possono facilmente presentarsi come qualcun altro. Sia l'indirizzo "Da" visualizzato nelle intestazioni email (quello che i client email mostrano agli utenti) che l'indirizzo della busta (utilizzato per la gestione del protocollo) possono essere liberamente impostati dal mittente. Sebbene tecnologie come SPF (Sender Policy Framework) e DMARC (Domain-based Message Authentication, Reporting, and Conformance) siano state sviluppate per limitare l'uso del dominio, esistono diversi metodi per aggirare queste misure, che vengono ora sfruttate pesantemente dai malintenzionati. Alcuni attaccanti possono usare il dominio esatto, mentre altri registrano domini simili con leggere variazioni o addirittura usano caratteri Unicode difficili da rilevare a colpo d'occhio.
+</p>
+<p>
+Finché l'email rimarrà un protocollo push-based, continuerà ad essere vulnerabile agli attacchi di phishing. Non ci sono soluzioni efficaci per questi difetti intrinseci nell'attuale concetto di email.
+</p>
+<p>
+Questo problema ha paralleli nel mondo fisico. Quando basiamo concetti digitali sul mondo fisico, come è stato fatto con l'email, ereditiamo i limiti fisici. Così come un messaggio fisico lasciato nella nostra casella di posta può provenire da chiunque finga di essere qualsiasi cosa, lo stesso vale per l'email. Ciò significa che le lettere che si presumono fatture provenienti da agenzie governative, banche o altre fonti ufficiali non sono automaticamente affidabili. Quando abbiamo dubbi sulla provenienza di una lettera, la nostra tendenza naturale è quella di rivolgerci direttamente alla fonte, piuttosto che affidarci esclusivamente alle informazioni contenute nella lettera. Ad esempio, se riceviamo una lettera dalla polizia riguardante un'infrazione stradale, potremmo visitare la stazione di polizia per verificarne l'autenticità.
+</p>
+<p>
+La questione fondamentale è che la provenienza di una lettera recapitato alla nostra casella postale pubblica non può mai essere completamente attendibile, e la posta elettronica, radicata nel concetto di casella postale pubblica e aperta, deve affrontare la stessa sfida. Di conseguenza, lo spam e i messaggi fraudolenti finiranno sempre nelle caselle di posta elettronica. Per risolvere questo problema, è necessario un cambio di logica: invece di fidarci ciecamente dei messaggi, dovremmo rivolgerci alle email come se non ci fidassimo dei messaggi fisici e andare direttamente alla fonte per recuperare i nostri messaggi. Fortunatamente, nel mondo digitale, questo processo di "pickup" è spesso a portata di click.
+</p>
+</body>
+</html>

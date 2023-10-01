@@ -1,0 +1,27 @@
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="../styles.css">
+  <title>Dejan Štrbac - Debunking Email Reliability</title>
+</head>
+
+<body>
+<a href="../index.html">D. Štrbac</a>
+
+<h1>Debunking Email Reliability</h1>
+<p>
+  Email is sometimes referred to as a system that can withstand even nuclear wars, a quality that was also falsely attributed to ARPANET. This claim is not accurate, and it wouldn't hold up under scrutiny. Email relies heavily on functioning both sender and receiver infrastructures, and there are numerous factors that can disrupt message delivery. These include issues like sender's DNS misconfiguration, IP/domain blacklisting, spam filtering, port blocking, misaddressing, recipient's domain DNS misconfiguration, recipient IP blocking, spam filtering, and internal delivery problems.
+</p>
+<p>
+  More frequently than one might expect, postmasters, individuals responsible for managing email systems, have to step in and engage with other postmasters to resolve issues amicably. Unfortunately, postmasters are becoming increasingly scarce, and many email infrastructures operate without proper monitoring, often disregarding RFC (Request for Comments) recommendations. It's crucial to acknowledge that the reliability of email owes much to the diligent work of postmasters.
+</p>
+<p>
+  When someone sends an email, they often do so with the expectation that it will successfully reach its intended recipient. Surprisingly, this email system is reliable enough for everyday users to trust it without much further thought. In cases where there are delivery problems, a bounce message is typically anticipated. Bounce messages, which notify the sender that a message couldn't be delivered, are commonly seen as a positive aspect of email. They provide valuable feedback to senders about the status of their messages, especially considering that Delivery Status Notifications are not universally supported or widely known as an email feature.
+</p>
+<p>
+  However, bounce messages themselves can be considered an anti-pattern and a security concern. This is because when an undeliverable message encounters an issue, it generates a new message. To make matters worse, these bounce messages can be easily misdirected and potentially exploited for malicious purposes.
+</p>
+<p>
+  Returning to the reliability claims, from a postmaster's perspective, there is often astonishment at the persistence of such an outdated and inefficient system in modern times. Managing email infrastructure can sometimes feel like operating a telephone switchboard from a bygone era. The ideal messaging system should not be reliant on human intervention for its smooth operation.
+</p>
+</body>
+</html>

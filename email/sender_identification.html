@@ -1,0 +1,29 @@
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="../styles.css">
+  <title>Dejan Štrbac - No Strong Sender Identification Assurances</title>
+</head>
+<body>
+<a href="../index.html">D. Štrbac</a>
+
+<h1>No Strong Sender Identification Assurances</h1>
+<p>
+The origins of email reflect a time when it was conceived for a specific purpose, not intended for widespread use by the general public. Initially, it was a straightforward file-sharing concept primarily employed among colleagues and associates who knew each other. Within this limited and controlled environment, the need for robust sender authentication, spam protection, identity verification, and authenticity checks was not apparent.
+</p>
+<p>
+However, as the popularity of email grew and it extended beyond its original boundaries, there was no turning back. The monumental task of updating all email servers and clients worldwide simultaneously and comprehensively became a logistical impossibility. Instead, changes had to be introduced incrementally through RFCs (Request for Comments) and gradually implemented across various servers and clients. The protocol, originally unsuitable for the evolving landscape, required continuous patching and adaptation to address the emerging challenges it faced.
+</p>
+<p>
+One of the most critical and still lacking features in email today is the ability to irrefutably identify the sender. Email, as an open system, allows virtually anyone to send messages to anyone else, provided they have the recipient's email address. What's particularly concerning is that within this system, individuals can easily present themselves as someone else. Both the "From" address displayed in email headers (what email clients show users) and the envelope address (used for protocol handling) can be freely set by the sender. While technologies like SPF (Sender Policy Framework) and DMARC (Domain-based Message Authentication, Reporting, and Conformance) were developed to restrict domain usage, there are various methods to circumvent these measures, which are now heavily exploited by malicious actors. Some attackers may use the exact domain, while others register similar domains with slight variations or even use Unicode characters that are difficult to detect at a glance.
+</p>
+<p>
+As long as email remains a push-based protocol, it will continue to be vulnerable to phishing attacks. There are no effective workarounds for these inherent flaws in the current email concept.
+</p>
+<p>
+This problem has parallels in the physical world. When we base digital concepts on the physical world, as it has been done with email, we inherit the physical limitations. Just as a physical message dropped into our mailbox can come from anyone pretending to be anything, the same applies to email. This means that a letter spurporting to be invoices from government agencies, banks, or other official sources cannot be automatically trusted. When we have doubts about the origin of a letter, our natural inclination is to go directly to the source, rather than relying solely on the information presented in the letter. For example, if we receive a letter from the police regarding a traffic violation, we might visit the police station to verify its authenticity.
+</p>
+<p>
+The fundamental issue here is that the origin of a letter delivered to our public postal mailbox can never be fully trusted, and email, rooted in the concept of a public and open mailbox, faces the same challenge. Consequently, spam and fraudulent messages will always find their way into email inboxes. To address this problem, a shift in logic is required: instead of trusting messages blindly, we should approach email as we would untrusted physical messages and go directly to the source to retrieve our messages. Fortunately, in the digital realm, this "pickup" process is often just a click away.
+</p>
+</body>
+</html>
