@@ -1,0 +1,22 @@
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="../styles.css">
+  <title>Dejan Štrbac - False Positives, Whose Fault?</title>
+</head>
+
+<body>
+<a href="../index.html">D. Štrbac</a>
+
+<h1>False Positives, Whose Fault?</h1>
+<p>
+When a legitimate (non-spam) message bounces because it was sent from an IP address or subnet that's blacklisted, the blame is often wrongly attributed to the sender's infrastructure. However, in reality, the message wasn't spam, indicating that the rejection occurred on the recipient's side before even examining the message content. This is essentially a false positive error.
+</p>
+<p>
+It's worth noting that IP blacklisting can occur for various reasons, unrelated to the message's actual content. For instance, many providers might blacklist an IP address if they detect a message sent to a honeypot address or if a recipient marks the message as spam. Often, a single such incident is sufficient for blacklisting, even though both scenarios are beyond the control of the sender. The question then arises: what is IP blocking actually penalizing?
+</p>
+<p>
+While it's understandable that recipient infrastructure needs to defend itself from abuse in a push protocol like email, rejecting a non-spam message solely based on the reputation of the IP address is not an ideal approach. This is where email encounters a flaw, compromising message delivery. IP-based rejections occur completely without the recipient's awareness or knowledge, regardless of whether the rejected message is expected or not.
+</p>
+<p>To put it into perspective, imagine if your postal service decided to reject letters addressed to you based on their origin without your knowledge. This is yet another reason why the messaging system should operate without any knowledge of the message's origin.</p>
+</body>
+</html>
