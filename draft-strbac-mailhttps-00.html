@@ -1,0 +1,2327 @@
+<!DOCTYPE html>
+<html lang="en" class="Internet-Draft">
+<head>
+<meta charset="utf-8">
+<meta content="Common,Latin" name="scripts">
+<meta content="initial-scale=1.0" name="viewport">
+<title>Mail/HTTPS</title>
+<meta content="Dejan Strbac" name="author">
+<meta content="
+       We propose a pull-based messaging protocol leveraging the HTTP protocol over TLS (HTTPS) for message transfer. The primary objective of this new messaging overlay is to tackle the challenges encountered in SMTP-based email, including concerns related to security, authenticity, spam, privacy, size limitations and message lifecycle. 
+    " name="description">
+<meta content="xml2rfc 3.17.4" name="generator">
+<meta content="draft-strbac-totp2-00.txt" name="ietf.draft">
+<!-- Generator version information:
+  xml2rfc 3.17.4
+    Python 3.11.4
+    ConfigArgParse 1.5.5
+    google-i18n-address 3.1.0
+    intervaltree 3.1.0
+    Jinja2 3.1.2
+    lxml 4.9.3
+    platformdirs 3.9.1
+    pycountry 22.3.5
+    PyYAML 6.0.1
+    requests 2.31.0
+    setuptools 67.6.1
+    six 1.16.0
+    wcwidth 0.2.6
+-->
+<link href="draft-strbac-mailhttps-00.xml" rel="alternate" type="application/rfc+xml">
+<link href="#copyright" rel="license">
+<style type="text/css">/*
+
+  NOTE: Changes at the bottom of this file overrides some earlier settings.
+
+  Once the style has stabilized and has been adopted as an official RFC style,
+  this can be consolidated so that style settings occur only in one place, but
+  for now the contents of this file consists first of the initial CSS work as
+  provided to the RFC Formatter (xml2rfc) work, followed by itemized and
+  commented changes found necessary during the development of the v3
+  formatters.
+
+*/
+
+/* fonts */
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans'); /* Sans-serif */
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif'); /* Serif (print) */
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono'); /* Monospace */
+
+:root {
+  --font-sans: 'Noto Sans', Arial, Helvetica, sans-serif;
+  --font-serif: 'Noto Serif', 'Times', 'Times New Roman', serif;
+  --font-mono: 'Roboto Mono', Courier, 'Courier New', monospace;
+}
+
+@viewport {
+  zoom: 1.0;
+}
+@-ms-viewport {
+  width: extend-to-zoom;
+  zoom: 1.0;
+}
+/* general and mobile first */
+html {
+}
+body {
+  max-width: 90%;
+  margin: 1.5em auto;
+  color: #222;
+  background-color: #fff;
+  font-size: 14px;
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  scroll-behavior: smooth;
+}
+.ears {
+  display: none;
+}
+
+/* headings */
+#title, h1, h2, h3, h4, h5, h6 {
+  margin: 1em 0 0.5em;
+  font-weight: bold;
+  line-height: 1.3;
+}
+#title {
+  clear: both;
+  border-bottom: 1px solid #ddd;
+  margin: 0 0 0.5em 0;
+  padding: 1em 0 0.5em;
+}
+.author {
+  padding-bottom: 4px;
+}
+h1 {
+  font-size: 26px;
+  margin: 1em 0;
+}
+h2 {
+  font-size: 22px;
+  margin-top: -20px;  /* provide offset for in-page anchors */
+  padding-top: 33px;
+}
+h3 {
+  font-size: 18px;
+  margin-top: -36px;  /* provide offset for in-page anchors */
+  padding-top: 42px;
+}
+h4 {
+  font-size: 16px;
+  margin-top: -36px;  /* provide offset for in-page anchors */
+  padding-top: 42px;
+}
+h5, h6 {
+  font-size: 14px;
+}
+#n-copyright-notice {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 1em;
+  margin-bottom: 1em;
+}
+/* general structure */
+p {
+  padding: 0;
+  margin: 0 0 1em 0;
+  text-align: left;
+}
+div, span {
+  position: relative;
+}
+div {
+  margin: 0;
+}
+.alignRight.art-text {
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  padding: 1em 1em 0;
+  margin-bottom: 1.5em;
+}
+.alignRight.art-text pre {
+  padding: 0;
+}
+.alignRight {
+  margin: 1em 0;
+}
+.alignRight > *:first-child {
+  border: none;
+  margin: 0;
+  float: right;
+  clear: both;
+}
+.alignRight > *:nth-child(2) {
+  clear: both;
+  display: block;
+  border: none;
+}
+svg {
+  display: block;
+}
+svg[font-family~="serif" i], svg [font-family~="serif" i] {
+  font-family: var(--font-serif);
+}
+svg[font-family~="sans-serif" i], svg [font-family~="sans-serif" i] {
+  font-family: var(--font-sans);
+}
+svg[font-family~="monospace" i], svg [font-family~="monospace" i] {
+  font-family: var(--font-mono);
+}
+.alignCenter.art-text {
+  background-color: #f9f9f9;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  padding: 1em 1em 0;
+  margin-bottom: 1.5em;
+}
+.alignCenter.art-text pre {
+  padding: 0;
+}
+.alignCenter {
+  margin: 1em 0;
+}
+.alignCenter > *:first-child {
+  display: table;
+  border: none;
+  margin: 0 auto;
+}
+
+/* lists */
+ol, ul {
+  padding: 0;
+  margin: 0 0 1em 2em;
+}
+ol ol, ul ul, ol ul, ul ol {
+  margin-left: 1em;
+}
+li {
+  margin: 0 0 0.25em 0;
+}
+.ulCompact li {
+  margin: 0;
+}
+ul.empty, .ulEmpty {
+  list-style-type: none;
+}
+ul.empty li, .ulEmpty li {
+  margin-top: 0.5em;
+}
+ul.ulBare, li.ulBare {
+  margin-left: 0em !important;
+}
+ul.compact, .ulCompact,
+ol.compact, .olCompact {
+  line-height: 100%;
+  margin: 0 0 0 2em;
+}
+
+/* definition lists */
+dl {
+}
+dl > dt {
+  float: left;
+  margin-right: 1em;
+}
+/* 
+dl.nohang > dt {
+  float: none;
+}
+*/
+dl > dd {
+  margin-bottom: .8em;
+  min-height: 1.3em;
+}
+dl.compact > dd, .dlCompact > dd {
+  margin-bottom: 0em;
+}
+dl > dd > dl {
+  margin-top: 0.5em;
+  margin-bottom: 0em;
+}
+
+/* links */
+a {
+  text-decoration: none;
+}
+a[href] {
+  color: #22e; /* Arlen: WCAG 2019 */
+}
+a[href]:hover {
+  background-color: #f2f2f2;
+}
+figcaption a[href],
+a[href].selfRef,
+.iref + a[href].internal {
+  color: #222;
+}
+/* XXX probably not this:
+a.selfRef:hover {
+  background-color: transparent;
+  cursor: default;
+} */
+
+/* Figures */
+tt, code, pre {
+  background-color: #f9f9f9;
+  font-family: var(--font-mono);
+}
+pre {
+  border: 1px solid #eee;
+  margin: 0;
+  padding: 1em;
+}
+img {
+  max-width: 100%;
+}
+figure {
+  margin: 0;
+}
+figure blockquote {
+  margin: 0.8em 0.4em 0.4em;
+}
+figcaption {
+  font-style: italic;
+  margin: 0 0 1em 0;
+}
+@media screen {
+  pre {
+    overflow-x: auto;
+    max-width: 100%;
+    max-width: calc(100% - 22px);
+  }
+}
+
+/* aside, blockquote */
+aside, blockquote {
+  margin-left: 0;
+  padding: 1.2em 2em;
+}
+blockquote {
+  background-color: #f9f9f9;
+  color: #111; /* Arlen: WCAG 2019 */
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  margin: 1em 0;
+}
+cite {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+
+/* tables */
+table {
+  width: 100%;
+  margin: 0 0 1em;
+  border-collapse: collapse;
+  border: 1px solid #eee;
+}
+th, td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.5em 0.75em;
+}
+th {
+  text-align: left;
+  background-color: #e9e9e9;
+}
+tr:nth-child(2n+1) > td {
+  background-color: #f5f5f5;
+}
+table caption {
+  font-style: italic;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+table p {
+  /* XXX to avoid bottom margin on table row signifiers. If paragraphs should
+     be allowed within tables more generally, it would be far better to select on a class. */
+  margin: 0;
+}
+
+/* pilcrow */
+a.pilcrow {
+  color: #666; /* Arlen: AHDJ 2019 */
+  text-decoration: none;
+  visibility: hidden;
+  user-select: none;
+  -ms-user-select: none;
+  -o-user-select:none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+@media screen {
+  aside:hover > a.pilcrow,
+  p:hover > a.pilcrow,
+  blockquote:hover > a.pilcrow,
+  div:hover > a.pilcrow,
+  li:hover > a.pilcrow,
+  pre:hover > a.pilcrow {
+    visibility: visible;
+  }
+  a.pilcrow:hover {
+    background-color: transparent;
+  }
+}
+
+/* misc */
+hr {
+  border: 0;
+  border-top: 1px solid #eee;
+}
+.bcp14 {
+  font-variant: small-caps;
+}
+
+.role {
+  font-variant: all-small-caps;
+}
+
+/* info block */
+#identifiers {
+  margin: 0;
+  font-size: 0.9em;
+}
+#identifiers dt {
+  width: 3em;
+  clear: left;
+}
+#identifiers dd {
+  float: left;
+  margin-bottom: 0;
+}
+/* Fix PDF info block run off issue */
+@media print {
+  #identifiers dd {
+    float: none;
+  }
+}
+#identifiers .authors .author {
+  display: inline-block;
+  margin-right: 1.5em;
+}
+#identifiers .authors .org {
+  font-style: italic;
+}
+
+/* The prepared/rendered info at the very bottom of the page */
+.docInfo {
+  color: #666; /* Arlen: WCAG 2019 */
+  font-size: 0.9em;
+  font-style: italic;
+  margin-top: 2em;
+}
+.docInfo .prepared {
+  float: left;
+}
+.docInfo .prepared {
+  float: right;
+}
+
+/* table of contents */
+#toc  {
+  padding: 0.75em 0 2em 0;
+  margin-bottom: 1em;
+}
+nav.toc ul {
+  margin: 0 0.5em 0 0;
+  padding: 0;
+  list-style: none;
+}
+nav.toc li {
+  line-height: 1.3em;
+  margin: 0.75em 0;
+  padding-left: 1.2em;
+  text-indent: -1.2em;
+}
+/* references */
+.references dt {
+  text-align: right;
+  font-weight: bold;
+  min-width: 7em;
+}
+.references dd {
+  margin-left: 8em;
+  overflow: auto;
+}
+
+.refInstance {
+  margin-bottom: 1.25em;
+}
+
+.references .ascii {
+  margin-bottom: 0.25em;
+}
+
+/* index */
+.index ul {
+  margin: 0 0 0 1em;
+  padding: 0;
+  list-style: none;
+}
+.index ul ul {
+  margin: 0;
+}
+.index li {
+  margin: 0;
+  text-indent: -2em;
+  padding-left: 2em;
+  padding-bottom: 5px;
+}
+.indexIndex {
+  margin: 0.5em 0 1em;
+}
+.index a {
+  font-weight: 700;
+}
+/* make the index two-column on all but the smallest screens */
+@media (min-width: 600px) {
+  .index ul {
+    -moz-column-count: 2;
+    -moz-column-gap: 20px;
+  }
+  .index ul ul {
+    -moz-column-count: 1;
+    -moz-column-gap: 0;
+  }
+}
+
+/* authors */
+address.vcard {
+  font-style: normal;
+  margin: 1em 0;
+}
+
+address.vcard .nameRole {
+  font-weight: 700;
+  margin-left: 0;
+}
+address.vcard .label {
+  font-family: var(--font-sans);
+  margin: 0.5em 0;
+}
+address.vcard .type {
+  display: none;
+}
+.alternative-contact {
+  margin: 1.5em 0 1em;
+}
+hr.addr {
+  border-top: 1px dashed;
+  margin: 0;
+  color: #ddd;
+  max-width: calc(100% - 16px);
+}
+
+/* temporary notes */
+.rfcEditorRemove::before {
+  position: absolute;
+  top: 0.2em;
+  right: 0.2em;
+  padding: 0.2em;
+  content: "The RFC Editor will remove this note";
+  color: #9e2a00; /* Arlen: WCAG 2019 */
+  background-color: #ffd; /* Arlen: WCAG 2019 */
+}
+.rfcEditorRemove {
+  position: relative;
+  padding-top: 1.8em;
+  background-color: #ffd; /* Arlen: WCAG 2019 */
+  border-radius: 3px;
+}
+.cref {
+  background-color: #ffd; /* Arlen: WCAG 2019 */
+  padding: 2px 4px;
+}
+.crefSource {
+  font-style: italic;
+}
+/* alternative layout for smaller screens */
+@media screen and (max-width: 1023px) {
+  body {
+    padding-top: 2em;
+  }
+  #title {
+    padding: 1em 0;
+  }
+  h1 {
+    font-size: 24px;
+  }
+  h2 {
+    font-size: 20px;
+    margin-top: -18px;  /* provide offset for in-page anchors */
+    padding-top: 38px;
+  }
+  #identifiers dd {
+    max-width: 60%;
+  }
+  #toc {
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    right: 0;
+    padding: 0;
+    margin: 0;
+    background-color: inherit;
+    border-bottom: 1px solid #ccc;
+  }
+  #toc h2 {
+    margin: -1px 0 0 0;
+    padding: 4px 0 4px 6px;
+    padding-right: 1em;
+    min-width: 190px;
+    font-size: 1.1em;
+    text-align: right;
+    background-color: #444;
+    color: white;
+    cursor: pointer;
+  }
+  #toc h2::before { /* css hamburger */
+    float: right;
+    position: relative;
+    width: 1em;
+    height: 1px;
+    left: -164px;
+    margin: 6px 0 0 0;
+    background: white none repeat scroll 0 0;
+    box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+    content: "";
+  }
+  #toc nav {
+    display: none;
+    padding: 0.5em 1em 1em;
+    overflow: auto;
+    height: calc(100vh - 48px);
+    border-left: 1px solid #ddd;
+  }
+}
+
+/* alternative layout for wide screens */
+@media screen and (min-width: 1024px) {
+  body {
+    max-width: 724px;
+    margin: 42px auto;
+    padding-left: 1.5em;
+    padding-right: 29em;
+  }
+  #toc {
+    position: fixed;
+    top: 42px;
+    right: 42px;
+    width: 25%;
+    margin: 0;
+    padding: 0 1em;
+    z-index: 1;
+  }
+  #toc h2 {
+    border-top: none;
+    border-bottom: 1px solid #ddd;
+    font-size: 1em;
+    font-weight: normal;
+    margin: 0;
+    padding: 0.25em 1em 1em 0;
+  }
+  #toc nav {
+    display: block;
+    height: calc(90vh - 84px);
+    bottom: 0;
+    padding: 0.5em 0 0;
+    overflow: auto;
+  }
+  img { /* future proofing */
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* pagination */
+@media print {
+  body {
+
+    width: 100%;
+  }
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+  #n-copyright-notice {
+    border-bottom: none;
+  }
+  #toc, #n-introduction {
+    page-break-before: always;
+  }
+  #toc {
+    border-top: none;
+    padding-top: 0;
+  }
+  figure, pre {
+    page-break-inside: avoid;
+  }
+  figure {
+    overflow: scroll;
+  }
+  .breakable pre {
+    break-inside: auto;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  h2+*, h3+*, h4+*, h5+*, h6+* {
+    page-break-before: avoid;
+  }
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 10pt;
+  }
+  table {
+    border: 1px solid #ddd;
+  }
+  td {
+    border-top: 1px solid #ddd;
+  }
+}
+
+/* This is commented out here, as the string-set: doesn't
+   pass W3C validation currently */
+/*
+.ears thead .left {
+  string-set: ears-top-left content();
+}
+
+.ears thead .center {
+  string-set: ears-top-center content();
+}
+
+.ears thead .right {
+  string-set: ears-top-right content();
+}
+
+.ears tfoot .left {
+  string-set: ears-bottom-left content();
+}
+
+.ears tfoot .center {
+  string-set: ears-bottom-center content();
+}
+
+.ears tfoot .right {
+  string-set: ears-bottom-right content();
+}
+*/
+
+@page :first {
+  padding-top: 0;
+  @top-left {
+    content: normal;
+    border: none;
+  }
+  @top-center {
+    content: normal;
+    border: none;
+  }
+  @top-right {
+    content: normal;
+    border: none;
+  }
+}
+
+@page {
+  size: A4;
+  margin-bottom: 45mm;
+  padding-top: 20px;
+  /* The following is commented out here, but set appropriately by in code, as
+     the content depends on the document */
+  /*
+  @top-left {
+    content: 'Internet-Draft';
+    vertical-align: bottom;
+    border-bottom: solid 1px #ccc;
+  }
+  @top-left {
+    content: string(ears-top-left);
+    vertical-align: bottom;
+    border-bottom: solid 1px #ccc;
+  }
+  @top-center {
+    content: string(ears-top-center);
+    vertical-align: bottom;
+    border-bottom: solid 1px #ccc;
+  }
+  @top-right {
+    content: string(ears-top-right);
+    vertical-align: bottom;
+    border-bottom: solid 1px #ccc;
+  }
+  @bottom-left {
+    content: string(ears-bottom-left);
+    vertical-align: top;
+    border-top: solid 1px #ccc;
+  }
+  @bottom-center {
+    content: string(ears-bottom-center);
+    vertical-align: top;
+    border-top: solid 1px #ccc;
+  }
+  @bottom-right {
+      content: '[Page ' counter(page) ']';
+      vertical-align: top;
+      border-top: solid 1px #ccc;
+  }
+  */
+
+}
+
+/* Changes introduced to fix issues found during implementation */
+/* Make sure links are clickable even if overlapped by following H* */
+a {
+  z-index: 2;
+}
+/* Separate body from document info even without intervening H1 */
+section {
+  clear: both;
+}
+
+
+/* Top align author divs, to avoid names without organization dropping level with org names */
+.author {
+  vertical-align: top;
+}
+
+/* Leave room in document info to show Internet-Draft on one line */
+#identifiers dt {
+  width: 8em;
+}
+
+/* Don't waste quite as much whitespace between label and value in doc info */
+#identifiers dd {
+  margin-left: 1em;
+}
+
+/* Give floating toc a background color (needed when it's a div inside section */
+#toc {
+  background-color: white;
+}
+
+/* Make the collapsed ToC header render white on gray also when it's a link */
+@media screen and (max-width: 1023px) {
+  #toc h2 a,
+  #toc h2 a:link,
+  #toc h2 a:focus,
+  #toc h2 a:hover,
+  #toc a.toplink,
+  #toc a.toplink:hover {
+    color: white;
+    background-color: #444;
+    text-decoration: none;
+  }
+}
+
+/* Give the bottom of the ToC some whitespace */
+@media screen and (min-width: 1024px) {
+  #toc {
+    padding: 0 0 1em 1em;
+  }
+}
+
+/* Style section numbers with more space between number and title */
+.section-number {
+  padding-right: 0.5em;
+}
+
+/* prevent monospace from becoming overly large */
+tt, code, pre {
+  font-size: 95%;
+}
+
+/* Fix the height/width aspect for ascii art*/
+.sourcecode pre,
+.art-text pre {
+  line-height: 1.12;
+}
+
+
+/* Add styling for a link in the ToC that points to the top of the document */
+a.toplink {
+  float: right;
+  margin-right: 0.5em;
+}
+
+/* Fix the dl styling to match the RFC 7992 attributes */
+dl > dt,
+dl.dlParallel > dt {
+  float: left;
+  margin-right: 1em;
+}
+dl.dlNewline > dt {
+  float: none;
+}
+
+/* Provide styling for table cell text alignment */
+table td.text-left,
+table th.text-left {
+  text-align: left;
+}
+table td.text-center,
+table th.text-center {
+  text-align: center;
+}
+table td.text-right,
+table th.text-right {
+  text-align: right;
+}
+
+/* Make the alternative author contact information look less like just another
+   author, and group it closer with the primary author contact information */
+.alternative-contact {
+  margin: 0.5em 0 0.25em 0;
+}
+address .non-ascii {
+  margin: 0 0 0 2em;
+}
+
+/* With it being possible to set tables with alignment
+  left, center, and right, { width: 100%; } does not make sense */
+table {
+  width: auto;
+}
+
+/* Avoid reference text that sits in a block with very wide left margin,
+   because of a long floating dt label.*/
+.references dd {
+  overflow: visible;
+}
+
+/* Control caption placement */
+caption {
+  caption-side: bottom;
+}
+
+/* Limit the width of the author address vcard, so names in right-to-left
+   script don't end up on the other side of the page. */
+
+address.vcard {
+  max-width: 30em;
+  margin-right: auto;
+}
+
+/* For address alignment dependent on LTR or RTL scripts */
+address div.left {
+  text-align: left;
+}
+address div.right {
+  text-align: right;
+}
+
+/* Provide table alignment support.  We can't use the alignX classes above
+   since they do unwanted things with caption and other styling. */
+table.right {
+ margin-left: auto;
+ margin-right: 0;
+}
+table.center {
+ margin-left: auto;
+ margin-right: auto;
+}
+table.left {
+ margin-left: 0;
+ margin-right: auto;
+}
+
+/* Give the table caption label the same styling as the figcaption */
+caption a[href] {
+  color: #222;
+}
+
+@media print {
+  .toplink {
+    display: none;
+  }
+
+  /* avoid overwriting the top border line with the ToC header */
+  #toc {
+    padding-top: 1px;
+  }
+
+  /* Avoid page breaks inside dl and author address entries */
+  .vcard {
+    page-break-inside: avoid;
+  }
+
+}
+/* Tweak the bcp14 keyword presentation */
+.bcp14 {
+  font-variant: small-caps;
+  font-weight: bold;
+  font-size: 0.9em;
+}
+/* Tweak the invisible space above H* in order not to overlay links in text above */
+ h2 {
+  margin-top: -18px;  /* provide offset for in-page anchors */
+  padding-top: 31px;
+ }
+ h3 {
+  margin-top: -18px;  /* provide offset for in-page anchors */
+  padding-top: 24px;
+ }
+ h4 {
+  margin-top: -18px;  /* provide offset for in-page anchors */
+  padding-top: 24px;
+ }
+/* Float artwork pilcrow to the right */
+@media screen {
+  .artwork a.pilcrow {
+    display: block;
+    line-height: 0.7;
+    margin-top: 0.15em;
+  }
+}
+/* Make pilcrows on dd visible */
+@media screen {
+  dd:hover > a.pilcrow {
+    visibility: visible;
+  }
+}
+/* Make the placement of figcaption match that of a table's caption
+   by removing the figure's added bottom margin */
+.alignLeft.art-text,
+.alignCenter.art-text,
+.alignRight.art-text {
+   margin-bottom: 0;
+}
+.alignLeft,
+.alignCenter,
+.alignRight {
+  margin: 1em 0 0 0;
+}
+/* In print, the pilcrow won't show on hover, so prevent it from taking up space,
+   possibly even requiring a new line */
+@media print {
+  a.pilcrow {
+    display: none;
+  }
+}
+/* Styling for the external metadata */
+div#external-metadata {
+  background-color: #eee;
+  padding: 0.5em;
+  margin-bottom: 0.5em;
+  display: none;
+}
+div#internal-metadata {
+  padding: 0.5em;                       /* to match the external-metadata padding */
+}
+/* Styling for title RFC Number */
+h1#rfcnum {
+  clear: both;
+  margin: 0 0 -1em;
+  padding: 1em 0 0 0;
+}
+/* Make .olPercent look the same as <ol><li> */
+dl.olPercent > dd {
+  margin-bottom: 0.25em;
+  min-height: initial;
+}
+/* Give aside some styling to set it apart */
+aside {
+  border-left: 1px solid #ddd;
+  margin: 1em 0 1em 2em;
+  padding: 0.2em 2em;
+}
+aside > dl,
+aside > ol,
+aside > ul,
+aside > table,
+aside > p {
+  margin-bottom: 0.5em;
+}
+/* Additional page break settings */
+@media print {
+  figcaption, table caption {
+    page-break-before: avoid;
+  }
+}
+/* Font size adjustments for print */
+@media print {
+  body  { font-size: 10pt;      line-height: normal; max-width: 96%; }
+  h1    { font-size: 1.72em;    padding-top: 1.5em; } /* 1*1.2*1.2*1.2 */
+  h2    { font-size: 1.44em;    padding-top: 1.5em; } /* 1*1.2*1.2 */
+  h3    { font-size: 1.2em;     padding-top: 1.5em; } /* 1*1.2 */
+  h4    { font-size: 1em;       padding-top: 1.5em; }
+  h5, h6 { font-size: 1em;      margin: initial; padding: 0.5em 0 0.3em; }
+}
+/* Sourcecode margin in print, when there's no pilcrow */
+@media print {
+  .artwork,
+  .artwork > pre,
+  .sourcecode {
+    margin-bottom: 1em;
+  }
+}
+/* Avoid narrow tables forcing too narrow table captions, which may render badly */
+table {
+  min-width: 20em;
+}
+/* ol type a */
+ol.type-a { list-style-type: lower-alpha; }
+ol.type-A { list-style-type: upper-alpha; }
+ol.type-i { list-style-type: lower-roman; }
+ol.type-I { list-style-type: lower-roman; }
+/* Apply the print table and row borders in general, on request from the RPC,
+and increase the contrast between border and odd row background slightly */
+table {
+  border: 1px solid #ddd;
+}
+td {
+  border-top: 1px solid #ddd;
+}
+tr {
+  break-inside: avoid;
+}
+tr:nth-child(2n+1) > td {
+  background-color: #f8f8f8;
+}
+/* Use style rules to govern display of the TOC. */
+@media screen and (max-width: 1023px) {
+  #toc nav { display: none; }
+  #toc.active nav { display: block; }
+}
+/* Add support for keepWithNext */
+.keepWithNext {
+  break-after: avoid-page;
+  break-after: avoid-page;
+}
+/* Add support for keepWithPrevious */
+.keepWithPrevious {
+  break-before: avoid-page;
+}
+/* Change the approach to avoiding breaks inside artwork etc. */
+figure, pre, table, .artwork, .sourcecode  {
+  break-before: auto;
+  break-after: auto;
+}
+/* Avoid breaks between <dt> and <dd> */
+dl {
+  break-before: auto;
+  break-inside: auto;
+}
+dt {
+  break-before: auto;
+  break-after: avoid-page;
+}
+dd {
+  break-before: avoid-page;
+  break-after: auto;
+  orphans: 3;
+  widows: 3
+}
+span.break, dd.break {
+  margin-bottom: 0;
+  min-height: 0;
+  break-before: auto;
+  break-inside: auto;
+  break-after: auto;
+}
+/* Undo break-before ToC */
+@media print {
+  #toc {
+    break-before: auto;
+  }
+}
+/* Text in compact lists should not get extra bottom margin space,
+   since that would makes the list not compact */
+ul.compact p, .ulCompact p,
+ol.compact p, .olCompact p {
+ margin: 0;
+}
+/* But the list as a whole needs the extra space at the end */
+section ul.compact,
+section .ulCompact,
+section ol.compact,
+section .olCompact {
+  margin-bottom: 1em;                    /* same as p not within ul.compact etc. */
+}
+/* The tt and code background above interferes with for instance table cell
+   backgrounds.  Changed to something a bit more selective. */
+tt, code {
+  background-color: transparent;
+}
+p tt, p code, li tt, li code {
+  background-color: #f8f8f8;
+}
+/* Tweak the pre margin -- 0px doesn't come out well */
+pre {
+   margin-top: 0.5px;
+}
+/* Tweak the compact list text */
+ul.compact, .ulCompact,
+ol.compact, .olCompact,
+dl.compact, .dlCompact {
+  line-height: normal;
+}
+/* Don't add top margin for nested lists */
+li > ul, li > ol, li > dl,
+dd > ul, dd > ol, dd > dl,
+dl > dd > dl {
+  margin-top: initial;
+}
+/* Elements that should not be rendered on the same line as a <dt> */
+/* This should match the element list in writer.text.TextWriter.render_dl() */
+dd > div.artwork:first-child,
+dd > aside:first-child,
+dd > figure:first-child,
+dd > ol:first-child,
+dd > div.sourcecode:first-child,
+dd > table:first-child,
+dd > ul:first-child {
+  clear: left;
+}
+/* fix for weird browser behaviour when <dd/> is empty */
+dt+dd:empty::before{
+  content: "\00a0";
+}
+/* Make paragraph spacing inside <li> smaller than in body text, to fit better within the list */
+li > p {
+  margin-bottom: 0.5em
+}
+/* Don't let p margin spill out from inside list items */
+li > p:last-of-type:only-child {
+  margin-bottom: 0;
+}
+</style>
+<link href="rfc-local.css" rel="stylesheet" type="text/css">
+<script type="application/javascript">async function addMetadata(){try{const e=document.styleSheets[0].cssRules;for(let t=0;t<e.length;t++)if(/#identifiers/.exec(e[t].selectorText)){const a=e[t].cssText.replace("#identifiers","#external-updates");document.styleSheets[0].insertRule(a,document.styleSheets[0].cssRules.length)}}catch(e){console.log(e)}const e=document.getElementById("external-metadata");if(e)try{var t,a="",o=function(e){const t=document.getElementsByTagName("meta");for(let a=0;a<t.length;a++)if(t[a].getAttribute("name")===e)return t[a].getAttribute("content");return""}("rfc.number");if(o){t="https://www.rfc-editor.org/rfc/rfc"+o+".json";try{const e=await fetch(t);a=await e.json()}catch(e){t=document.URL.indexOf("html")>=0?document.URL.replace(/html$/,"json"):document.URL+".json";const o=await fetch(t);a=await o.json()}}if(!a)return;e.style.display="block";const s="",d="https://datatracker.ietf.org/doc",n="https://datatracker.ietf.org/ipr/search",c="https://www.rfc-editor.org/info",l=a.doc_id.toLowerCase(),i=a.doc_id.slice(0,3).toLowerCase(),f=a.doc_id.slice(3).replace(/^0+/,""),u={status:"Status",obsoletes:"Obsoletes",obsoleted_by:"Obsoleted By",updates:"Updates",updated_by:"Updated By",see_also:"See Also",errata_url:"Errata"};let h="<dl style='overflow:hidden' id='external-updates'>";["status","obsoletes","obsoleted_by","updates","updated_by","see_also","errata_url"].forEach(e=>{if("status"==e){a[e]=a[e].toLowerCase();var t=a[e].split(" "),o=t.length,w="",p=1;for(let e=0;e<o;e++)p<o?w=w+r(t[e])+" ":w+=r(t[e]),p++;a[e]=w}else if("obsoletes"==e||"obsoleted_by"==e||"updates"==e||"updated_by"==e){var g,m="",b=1;g=a[e].length;for(let t=0;t<g;t++)a[e][t]&&(a[e][t]=String(a[e][t]).toLowerCase(),m=b<g?m+"<a href='"+s+"/rfc/".concat(a[e][t])+"'>"+a[e][t].slice(3)+"</a>, ":m+"<a href='"+s+"/rfc/".concat(a[e][t])+"'>"+a[e][t].slice(3)+"</a>",b++);a[e]=m}else if("see_also"==e){var y,L="",C=1;y=a[e].length;for(let t=0;t<y;t++)if(a[e][t]){a[e][t]=String(a[e][t]);var _=a[e][t].slice(0,3),v=a[e][t].slice(3).replace(/^0+/,"");L=C<y?"RFC"!=_?L+"<a href='"+s+"/info/"+_.toLowerCase().concat(v.toLowerCase())+"'>"+_+" "+v+"</a>, ":L+"<a href='"+s+"/info/"+_.toLowerCase().concat(v.toLowerCase())+"'>"+v+"</a>, ":"RFC"!=_?L+"<a href='"+s+"/info/"+_.toLowerCase().concat(v.toLowerCase())+"'>"+_+" "+v+"</a>":L+"<a href='"+s+"/info/"+_.toLowerCase().concat(v.toLowerCase())+"'>"+v+"</a>",C++}a[e]=L}else if("errata_url"==e){var R="";R=a[e]?R+"<a href='"+a[e]+"'>Errata exist</a> | <a href='"+d+"/"+l+"'>Datatracker</a>| <a href='"+n+"/?"+i+"="+f+"&submit="+i+"'>IPR</a> | <a href='"+c+"/"+l+"'>Info page</a>":"<a href='"+d+"/"+l+"'>Datatracker</a> | <a href='"+n+"/?"+i+"="+f+"&submit="+i+"'>IPR</a> | <a href='"+c+"/"+l+"'>Info page</a>",a[e]=R}""!=a[e]?"Errata"==u[e]?h+=`<dt>More info:</dt><dd>${a[e]}</dd>`:h+=`<dt>${u[e]}:</dt><dd>${a[e]}</dd>`:"Errata"==u[e]&&(h+=`<dt>More info:</dt><dd>${a[e]}</dd>`)}),h+="</dl>",e.innerHTML=h}catch(e){console.log(e)}else console.log("Could not locate metadata <div> element");function r(e){return e.charAt(0).toUpperCase()+e.slice(1)}}window.removeEventListener("load",addMetadata),window.addEventListener("load",addMetadata);</script>
+</head>
+<body class="xml2rfc">
+<script src="metadata.min.js"></script>
+<table class="ears">
+<thead><tr>
+<td class="left">Internet-Draft</td>
+<td class="center">Mail/HTTPS</td>
+<td class="right">October 2023</td>
+</tr></thead>
+<tfoot><tr>
+<td class="left">Strbac</td>
+<td class="center">Expires 24 April 2024</td>
+<td class="right">[Page]</td>
+</tr></tfoot>
+</table>
+<div id="external-metadata" class="document-information"></div>
+<div id="internal-metadata" class="document-information">
+<dl id="identifiers">
+<dt class="label-workgroup">Workgroup:</dt>
+<dd class="workgroup">Network Working Group</dd>
+<dt class="label-internet-draft">Internet-Draft:</dt>
+<dd class="internet-draft">draft-strbac-totp2-00.txt</dd>
+<dt class="label-published">Published:</dt>
+<dd class="published">
+<time datetime="2023-10-22" class="published">22 October 2023</time>
+    </dd>
+<dt class="label-intended-status">Intended Status:</dt>
+<dd class="intended-status">Informational</dd>
+<dt class="label-expires">Expires:</dt>
+<dd class="expires"><time datetime="2024-04-24">24 April 2024</time></dd>
+<dt class="label-authors">Author:</dt>
+<dd class="authors">
+<div class="author">
+      <div class="author-name">D. Strbac</div>
+<div class="org">Mercata</div>
+</div>
+</dd>
+</dl>
+</div>
+<h1 id="title">Mail/HTTPS</h1>
+<section id="section-abstract">
+      <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
+<p id="section-abstract-1">We propose a pull-based messaging protocol leveraging the HTTP protocol over TLS (HTTPS) for message transfer. The primary objective of this new messaging overlay is to tackle the challenges encountered in SMTP-based email, including concerns related to security, authenticity, spam, privacy, size limitations and message lifecycle.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+</section>
+<div id="status-of-memo">
+<section id="section-boilerplate.1">
+        <h2 id="name-status-of-this-memo">
+<a href="#name-status-of-this-memo" class="section-name selfRef">Status of This Memo</a>
+        </h2>
+<p id="section-boilerplate.1-1">
+        This Internet-Draft is submitted in full conformance with the
+        provisions of BCP 78 and BCP 79.<a href="#section-boilerplate.1-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-2">
+        Internet-Drafts are working documents of the Internet Engineering Task
+        Force (IETF). Note that other groups may also distribute working
+        documents as Internet-Drafts. The list of current Internet-Drafts is
+        at <span><a href="https://datatracker.ietf.org/drafts/current/">https://datatracker.ietf.org/drafts/current/</a></span>.<a href="#section-boilerplate.1-2" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-3">
+        Internet-Drafts are draft documents valid for a maximum of six months
+        and may be updated, replaced, or obsoleted by other documents at any
+        time. It is inappropriate to use Internet-Drafts as reference
+        material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.1-4">
+        This Internet-Draft will expire on 24 April 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="copyright">
+<section id="section-boilerplate.2">
+        <h2 id="name-copyright-notice">
+<a href="#name-copyright-notice" class="section-name selfRef">Copyright Notice</a>
+        </h2>
+<p id="section-boilerplate.2-1">
+            Copyright (c) 2023 IETF Trust and the persons identified as the
+            document authors. All rights reserved.<a href="#section-boilerplate.2-1" class="pilcrow">¶</a></p>
+<p id="section-boilerplate.2-2">
+            This document is subject to BCP 78 and the IETF Trust's Legal
+            Provisions Relating to IETF Documents
+            (<span><a href="https://trustee.ietf.org/license-info">https://trustee.ietf.org/license-info</a></span>) in effect on the date of
+            publication of this document. Please review these documents
+            carefully, as they describe your rights and restrictions with
+            respect to this document. Code Components extracted from this
+            document must include Revised BSD License text as described in
+            Section 4.e of the Trust Legal Provisions and are provided without
+            warranty as described in the Revised BSD License.<a href="#section-boilerplate.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="toc">
+<section id="section-toc.1">
+        <a href="#" onclick="scroll(0,0)" class="toplink">▲</a><h2 id="name-table-of-contents">
+<a href="#name-table-of-contents" class="section-name selfRef">Table of Contents</a>
+        </h2>
+<nav class="toc"><ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1">
+            <p id="section-toc.1-1.1.1" class="keepWithNext"><a href="#section-1" class="auto internal xref">1</a>.  <a href="#name-introduction" class="internal xref">Introduction</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.1">
+                <p id="section-toc.1-1.1.2.1.1" class="keepWithNext"><a href="#section-1.1" class="auto internal xref">1.1</a>.  <a href="#name-background" class="internal xref">Background</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.2">
+                <p id="section-toc.1-1.1.2.2.1" class="keepWithNext"><a href="#section-1.2" class="auto internal xref">1.2</a>.  <a href="#name-deliverability" class="internal xref">Deliverability</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
+            <p id="section-toc.1-1.2.1"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-terminology" class="internal xref">Terminology</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-email-address" class="internal xref">Email Address</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
+                <p id="section-toc.1-1.3.2.1.1"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-format" class="internal xref">Format</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2">
+                <p id="section-toc.1-1.3.2.2.1"><a href="#section-3.2" class="auto internal xref">3.2</a>.  <a href="#name-examples" class="internal xref">Examples</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-address-secrecy" class="internal xref">Address Secrecy</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-connection-identifier" class="internal xref">Connection Identifier</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
+                <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-example" class="internal xref">Example</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-authors-and-readers" class="internal xref">Authors and Readers</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
+            <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-mail-agent" class="internal xref">Mail Agent</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-discovery" class="internal xref">Discovery</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.1">
+                    <p id="section-toc.1-1.6.2.1.2.1.1"><a href="#section-6.1.1" class="auto internal xref">6.1.1</a>.  <a href="#name-example-well-known-configur" class="internal xref">Example Well-Known Configuration</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7">
+            <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-public-profile" class="internal xref">Public Profile</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
+                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-multiplicity" class="internal xref">Multiplicity</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2">
+                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="auto internal xref">7.2</a>.  <a href="#name-location" class="internal xref">Location</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2.2.1">
+                    <p id="section-toc.1-1.7.2.2.2.1.1"><a href="#section-7.2.1" class="auto internal xref">7.2.1</a>.  <a href="#name-required-profile-attributes" class="internal xref">Required Profile Attributes</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2.2.2">
+                    <p id="section-toc.1-1.7.2.2.2.2.1"><a href="#section-7.2.2" class="auto internal xref">7.2.2</a>.  <a href="#name-optional-profile-attributes" class="internal xref">Optional Profile Attributes</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.3">
+                <p id="section-toc.1-1.7.2.3.1"><a href="#section-7.3" class="auto internal xref">7.3</a>.  <a href="#name-profile-image" class="internal xref">Profile Image</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.3.2.1">
+                    <p id="section-toc.1-1.7.2.3.2.1.1"><a href="#section-7.3.1" class="auto internal xref">7.3.1</a>.  <a href="#name-location-2" class="internal xref">Location</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
+            <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-algorithms" class="internal xref">Algorithms</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1">
+                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="auto internal xref">8.1</a>.  <a href="#name-key-fingerprinting" class="internal xref">Key Fingerprinting</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1.2.1">
+                    <p id="section-toc.1-1.8.2.1.2.1.1"><a href="#section-8.1.1" class="auto internal xref">8.1.1</a>.  <a href="#name-example-2" class="internal xref">Example</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2">
+                <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="auto internal xref">8.2</a>.  <a href="#name-signing" class="internal xref">Signing</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2.2.1">
+                    <p id="section-toc.1-1.8.2.2.2.1.1"><a href="#section-8.2.1" class="auto internal xref">8.2.1</a>.  <a href="#name-example-3" class="internal xref">Example</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.3">
+                <p id="section-toc.1-1.8.2.3.1"><a href="#section-8.3" class="auto internal xref">8.3</a>.  <a href="#name-encryption" class="internal xref">Encryption</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.3.2.1">
+                    <p id="section-toc.1-1.8.2.3.2.1.1"><a href="#section-8.3.1" class="auto internal xref">8.3.1</a>.  <a href="#name-symmetric-ciphers" class="internal xref">Symmetric Ciphers</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.3.2.2">
+                    <p id="section-toc.1-1.8.2.3.2.2.1"><a href="#section-8.3.2" class="auto internal xref">8.3.2</a>.  <a href="#name-asymmetric-ciphers" class="internal xref">Asymmetric Ciphers</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
+            <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-message-objects" class="internal xref">Message Objects</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.1">
+                <p id="section-toc.1-1.9.2.1.1"><a href="#section-9.1" class="auto internal xref">9.1</a>.  <a href="#name-message-id" class="internal xref">Message-ID</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2">
+                <p id="section-toc.1-1.9.2.2.1"><a href="#section-9.2" class="auto internal xref">9.2</a>.  <a href="#name-content" class="internal xref">Content</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2.2.1">
+                    <p id="section-toc.1-1.9.2.2.2.1.1"><a href="#section-9.2.1" class="auto internal xref">9.2.1</a>.  <a href="#name-encoding" class="internal xref">Encoding</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2.2.2">
+                    <p id="section-toc.1-1.9.2.2.2.2.1"><a href="#section-9.2.2" class="auto internal xref">9.2.2</a>.  <a href="#name-size-restrictions" class="internal xref">Size Restrictions</a></p>
+</li>
+                </ul>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.3">
+                <p id="section-toc.1-1.9.2.3.1"><a href="#section-9.3" class="auto internal xref">9.3</a>.  <a href="#name-headers" class="internal xref">Headers</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.3.2.1">
+                    <p id="section-toc.1-1.9.2.3.2.1.1"><a href="#section-9.3.1" class="auto internal xref">9.3.1</a>.  <a href="#name-reserved-headers" class="internal xref">Reserved Headers</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.3.2.2">
+                    <p id="section-toc.1-1.9.2.3.2.2.1"><a href="#section-9.3.2" class="auto internal xref">9.3.2</a>.  <a href="#name-categorization" class="internal xref">Categorization</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
+            <p id="section-toc.1-1.10.1"><a href="#section-10" class="auto internal xref">10</a>. <a href="#name-anonymized-address-book" class="internal xref">Anonymized Address Book</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
+            <p id="section-toc.1-1.11.1"><a href="#section-11" class="auto internal xref">11</a>. <a href="#name-message-notifications" class="internal xref">Message Notifications</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1">
+                <p id="section-toc.1-1.11.2.1.1"><a href="#section-11.1" class="auto internal xref">11.1</a>.  <a href="#name-notification-object" class="internal xref">Notification Object</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
+            <p id="section-toc.1-1.12.1"><a href="#section-12" class="auto internal xref">12</a>. <a href="#name-authentication" class="internal xref">Authentication</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.1">
+                <p id="section-toc.1-1.12.2.1.1"><a href="#section-12.1" class="auto internal xref">12.1</a>.  <a href="#name-example-4" class="internal xref">Example</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
+            <p id="section-toc.1-1.13.1"><a href="#section-13" class="auto internal xref">13</a>. <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13.2.1">
+                <p id="section-toc.1-1.13.2.1.1"><a href="#section-13.1" class="auto internal xref">13.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13.2.2">
+                <p id="section-toc.1-1.13.2.2.1"><a href="#section-13.2" class="auto internal xref">13.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14">
+            <p id="section-toc.1-1.14.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
+</li>
+        </ul>
+</nav>
+</section>
+</div>
+<div id="introduction">
+<section id="section-1">
+      <h2 id="name-introduction">
+<a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
+      </h2>
+<p id="section-1-1">The primary objective of Mail/HTTPS (Mail over HTTPS, or MoH) is to facilitate the transfer of messages with a focus on  reliability, efficiency, security, privacy, and trustworthiness.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">Mail/HTTPS leverages the established infrastructure of the web, utilizing the secure HTTPS protocol as its foundation. It  eliminates the need for additional protocol suites such as SMTP, POP, or IMAP, simplifying the process of implementing both new servers and clients.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<div id="background">
+<section id="section-1.1">
+        <h3 id="name-background">
+<a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-background" class="section-name selfRef">Background</a>
+        </h3>
+<p id="section-1.1-1">Email has evolved into a crucial communication method, but the conventional push based SMTP email model is ill-suited to meet the demands of modern communication. Numerous RFCs have been developed to address challenges such as spam, phishing, enhancing authenticity guarantees, reputation, deliverability and improving overall security. While the problems may seem to have reduced, with the continuous growth of email, they have also quantitatively scaled up. No solution is in sight.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
+<p id="section-1.1-2">The lack of significant changes in the email landscape, coupled with its complexity, has led to minimal progress. Adapting abusers continually pose challenges, making email management and hosting increasingly complex and expensive. Since spam filtering and privacy are conflicting objectives, finding a solution for the push model of messaging remains elusive.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
+<p id="section-1.1-3">Email serves as a fundamental component of the Internet, playing a crucial role in communication. However, the growing complexity surrounding email systems is leading to a trend of centralized control, which poses a threat to the core principles and ideals of a democratic and open Internet.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="deliverability">
+<section id="section-1.2">
+        <h3 id="name-deliverability">
+<a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-deliverability" class="section-name selfRef">Deliverability</a>
+        </h3>
+<p id="section-1.2-1">Deliverability is one of the most important terms of SMTP based email. This (invented) word has erroneously entered the colloquial language due to the ever-present issues of push-email.<a href="#section-1.2-1" class="pilcrow">¶</a></p>
+<p id="section-1.2-2">Ironically, deliverability stands for the ease of access to one's inbox. This represents the core issue of push-email as interests of senders and recipients most often do not align. By any sane standards, access to one's top of the messages queue should never be in the hands of anyone else but the queue owner.<a href="#section-1.2-2" class="pilcrow">¶</a></p>
+<p id="section-1.2-3">It is time to forget the old terminology - spam filtering, blacklists, bounces, reputations (IP &amp; domain), deliverability. Messages should never be rejected, queued, quarantined or deferred, and especially not without final recipient's knowledge. The dependency on middle-men, providers and postmasters must be a fact of the past.<a href="#section-1.2-3" class="pilcrow">¶</a></p>
+<p id="section-1.2-4">In Mail/HTTPS, it is the final reader that determines "deliverability," and never the author or the infrastructures in between.<a href="#section-1.2-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="terminology">
+<section id="section-2">
+      <h2 id="name-terminology">
+<a href="#section-2" class="section-number selfRef">2. </a><a href="#name-terminology" class="section-name selfRef">Terminology</a>
+      </h2>
+<p id="section-2-1">The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED",  "MAY", and "OPTIONAL" in this document are to be interpreted as described in <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span>.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2-2.1">SMTP-email: push-based email commonly in use today, utilizing SMTP protocol<a href="#section-2-2.1" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-2-2.2">Mail Agent: an always online service which stores and forwards messages.<a href="#section-2-2.2" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-2-2.3">Author: person or system authoring messages, a modern replacement for "sender."<a href="#section-2-2.3" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-2-2.4">Reader: person or system authorized to fetch and read messages.<a href="#section-2-2.4" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-2-2.5">Connection Identifier: a hash of two email addresses, uniquely identifying a connection between two email users.<a href="#section-2-2.5" class="pilcrow">¶</a>
+</li>
+      </ul>
+</section>
+</div>
+<div id="email-address">
+<section id="section-3">
+      <h2 id="name-email-address">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-email-address" class="section-name selfRef">Email Address</a>
+      </h2>
+<p id="section-3-1">Mail/HTTPS retains the traditional email addressing scheme used in SMTP-based email systems, with minor normalization based on de-facto accepted addressing scheme by the majority.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<p id="section-3-2">This dual usage allows for the convenience of seamlessly transitioning between legacy and Mail/HTTPS systems without the need for significant changes in the user experience. The address space compatibility also facilitates transitioning.<a href="#section-3-2" class="pilcrow">¶</a></p>
+<div id="format">
+<section id="section-3.1">
+        <h3 id="name-format">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-format" class="section-name selfRef">Format</a>
+        </h3>
+<p id="section-3.1-1">Email addresses serve a purpose beyond mere message transmission. They have evolved into a fundamental digital identity, functioning as the primary identifier and recovery mechanism throughout the online realm. Although certain companies attempt to monopolize email addresses by necessitating users to create accounts on their exclusive domains, the reality is that email addresses are inherently decentralized and accessible to all individuals.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-2">Unlike <span>[<a href="#RFC5322" class="cite xref">RFC5322</a>]</span> email addresses, which have a very liberal format due to historical reasons and long-obsolete features, the streamlined format of Mail/HTTPS reduces unnecessary challenges in validating and parsing email addresses, as well as minimizing discrepancies between different systems. Mail/HTTPS employs a simplified address format that has proven to be easy to understand and "good-enough" over time:<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-3.1-3">
+<pre>
+addr-spec         = local-part "@" hostname
+local-part        = (letter | digit) {alphanumeric-char}
+alphanumeric-char = letter | digit | "-" | "+" | "." | "_"
+letter            = "A" | "B" | ... | "Z" | "a" | "b" | ... | "z"
+digit             = "0" | "1" | ... | "9"
+</pre><a href="#section-3.1-3" class="pilcrow">¶</a>
+</div>
+<p id="section-3.1-4">The local-part of a Mail/HTTPS address is case-insensitive and MUST NOT exceed a maximum length of 256 characters. Special characters are allowed. Local part MUST NOT start or end with a special character. Special characters MUST NOT be consecutive.<a href="#section-3.1-4" class="pilcrow">¶</a></p>
+<p id="section-3.1-5">The domain portion of an email address functions as an identifier for the location from which mail is retrieved. It is understood as the explicit DNS label of the particular host. The domain portion MAY NOT be an IP address.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="examples">
+<section id="section-3.2">
+        <h3 id="name-examples">
+<a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-examples" class="section-name selfRef">Examples</a>
+        </h3>
+<div class="alignLeft art-text artwork" id="section-3.2-1">
+<pre>
+dejan@mercata.com
+dejan+tag@strbac.com
+this_is_a_valid_email_address@group.example.com
+george-work@phillips.com
+jeff.kloster@bigco.org
+jimmy1988@weasy.net
+</pre><a href="#section-3.2-1" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="address-secrecy">
+<section id="section-3.3">
+        <h3 id="name-address-secrecy">
+<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-address-secrecy" class="section-name selfRef">Address Secrecy</a>
+        </h3>
+<p id="section-3.3-1">In traditional SMTP-based email systems, preserving the secrecy of email addresses is vital, especially for famous individuals, commonly sought-after institutions and public figures. Exposed email addresses are nowadays susceptible to spam, phishing, ransomware and unsolicited messages, leading to privacy concerns and potential security risks.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.3-2">However, in the Mail/HTTPS system, exposing an email address doesn't pose the same risks as in SMTP-based email and it does not grant inbox access. This distinction ensures a higher level of security and privacy for users, allowing them to share their email addresses publicly with confidence.<a href="#section-3.3-2" class="pilcrow">¶</a></p>
+<p id="section-3.3-3">The implementation of this restriction is achieved through the use of an address book containing mutual connection identifiers, calculated from the email addresses pair. These identifiers serve as "links" between email users and act as an anonymized allowlist. Such anonymization hides communication logs and metadata from eventual third party providers.<a href="#section-3.3-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="connection-identifier">
+<section id="section-4">
+      <h2 id="name-connection-identifier">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-connection-identifier" class="section-name selfRef">Connection Identifier</a>
+      </h2>
+<p id="section-4-1">In contrast to open mailbox systems, Mail/HTTPS operates under a more controlled model where messaging is restricted to parties that have mutually agreed to engage in message exchange. Messages are shared only among authorized and consenting parties, enhancing privacy and security in the communication process.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-2">To safeguard users from unauthorized messages while preserving the privacy of correspondents' identities from third party email providers, a distinct and constant connection identifier is created for each email connection established between two parties.<a href="#section-4-2" class="pilcrow">¶</a></p>
+<p id="section-4-3">This consistent identifier ensures that the identities of the correspondents remain confidential and undisclosed to the email service providers throughout the duration of the email exchange, while still allowing service providers to determine whether a request is authorized or not.<a href="#section-4-3" class="pilcrow">¶</a></p>
+<p id="section-4-4">The connection identifier is generated by taking two email addresses, lowercasing them, ordering them alphabetically, concatenating them, and then applying the SHA2 hash function defined in <span>[<a href="#RFC6234" class="cite xref">RFC6234</a>]</span>. The use of SHA2 hash function ensures that the original email addresses are transformed into irreversible, fixed-length hash values, protecting the correspondents' identities from direct exposure to the email service providers.<a href="#section-4-4" class="pilcrow">¶</a></p>
+<p id="section-4-5">The deliberate omission of a hashing salt is intentional. Utilizing common connection identifiers between two parties allows for efficient access rights determination and facilitates the discovery of network connections, as further elaborated in this document.<a href="#section-4-5" class="pilcrow">¶</a></p>
+<div id="example">
+<section id="section-4.1">
+        <h3 id="name-example">
+<a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-example" class="section-name selfRef">Example</a>
+        </h3>
+<p id="section-4.1-1">Let's say we have two email addresses: "user2@Domain2.tld" and "USER1@domain1.tld."<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-4.1-2">
+<li id="section-4.1-2.1">First, we order the lowercase email addresses alphabetically:<a href="#section-4.1-2.1" class="pilcrow">¶</a>
+</li>
+        </ol>
+<div class="alignLeft art-text artwork" id="section-4.1-3">
+<pre>
+    user1@domain1.tld
+    user2@domain2.tld
+</pre><a href="#section-4.1-3" class="pilcrow">¶</a>
+</div>
+<ol start="1" type="1" class="normal type-1" id="section-4.1-4">
+<li id="section-4.1-4.1">Next, we concatenate the two email addresses without any separators:<a href="#section-4.1-4.1" class="pilcrow">¶</a>
+</li>
+        </ol>
+<div class="alignLeft art-text artwork" id="section-4.1-5">
+<pre>
+    user1@domain1.tlduser2@domain2.tld
+</pre><a href="#section-4.1-5" class="pilcrow">¶</a>
+</div>
+<ol start="1" type="1" class="normal type-1" id="section-4.1-6">
+<li id="section-4.1-6.1">Then, we apply the SHA2 hash function to the concatenated string. Let's assume the resulting hash is:<a href="#section-4.1-6.1" class="pilcrow">¶</a>
+</li>
+        </ol>
+<div class="alignLeft art-text artwork" id="section-4.1-7">
+<pre>
+  c586af64026edfaff36c1e3beb161b9e67b95ce665ff777b83c68382132c8c98
+</pre><a href="#section-4.1-7" class="pilcrow">¶</a>
+</div>
+<p id="section-4.1-8">The final hash value becomes the unique connection identifier for the email connection between "user1@domain1.tld" and "user2@domain2.tld".<a href="#section-4.1-8" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="authors-and-readers">
+<section id="section-5">
+      <h2 id="name-authors-and-readers">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-authors-and-readers" class="section-name selfRef">Authors and Readers</a>
+      </h2>
+<p id="section-5-1">Unlike traditional SMTP-based email, where senders and receivers are designated, Mail/HTTPS employs a passive terminology of authors and readers. In this system, authors compose messages and share them within their own environment with the public or specific readers only. Readers, on the other hand, MAY fetch messages from authors if they are interested in the author and their messages.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-2">This shift in terminology promotes a more dynamic and user-centric approach to email communication, where users have full control over their interactions and messages.<a href="#section-5-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="mail-agent">
+<section id="section-6">
+      <h2 id="name-mail-agent">
+<a href="#section-6" class="section-number selfRef">6. </a><a href="#name-mail-agent" class="section-name selfRef">Mail Agent</a>
+      </h2>
+<p id="section-6-1">The underlying architecture of Mail/HTTPS functions as a store-and-forward system using always online mail agents, similar to the Mail-Exchange (MX) relays of SMTP based email. This approach is vital for supporting asynchronous communication, enabling messages to be authored and read at different intervals.<a href="#section-6-1" class="pilcrow">¶</a></p>
+<p id="section-6-2">Unlike SMTP-based systems that rely on Mail Transfer Agents (MTAs) for message relaying, which involve at least one additional message retransmission, Mail/HTTPS agents do not forward messages further. These agents receive messages from users (authors) over HTTPS and store them  locally until the designated readers retrieve them and before message expiry time.<a href="#section-6-2" class="pilcrow">¶</a></p>
+<p id="section-6-3">The HTTP protocol was designed for this exact usage and is conveniently utilized in Mail/HTTPS. Message transmission is achieved through a single HTTP upload and single download, simplifying the process and reducing the risk of message loss or delay.<a href="#section-6-3" class="pilcrow">¶</a></p>
+<div id="discovery">
+<section id="section-6.1">
+        <h3 id="name-discovery">
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-discovery" class="section-name selfRef">Discovery</a>
+        </h3>
+<p id="section-6.1-1">To initiate communication, communicating parties must first discover each other's mail agents.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.1-2">SMTP based email relies heavily on DNS records to discover the push destination of a given domain.<a href="#section-6.1-2" class="pilcrow">¶</a></p>
+<p id="section-6.1-3">In Mail/HTTPS, the discovery method serves the opposite purpose, to deduct the location from where to pull messages and profile information for a given email address. The authenticity is self-validated by retrieving messages directly from the origin and may be further improved through usage of DNSSEC.<a href="#section-6.1-3" class="pilcrow">¶</a></p>
+<p id="section-6.1-4">Mail/HTTPS intentionally does not use DNS discovery. SMTP email predates the web and is incompatible with its document sharing ideas. To this day, direct interaction with email services from the web is not possible, and for well-known security reasons. To support new interactions, we design Mail/HTTPS as a web-native, so it can fully by used via the web and the browser, securely, from discovery up to message retrieval.<a href="#section-6.1-4" class="pilcrow">¶</a></p>
+<p id="section-6.1-5">To discover responsible mail agents for a host, mail clients MUST check for existence of a file at a well-known URI, deduced from the host part of a given email address. Well-Known URIs are defined in <span>[<a href="#RFC8615" class="cite xref">RFC8615</a>]</span>. The Mail/HTTPS well-known file is expected at the following URI:<a href="#section-6.1-5" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-6.1-6">
+<pre>
+https://HOSTNAME/.well-known/mail.txt
+</pre><a href="#section-6.1-6" class="pilcrow">¶</a>
+</div>
+<p id="section-6.1-7">The HOSTNAME represents any valid DNS hostname, as part of a given email address, for example "domain.tld" in email address "user@domain.tld."<a href="#section-6.1-7" class="pilcrow">¶</a></p>
+<p id="section-6.1-8">The well-known URI MUST be retrieved over HTTPS and over a trusted connection. File contents served over an un-trusted connection MUST be ignored.<a href="#section-6.1-8" class="pilcrow">¶</a></p>
+<p id="section-6.1-9">The retrieved file MUST be a valid text file representing Mail/HTTPS service configuration file. Invalid files are to be ignored in entirety.<a href="#section-6.1-9" class="pilcrow">¶</a></p>
+<p id="section-6.1-10">If the configuration file is present and valid, its content should be read to determine possible Mail/HTTPS service delegation. The configuration file is a simple text file with hostnames of delegated mailagents on each line. Multiple mail agent hostnames may be listed but no more than three. Should more be present, only the first three will be considered. The well-known file determines the order of accessing the mail agents.<a href="#section-6.1-10" class="pilcrow">¶</a></p>
+<p id="section-6.1-11">Each line of the well-known file is trimmed for surrounding whitespace before being considered.
+Lines starting with hash are ignored as comments. Invalid hostnames are ignored.<a href="#section-6.1-11" class="pilcrow">¶</a></p>
+<p id="section-6.1-12">All valid hosts listed are assumed to have a copy of all users data. Upon authoring messages, email clients MUST respect the setting and store authored messages on at least two of the listed mail agent hosts, respecting order in upload attempts.<a href="#section-6.1-12" class="pilcrow">¶</a></p>
+<p id="section-6.1-13">When querying and fetching messages, all mail agent hostnames listed in the well-known file MUST be queried.<a href="#section-6.1-13" class="pilcrow">¶</a></p>
+<p id="section-6.1-14">If the well-known file is not present, it is assumed the email address hostname is the mail agent hostname under the subdomain:<a href="#section-6.1-14" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-6.1-15">
+<pre>
+mail.HOSTNAME
+</pre><a href="#section-6.1-15" class="pilcrow">¶</a>
+</div>
+<div id="example-well-known-configuration">
+<section id="section-6.1.1">
+          <h4 id="name-example-well-known-configur">
+<a href="#section-6.1.1" class="section-number selfRef">6.1.1. </a><a href="#name-example-well-known-configur" class="section-name selfRef">Example Well-Known Configuration</a>
+          </h4>
+<div class="alignLeft art-text artwork" id="section-6.1.1-1">
+<pre>
+# This is a comment
+mail.otherdomain1.tld
+otherdomain2.tld
+</pre><a href="#section-6.1.1-1" class="pilcrow">¶</a>
+</div>
+<p id="section-6.1.1-2">In the example above, the Mail/HTTPS service is delegated to hosts mail.otherdomain1.tld and otherdomain2.tld. Authored messages are uploaded to both hosts. When fetching, readers query both hosts too.<a href="#section-6.1.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="public-profile">
+<section id="section-7">
+      <h2 id="name-public-profile">
+<a href="#section-7" class="section-number selfRef">7. </a><a href="#name-public-profile" class="section-name selfRef">Public Profile</a>
+      </h2>
+<p id="section-7-1">The advent of email predates the widespread use of the web and the emergence of social networking platforms that now permeate both our personal and professional lives.<a href="#section-7-1" class="pilcrow">¶</a></p>
+<p id="section-7-2">In today's interconnected world, it is immensely valuable to have insights into someone's current status, availability, and sometimes even their location. This information aids in establishing effective communication and helps individuals understand the context in which they are interacting. Additionally, certain details may extend beyond personal contact lists and be publicly visible, contributing to a person's online presence.<a href="#section-7-2" class="pilcrow">¶</a></p>
+<p id="section-7-3">Traditional email systems were not originally designed to accommodate additional information about email address holders. To address this limitation, various initiatives were undertaken to introduce add-ons like proprietary solutions such as <a href="http://en.gravatar.com/">Gravatar</a>, and proposed standards like WebFinger defined in <span>[<a href="#RFC7033" class="cite xref">RFC7033</a>]</span> and <a href="https://www.ietf.org/archive/id/draft-brand-indicators-for-message-identification-03.txt">BIMI</a>. These efforts aimed to provide user information, profile data, or brand images within email communications.<a href="#section-7-3" class="pilcrow">¶</a></p>
+<p id="section-7-4">However, despite these endeavors, widespread adoption of these solutions did not materialize. As a result, the most common approach to include supplementary information has been to add a substantial footer in emails. Additionally, relying on provider-dependent profiles and profile images has become a prevailing practice in the absence of widely adopted standards for enhanced email address information and metadata presentation.<a href="#section-7-4" class="pilcrow">¶</a></p>
+<p id="section-7-5">Mail/HTTPS takes inspiration from previous efforts to enhance email functionality by introducing user profiles. In this new protocol, each Mail/HTTPS address is linked to a public profile hosted at a standardized URI. The management of these profiles is handled by the individual's mail agent, providing a centralized and standardized way to access and display user information associated with the email address.<a href="#section-7-5" class="pilcrow">¶</a></p>
+<div id="multiplicity">
+<section id="section-7.1">
+        <h3 id="name-multiplicity">
+<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-multiplicity" class="section-name selfRef">Multiplicity</a>
+        </h3>
+<p id="section-7.1-1">In contrast to social media platforms, which typically limit users to a single identity, Mail/HTTPS natively allows use of multiple profiles. With Mail/HTTPS, each email address has its own distinct profile, allowing users to create and manage different personas for various contexts. This separation of profiles empowers users to maintain distinct presentations for private, fun, casual, and professional interactions, providing greater control over their online identity and presentation.<a href="#section-7.1-1" class="pilcrow">¶</a></p>
+<p id="section-7.1-2">Users can adapt their communication style and information sharing based on the specific context, just by using different email addresses. This is already the norm today with existing email addresses.<a href="#section-7.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="location">
+<section id="section-7.2">
+        <h3 id="name-location">
+<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-location" class="section-name selfRef">Location</a>
+        </h3>
+<p id="section-7.2-1">In the simplest case, if we consider the address "LOCALPART@HOSTNAME" with already discovered  MAILAGENT_HOSTNAME as its mail agent hostname, the corresponding profile MUST be located at the following URL:<a href="#section-7.2-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-7.2-2">
+<pre>
+https://MAILAGENT_HOSTNAME/mail/HOSTNAME/LOCALPART/profile
+</pre><a href="#section-7.2-2" class="pilcrow">¶</a>
+</div>
+<p id="section-7.2-3">It is essential to ensure that the MAILAGENT_HOSTNAME, if different than email address HOSTNAME, provides the correct TLS certification for HOSTNAME. Any attempts to establish an unverified TLS connection MUST BE rejected as a security precaution within the Mail/HTTPS system.<a href="#section-7.2-3" class="pilcrow">¶</a></p>
+<p id="section-7.2-4">The public email profile is a plain text file in which each line contains key-value pairs. These pairs are separated by a single colon character, with the key and its corresponding value. The order of the lines does not matter.<a href="#section-7.2-4" class="pilcrow">¶</a></p>
+<p id="section-7.2-5">The profile MUST contain mandatory attributes and MAY contain additional optional attributes.<a href="#section-7.2-5" class="pilcrow">¶</a></p>
+<p id="section-7.2-6">Profile total size SHOULD not exceed 64KB in size. If this size limit is exceeded, the profile MAY be truncated. The actual maximum size permitted is left to email clients.<a href="#section-7.2-6" class="pilcrow">¶</a></p>
+<div id="required-profile-attributes">
+<section id="section-7.2.1">
+          <h4 id="name-required-profile-attributes">
+<a href="#section-7.2.1" class="section-number selfRef">7.2.1. </a><a href="#name-required-profile-attributes" class="section-name selfRef">Required Profile Attributes</a>
+          </h4>
+<p id="section-7.2.1-1">Public email profiles offer more than just convenience; they also play a crucial role in facilitating message encryption through the exposure of public keys.<a href="#section-7.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-7.2.1-2">A standard public email profile should include, at a minimum, the following essential attributes:<a href="#section-7.2.1-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-7.2.1-3.1">Name: This attribute represents the display name associated with the email address. Previously, it was typically written as "name" &lt;address&gt;. The name helps identify the user or entity behind the email address and it SHOULD NOT be empty.<a href="#section-7.2.1-3.1" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-7.2.1-3.2">Signing-Key: This attribute provides information about the user's public signing key, which is utilized to verify the authenticity of messages. Digital signatures enable readers to validate that a message indeed originated from the claimed sender and has remained unaltered during transmission. It is mandatory for this attribute not to be empty.<a href="#section-7.2.1-3.2" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-7.2.1-3.3">Last-Signing-Key: This attribute provides information about the user's previous signing key. It is optional and may be empty. The attribute serves the purpose of verifying messages that were authored during key rotations, as well as verifying the user's own API requests on mail agents from their email clients that are still awaiting key updates.<a href="#section-7.2.1-3.3" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-7.2.1-3.4">Encryption-Key: This attribute holds the user's public encryption key, which is utilized for encrypting messages intended for the email address holder. Encrypting messages ensures that only the intended reader can decrypt and read the contents, providing a high level of confidentiality and data protection.<a href="#section-7.2.1-3.4" class="pilcrow">¶</a>
+</li>
+          </ul>
+<p id="section-7.2.1-4">Unlike the last signing key, the previous encryption key is not tracked as it SHOULD never be used.<a href="#section-7.2.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="optional-profile-attributes">
+<section id="section-7.2.2">
+          <h4 id="name-optional-profile-attributes">
+<a href="#section-7.2.2" class="section-number selfRef">7.2.2. </a><a href="#name-optional-profile-attributes" class="section-name selfRef">Optional Profile Attributes</a>
+          </h4>
+<p id="section-7.2.2-1">In the past, allowing profile owners to freely choose optional attributes has resulted in unstructured data that posed challenges for programmatic utilization. We now aim to establish a set of widely adopted attributes.<a href="#section-7.2.2-1" class="pilcrow">¶</a></p>
+<p id="section-7.2.2-2">The profile attributes cannot repeat unless explicitely stated. If non-repatable attributes are found more than once, only the first occurence MUST be considered.<a href="#section-7.2.2-2" class="pilcrow">¶</a></p>
+<p id="section-7.2.2-3">All attributes within the user profiles are expected to be and presented in plaintext format. Clients MUST NOT parse attributes for formatting and MUST always present the raw source.<a href="#section-7.2.2-3" class="pilcrow">¶</a></p>
+<p id="section-7.2.2-4">Any non-standard attribute not explicitly listed here MAY be presented as a custom profile attribute. Such custom attributes SHOULD be presented in a trailing order, following the standard, recognized attributes.<a href="#section-7.2.2-4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-7.2.2-5.1">About: The attribute provides a brief description or summary of the profile owner's background, interests, or personal statement. It is a free-form attribute.<a href="#section-7.2.2-5.1" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-7.2.2-5.2">Address: The attribute represents the physical address or mailing address of the profile owner. It is a free-form attribute.<a href="#section-7.2.2-5.2" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-7.2.2-5.3">Away-Until: If set, the attribute indicates that the user may not read messages until the date given in ISO 8601 format (YYYYMMDD). Mail clients SHOULD warn authors from authoring messages for away readers. That warning MAY be ignored.<a href="#section-7.2.2-5.3" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-7.2.2-5.4">Away-Warning: If set, an attempt to author a message for away reader SHOULD bring up the custom warning which MAY be ignored.<a href="#section-7.2.2-5.4" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-7.2.2-5.5">Birthday: The attribute indicates the date of birth or birthdate of the profile owner in ISO 8601 format (YYYYMMDD).<a href="#section-7.2.2-5.5" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-7.2.2-5.6">Books: The attribute lists literary works or genres that the profile owner likes to read. It is a free-form attribute.<a href="#section-7.2.2-5.6" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-7.2.2-5.7">Department: The attribute denotes the specific department or division within the organization where the profile owner works. It is a free-form attribute.<a href="#section-7.2.2-5.7" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-7.2.2-5.8">Education: The attribute provides information about the educational background of the profile owner, including schools attended and degrees earned. It is a free-form attribute.<a href="#section-7.2.2-5.8" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-7.2.2-5.9">Gender: The attribute represents the gender identity or gender expression of the profile owner. It is a free-form attribute.<a href="#section-7.2.2-5.9" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-7.2.2-5.10">Interests: The attribute lists hobbies, activities, or topics of interest that the profile owner has indicated. It is a free-form attribute.<a href="#section-7.2.2-5.10" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-7.2.2-5.11">Job-Title: The attribute specifies the job title or position held by the profile owner within their organization. It is a free-form attribute.<a href="#section-7.2.2-5.11" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-7.2.2-5.12">Languages: The attribute indicates the languages spoken or understood by the profile owner. It is a free-form attribute.<a href="#section-7.2.2-5.12" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-7.2.2-5.13">Location: The attribute represents the geographical location or address of the profile owner. It is a free-form attribute.<a href="#section-7.2.2-5.13" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-7.2.2-5.14">Movies: The attribute lists films or movie genres that the profile owner enjoys. It is a free-form attribute.<a href="#section-7.2.2-5.14" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-7.2.2-5.15">Music: The attribute indicates the profile owner's preferred music genres, artists, or songs. It is a free-form attribute.<a href="#section-7.2.2-5.15" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-7.2.2-5.16">Name: The user's name. There are no strict requirements for real names to be used. Each user decides for themselves.<a href="#section-7.2.2-5.16" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-7.2.2-5.17">Notes: The attribute allows for additional remarks or notes about the profile owner, such as preferences, interests, or specific instructions. It is a free-form attribute.<a href="#section-7.2.2-5.17" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-7.2.2-5.18">Organization: The attribute denotes the name of the company, organization, or institution the profile owner is affiliated with. It is a free-form attribute.<a href="#section-7.2.2-5.18" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-7.2.2-5.19">Phone: The attribute represents the contact number associated with the profile owner. This attribute may appear multiple times to include different phone numbers. The phone number is a free-form attribute. To label a phone number (e.g. "mobile", "work"), prefix by a single label in square brackets, e.g. "[work] +804-500-7000 ".<a href="#section-7.2.2-5.19" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-7.2.2-5.20">Places-Lived: The attribute encompasses information about the profile owner's previous or current places of residence or significant locations in their life. This attribute is designed to be free-form, meaning that there are no specific formatting requirements or constraints imposed. Users have the flexibility to input the relevant location data in a way that best suits their preferences, allowing for a customizable representation of their lived experiences and important geographical information.<a href="#section-7.2.2-5.20" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-7.2.2-5.21">
+              <p id="section-7.2.2-5.21.1">Profile-Image: The attribute is used to indicate the URL or file path that points to the profile owner's avatar or profile picture. It is essential to note that the URL must be served via HTTPS. If the image URL is not secured with HTTPS, the image will not be displayed and will appear as blank.<a href="#section-7.2.2-5.21.1" class="pilcrow">¶</a></p>
+<p id="section-7.2.2-5.21.2">
+If a profile image URL is not supplied, the profile will automatically use the "image" filename found at the same level as the profile's location.<a href="#section-7.2.2-5.21.2" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-7.2.2-5.22">Relationship-Status: The attribute is a free-form attribute and indicates the current relationship status of the profile owner (e.g., single, in a relationship, married, looking, etc.).<a href="#section-7.2.2-5.22" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-7.2.2-5.23">Sports: The attribute is a free-form and may lists sports activities or teams that the profile owner follows or participates in.<a href="#section-7.2.2-5.23" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-7.2.2-5.24">Status: The attribute provides the current status of the profile owner. It is a free-form attribute.<a href="#section-7.2.2-5.24" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-7.2.2-5.25">Streams: The "attribute provides a collection of free-form tags that readers can use to filter messages during the message pulling process. These tags allow for flexible categorization and organization of messages and can include various labels such as "familyphotos," "notes," "events," "location," and more.<a href="#section-7.2.2-5.25" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-7.2.2-5.26">Website: The attribute represents the website associated with the profile owner.<a href="#section-7.2.2-5.26" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-7.2.2-5.27">Work: The attribute provides details about the professional work experience of the profile owner, including employment history, job positions, and companies worked for. It is a free-form attribute.<a href="#section-7.2.2-5.27" class="pilcrow">¶</a>
+</li>
+          </ul>
+</section>
+</div>
+</section>
+</div>
+<div id="profile-image">
+<section id="section-7.3">
+        <h3 id="name-profile-image">
+<a href="#section-7.3" class="section-number selfRef">7.3. </a><a href="#name-profile-image" class="section-name selfRef">Profile Image</a>
+        </h3>
+<p id="section-7.3-1">Each email address may provide a profile image to be used as a thumbnail as well as profile banner. It serves to clearly identify the user of a given email address. It is RECOMMENDED for all email addresses to provide a profile image.<a href="#section-7.3-1" class="pilcrow">¶</a></p>
+<p id="section-7.3-2">Just as the profile, the profile image MUST be served over HTTPS. Profile images served over insecure connections are ignored.<a href="#section-7.3-2" class="pilcrow">¶</a></p>
+<p id="section-7.3-3">The profile image format MAY be one of the following: JPEG, GIF, PNG, or WebP.<a href="#section-7.3-3" class="pilcrow">¶</a></p>
+<p id="section-7.3-4">The profile image size SHOULD not exceed 512KB in size. If this size limit is exceeded, the profile image MAY be ommited for a placeholder.<a href="#section-7.3-4" class="pilcrow">¶</a></p>
+<p id="section-7.3-5">The profile image should be square, of equal height and width. The RECOMMMENDED image size is 400x400 pixels. The mail agents do not provide alternative sizes of the profile image. It is the responsability of the email clients to retrieve, resize and cache the profile images.<a href="#section-7.3-5" class="pilcrow">¶</a></p>
+<div id="location-1">
+<section id="section-7.3.1">
+          <h4 id="name-location-2">
+<a href="#section-7.3.1" class="section-number selfRef">7.3.1. </a><a href="#name-location-2" class="section-name selfRef">Location</a>
+          </h4>
+<p id="section-7.3.1-1">Unless a custom profile image URL is provided in the Profile-Image profile attribute, the image is served from the mail agent just as the profile:<a href="#section-7.3.1-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-7.3.1-2">
+<pre>
+https://MAILAGENT_HOSTNAME/mail/HOSTNAME/LOCALPART/image
+</pre><a href="#section-7.3.1-2" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="algorithms">
+<section id="section-8">
+      <h2 id="name-algorithms">
+<a href="#section-8" class="section-number selfRef">8. </a><a href="#name-algorithms" class="section-name selfRef">Algorithms</a>
+      </h2>
+<p id="section-8-1">Mail/HTTPS relies on a combination of assymetric and symmetric ciphers. The message content is encrypted using symmetric ciphers, effectively avoiding duplication of data for multiple readers. The symmetric cipher key is however encrypted using assymetric ciphers for each reader.<a href="#section-8-1" class="pilcrow">¶</a></p>
+<p id="section-8-2">Both public and private messages are signed using assymetric keys.<a href="#section-8-2" class="pilcrow">¶</a></p>
+<p id="section-8-3">To ensure adaptability to future developments and prevent the need for versioning, Mail/HTTPS does not depend on or mandate specific algorithms. It anticipates that algorithms will advance over time. What remains consistent is the utilization of a combination of asymmetric and symmetric ciphers.<a href="#section-8-3" class="pilcrow">¶</a></p>
+<p id="section-8-4">The headers of Mail/HTTPS list which ciphers are used for encrypting payloads.<a href="#section-8-4" class="pilcrow">¶</a></p>
+<p id="section-8-5">Embedded encrypted/signed headers include a prefix of the cipher used.<a href="#section-8-5" class="pilcrow">¶</a></p>
+<p id="section-8-6">Minimum RECOMMENDED hashing algorithms:<a href="#section-8-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-8-7.1">sha256<a href="#section-8-7.1" class="pilcrow">¶</a>
+</li>
+      </ul>
+<p id="section-8-8">Minimum RECOMMENDED encryption algorithms:<a href="#section-8-8" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-8-9.1">aes256gcm<a href="#section-8-9.1" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-8-9.2">xchacha20poly1305<a href="#section-8-9.2" class="pilcrow">¶</a>
+</li>
+      </ul>
+<p id="section-8-10">Minimum RECOMMENDED signing algorithms:<a href="#section-8-10" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-8-11.1">ed25519<a href="#section-8-11.1" class="pilcrow">¶</a>
+</li>
+      </ul>
+<p id="section-8-12">Most of these algorithms are conveniently available as part of the <a href="https://doc.libsodium.org/">LibSodium</a> library.<a href="#section-8-12" class="pilcrow">¶</a></p>
+<div id="key-fingerprinting">
+<section id="section-8.1">
+        <h3 id="name-key-fingerprinting">
+<a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-key-fingerprinting" class="section-name selfRef">Key Fingerprinting</a>
+        </h3>
+<p id="section-8.1-1">After keys rotation, each user keeps previous keys for at least one maximum duration of a message. Previous signing key is published in the user's profile, alongside the actual signing key. The previous public encryption key needs no publishing, but its private counterpart should be kept locally to read messages authored by others shortly before rotation.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
+<p id="section-8.1-2">Public key fingerprints are used to identify the key which is needed in a crypto operation, whether decryption or signature verification, without futilely trying multiple keys.<a href="#section-8.1-2" class="pilcrow">¶</a></p>
+<p id="section-8.1-3">The fingerprint is exactly the first 8 bytes of the key, encoded as lowercase hex. The resulting fingerprint is precisely 16 characters long.<a href="#section-8.1-3" class="pilcrow">¶</a></p>
+<div id="example-1">
+<section id="section-8.1.1">
+          <h4 id="name-example-2">
+<a href="#section-8.1.1" class="section-number selfRef">8.1.1. </a><a href="#name-example-2" class="section-name selfRef">Example</a>
+          </h4>
+<div class="alignLeft art-text artwork" id="section-8.1.1-1">
+<pre>
+Public Signing Key: dC4NJhNHl739aYj8rkOCJsvoC777LnnT9+eWFaU0Sgo=
+
+Fingerprint: 742e0d26134797bd
+</pre><a href="#section-8.1.1-1" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="signing">
+<section id="section-8.2">
+        <h3 id="name-signing">
+<a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-signing" class="section-name selfRef">Signing</a>
+        </h3>
+<p id="section-8.2-1">Each signed data is a construct of exactly three fields, separated by '$' (dollar) sign:<a href="#section-8.2-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-8.2-2.1">Signing algorithm tag, needed to identify the algorithm as it may change in the future. By default EdDSA Ed25519 <span>[<a href="#RFC8032" class="cite xref">RFC8032</a>]</span> is used.<a href="#section-8.2-2.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-8.2-2.2">Public key fingerprint, needed to identify the needed key to verify the signature. In Mail/HTTPS, the keys are rotated often. As such it is convenient to identify the public key needed to verify the signature.<a href="#section-8.2-2.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-8.2-2.3">Signed data, encoded using basic Base64 encoding with padding.<a href="#section-8.2-2.3" class="pilcrow">¶</a>
+</li>
+        </ul>
+<p id="section-8.2-3">The dollar sign is not used by either hex encoding used by the fingerprint, or Base64 encoding used by the signed data, and can be safely used as a separator.<a href="#section-8.2-3" class="pilcrow">¶</a></p>
+<div id="example-2">
+<section id="section-8.2.1">
+          <h4 id="name-example-3">
+<a href="#section-8.2.1" class="section-number selfRef">8.2.1. </a><a href="#name-example-3" class="section-name selfRef">Example</a>
+          </h4>
+<p id="section-8.2.1-1">In the following example, the signed data is prefixed by the algorithm (ed25519) and the public key fingerprint (98335b06f02440e9).<a href="#section-8.2.1-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-8.2.1-2">
+<pre>
+ed25519$98335b06f02440e9$pWHxd1/jCwkO5Ao5+sc+xDI01DWER2VAYBKCDEK/LgPBBwohiAcBENmy32Dhj0sqCAuME87couIue5dTF1b4AEUyg+pkRyFKisb5Pfay1CCC//JhKRiqhNHhjDijwkGN
+</pre><a href="#section-8.2.1-2" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="encryption">
+<section id="section-8.3">
+        <h3 id="name-encryption">
+<a href="#section-8.3" class="section-number selfRef">8.3. </a><a href="#name-encryption" class="section-name selfRef">Encryption</a>
+        </h3>
+<p id="section-8.3-1">ANONYMOUS_ENCRYPTION_CIPHER + FIELD_SEPARATOR + Fingerprint(publicKey[:]) + FIELD_SEPARATOR + base64.StdEncoding.EncodeToString(encryptedData)<a href="#section-8.3-1" class="pilcrow">¶</a></p>
+<p id="section-8.3-2">Both the content (message payload) and the message content meta-data of private messages is encrypted. To avoid unneccessary copies of the same data, the data is encrypted using symmetric ciphers. The random encryption key is further encrypted for each reader using each reader's own public encryption key.<a href="#section-8.3-2" class="pilcrow">¶</a></p>
+<div id="symmetric-ciphers">
+<section id="section-8.3.1">
+          <h4 id="name-symmetric-ciphers">
+<a href="#section-8.3.1" class="section-number selfRef">8.3.1. </a><a href="#name-symmetric-ciphers" class="section-name selfRef">Symmetric Ciphers</a>
+          </h4>
+<p id="section-8.3.1-1">The choice of the symmetric cipher depends on the size of the data and email client capabilities.<a href="#section-8.3.1-1" class="pilcrow">¶</a></p>
+<div id="aes256-gcm">
+<section id="section-8.3.1.1">
+            <h5 id="name-aes256-gcm">
+<a href="#section-8.3.1.1" class="section-number selfRef">8.3.1.1. </a><a href="#name-aes256-gcm" class="section-name selfRef">AES256-GCM</a>
+            </h5>
+<p id="section-8.3.1.1-1">AES suite of algorithms are very common and readily available on most platforms.<a href="#section-8.3.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-8.3.1.1-2">In Mail/HTTPS, AES256-GCM is utilized for encrypting shorter data which must fit in computer memory for encryption and decryption. As such, it is convenient for encrypting meta-data and smaller message payloads, typically less than 1 Gigabyte. It is not suitable for encrypting large files.<a href="#section-8.3.1.1-2" class="pilcrow">¶</a></p>
+<p id="section-8.3.1.1-3">When AES256-GCM is used for encrypting the content meta-data within the headers, the encrypted data is encoded using basic Base64 encoding with padding and prefixed by the 'aes256gcm' tag and trailing '$' dollar sign as a separator.<a href="#section-8.3.1.1-3" class="pilcrow">¶</a></p>
+<p id="section-8.3.1.1-4">If used for encrypting smaller message payloads, the envelope header "Message-Payload-Cipher" should hold the value "aes256gcm".<a href="#section-8.3.1.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="xchacha20poly1305">
+<section id="section-8.3.1.2">
+            <h5 id="name-xchacha20poly1305">
+<a href="#section-8.3.1.2" class="section-number selfRef">8.3.1.2. </a><a href="#name-xchacha20poly1305" class="section-name selfRef">XChaCha20Poly1305</a>
+            </h5>
+<p id="section-8.3.1.2-1">XChaCha20Poly1305 defined in <span>[<a href="#RFC8439" class="cite xref">RFC8439</a>]</span> and part of LibSodium, can be utilized for encrypting both small and large data.<a href="#section-8.3.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-8.3.1.2-2">When XChaCha20Poly1305 is used for encrypting the content meta-data within the headers, the encrypted data is encoded using basic Base64 encoding with padding and prefixed by the 'xchacha20poly1305' tag and trailing '$' dollar sign as a separator.<a href="#section-8.3.1.2-2" class="pilcrow">¶</a></p>
+<p id="section-8.3.1.2-3">If used for encrypting smaller message payloads, the envelope header "Message-Payload-Cipher" should hold the value "xchacha20poly1305".<a href="#section-8.3.1.2-3" class="pilcrow">¶</a></p>
+<p id="section-8.3.1.2-4">When the algorithm is used for encrypting larger payloads, it is used in streaming mode, in which each read constant size chunk is encrypted individually. The envelope header "Message-Payload-Cipher" should hold the algorithm identifier "xchacha20poly1305" folowed by the chunk size, separated by the dollar sign ('$'). For example 'xchacha20poly1305$4096' would mean use of the XChaCha20Poly1305 cipher with a chunk size of 4096 bytes.<a href="#section-8.3.1.2-4" class="pilcrow">¶</a></p>
+<p id="section-8.3.1.2-5">With XChaCha20Poly1305, the resulting encrypted files contain the salt (header) of 32 bytes at the begining of the file, folowed by the encrypted chunks.<a href="#section-8.3.1.2-5" class="pilcrow">¶</a></p>
+<p id="section-8.3.1.2-6">The recommended chunk sizes are between 4096 (4KB) and 131072 bytes (128 KB), but any size below 1 MB is permitted.<a href="#section-8.3.1.2-6" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="asymmetric-ciphers">
+<section id="section-8.3.2">
+          <h4 id="name-asymmetric-ciphers">
+<a href="#section-8.3.2" class="section-number selfRef">8.3.2. </a><a href="#name-asymmetric-ciphers" class="section-name selfRef">Asymmetric Ciphers</a>
+          </h4>
+<p id="section-8.3.2-1">Mail/HTTPS utilizes LibSodium library and its Anonymous box primitives based on Curve25519. XSalsa20 and Poly1305 for assymetric key encryption of small data. Using LibSodium is not a requirement and any assymetric public cryptographic cipher could be used in the future.<a href="#section-8.3.2-1" class="pilcrow">¶</a></p>
+<p id="section-8.3.2-2">Anonymous box uses readers public key and a freshly generated key pair for ecryption. The newly generated public key required for decrypting the message is embedded in the encrypted message itself. Such anonymization shifts the responsability for the message to the reader, as solely the reader's private key is able to decrypt the message.<a href="#section-8.3.2-2" class="pilcrow">¶</a></p>
+<p id="section-8.3.2-3">Anonymous box does not authenticate messages. Authenticity is instead determined through the provided signature, available only after decrypting the content meta-data.<a href="#section-8.3.2-3" class="pilcrow">¶</a></p>
+<p id="section-8.3.2-4">In Mail/HTTPS, resulting data encrypted via LibSodium boxes is in similar format to the one resulting from signing.<a href="#section-8.3.2-4" class="pilcrow">¶</a></p>
+<p id="section-8.3.2-5">Each encrypted data is a construct of exactly three fields, separated by a '$' dollar sign.<a href="#section-8.3.2-5" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-8.3.2-6.1">Encryption algorithm tag, needed to identify the algorithm as it may change in the future. By default 'curve25519xsalsa20poly1305' is used.<a href="#section-8.3.2-6.1" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-8.3.2-6.2">Public key fingerprint, used to encrypt the message and needed to identify the needed reader's key pair to decrypt the message.<a href="#section-8.3.2-6.2" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-8.3.2-6.3">The encrypted data in Base64 encoding. The data includes the anonymized public key needed for decrypting.<a href="#section-8.3.2-6.3" class="pilcrow">¶</a>
+</li>
+          </ul>
+<p id="section-8.3.2-7">The dollar sign is not used by the fingerprint nor Base64 encoding used by the signed data, and can be safely used as a separator.<a href="#section-8.3.2-7" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="message-objects">
+<section id="section-9">
+      <h2 id="name-message-objects">
+<a href="#section-9" class="section-number selfRef">9. </a><a href="#name-message-objects" class="section-name selfRef">Message Objects</a>
+      </h2>
+<p id="section-9-1">Mail/HTTPS objects are accessible through public URIs (Uniform Resource Identifiers). These URIs provide a means for locating and retrieving the Mail/HTTPS objects, ensuring they can be accessed and interacted with by readers.<a href="#section-9-1" class="pilcrow">¶</a></p>
+<p id="section-9-2">The transportation of a message object is accomplished within a single HTTPS request. A message object consists of both metadata and payload, allowing for the inclusion of relevant information about the message as well as the actual content being transmitted.<a href="#section-9-2" class="pilcrow">¶</a></p>
+<p id="section-9-3">Message objects in Mail/HTTPS can be classified as either private or public. Public message objects are accessible to everyone. They lack specified readers and are signed by the author to ensure authenticity. These messages are akin to broadcasts, openly available to anyone interested in their content.<a href="#section-9-3" class="pilcrow">¶</a></p>
+<p id="section-9-4">On the other hand, private message objects are encrypted and can only be accessed by designated readers specified by the author. This encryption ensures the confidentiality and security of the message content, restricting access to authorized readers only.<a href="#section-9-4" class="pilcrow">¶</a></p>
+<p id="section-9-5">The metadata of a Mail/HTTPS object is efficiently transferred using HTTP headers, enabling a convenient and streamlined transmission of essential information about the message. While transfer-related metadata is not encrypted, message-specific data, including the author, readers, subject, and other confidential information, may be encrypted to ensure privacy and security during transmission.<a href="#section-9-5" class="pilcrow">¶</a></p>
+<div id="message-id">
+<section id="section-9.1">
+        <h3 id="name-message-id">
+<a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-message-id" class="section-name selfRef">Message-ID</a>
+        </h3>
+<p id="section-9.1-1">SMTP-based email leaves too much freedom for choosing a message-ID.<a href="#section-9.1-1" class="pilcrow">¶</a></p>
+<p id="section-9.1-2">In Mail/HTTPS, all message-IDs are hex strings between 32 and 128 characters, containing only numbers and characters A to F. As hex strings, Message-IDs are anonymized and URL safe.<a href="#section-9.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="content">
+<section id="section-9.2">
+        <h3 id="name-content">
+<a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-content" class="section-name selfRef">Content</a>
+        </h3>
+<p id="section-9.2-1">In the Mail/HTTPS system, private messages undergo a robust encryption process to ensure confidentiality and integrity. The author's email client encrypts the messages locally using a strong, randomly generated password and a symmetric cipher.<a href="#section-9.2-1" class="pilcrow">¶</a></p>
+<p id="section-9.2-2">For secure sharing with readers, the random password is individually encrypted for each reader. This is achieved by encrypting the password with the reader's public encryption key, obtained from the reader's public profile, and a randomly generated asymmetric key-pair. The private key involved in this encryption is discarded, while the corresponding public key is included alongside the ciphertext of the encrypted message.<a href="#section-9.2-2" class="pilcrow">¶</a></p>
+<p id="section-9.2-3">In Mail/HTTPS, the responsibility for message confidentiality is effectively shifted to the intended readers. Only authorized readers possessing the respective private keys can successfully decrypt and access the private message. The message content remains private and secure throughout transmission and storage.<a href="#section-9.2-3" class="pilcrow">¶</a></p>
+<div id="encoding">
+<section id="section-9.2.1">
+          <h4 id="name-encoding">
+<a href="#section-9.2.1" class="section-number selfRef">9.2.1. </a><a href="#name-encoding" class="section-name selfRef">Encoding</a>
+          </h4>
+<p id="section-9.2.1-1">SMTP-email uses MIME for encoding messages and allowing use of character sets other than ASCII as well embedding additional content into single messages. This has made email messages unnecessarily complicated.<a href="#section-9.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-9.2.1-2">Mail/HTTPS does not encode messages beyond encryption in private context. Body of messages, if present, natively supports Unicode.<a href="#section-9.2.1-2" class="pilcrow">¶</a></p>
+<p id="section-9.2.1-3">Mail/HTTPS does not allow embedding of additional content into a single message. In line with HTTP, each message is either a text file body or a binary file. Messages that are parts of a single top message SHOULD reference that parent message by its ID.<a href="#section-9.2.1-3" class="pilcrow">¶</a></p>
+<p id="section-9.2.1-4">The user interface MAY hide this implementation detail just as MIME hides the multipart nature of messages.<a href="#section-9.2.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="size-restrictions">
+<section id="section-9.2.2">
+          <h4 id="name-size-restrictions">
+<a href="#section-9.2.2" class="section-number selfRef">9.2.2. </a><a href="#name-size-restrictions" class="section-name selfRef">Size Restrictions</a>
+          </h4>
+<p id="section-9.2.2-1">There are no message size limitations by the protocol itself. However, some absolute limit is expected and RECOMMENDED to avoid abuse. Considering the transient nature of messages on mail agents, the message size limit may be considerably high.<a href="#section-9.2.2-1" class="pilcrow">¶</a></p>
+<p id="section-9.2.2-2">Unlike in the SMTP-email, the size restrictions are imposed by author's own service, not the remote reader's infrastructure, so there is no guess work or trial and error when transfering large messages.<a href="#section-9.2.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="headers">
+<section id="section-9.3">
+        <h3 id="name-headers">
+<a href="#section-9.3" class="section-number selfRef">9.3. </a><a href="#name-headers" class="section-name selfRef">Headers</a>
+        </h3>
+<p id="section-9.3-1">HTTP headers of the message object play a critical role in providing information about the transfer, payload, and nature of messages within the Mail/HTTPS system. These headers are essential for various purposes, including determining the authenticity of messages, establishing fetching rights for readers, and understanding the overall nature of the messages being exchanged.<a href="#section-9.3-1" class="pilcrow">¶</a></p>
+<p id="section-9.3-2">Confidential metadata is encapsulated within an encrypted object. The object is encrypted using the same randomly generated password that is used for encrypting the message content and is found in the "Message-Content-Headers" HTTP header.<a href="#section-9.3-2" class="pilcrow">¶</a></p>
+<p id="section-9.3-3">Reusing the same random password for encrypting both the content and metadata ensures consistency and simplifies the encryption process. It avoids the need for separate passwords and allows for efficient decryption of both the message content and metadata using the same shared key.<a href="#section-9.3-3" class="pilcrow">¶</a></p>
+<div id="reserved-headers">
+<section id="section-9.3.1">
+          <h4 id="name-reserved-headers">
+<a href="#section-9.3.1" class="section-number selfRef">9.3.1. </a><a href="#name-reserved-headers" class="section-name selfRef">Reserved Headers</a>
+          </h4>
+<div id="envelope">
+<section id="section-9.3.1.1">
+            <h5 id="name-envelope">
+<a href="#section-9.3.1.1" class="section-number selfRef">9.3.1.1. </a><a href="#name-envelope" class="section-name selfRef">Envelope</a>
+            </h5>
+<p id="section-9.3.1.1-1">Envelope headers are directly provided as HTTP headers. In private messages, they do not reveal any information about the payload.<a href="#section-9.3.1.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-9.3.1.1-2.1">Message-Id: The unique message identifier.<a href="#section-9.3.1.1-2.1" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-9.3.1.1-2.2">Message-Stream: The public stream, tag or grouping of the message, a free-form value.<a href="#section-9.3.1.1-2.2" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-9.3.1.1-2.3">Message-Size: The content length of the message body (payload), used to indicate the size of HTTP request akin to Content-Length.<a href="#section-9.3.1.1-2.3" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-9.3.1.1-2.4">Message-Checksum: The checksum of the payload, used for determining correct message transfer.<a href="#section-9.3.1.1-2.4" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-9.3.1.1-2.5">Message-Access: List of connection identifiers, their public keys and encrypted passwords for determining access rights.<a href="#section-9.3.1.1-2.5" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-9.3.1.1-2.6">Message-Content-Headers: Encrypted content headers.<a href="#section-9.3.1.1-2.6" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-9.3.1.1-2.7">Message-Envelope-Order: Order of headers when evaluating Envelope-Checksum.<a href="#section-9.3.1.1-2.7" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-9.3.1.1-2.8">Message-Envelope-Checksum: Checksum of these envelope headers.<a href="#section-9.3.1.1-2.8" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-9.3.1.1-2.9">Message-Envelope-Checksum-Signature: Signature of the above checksum.<a href="#section-9.3.1.1-2.9" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-9.3.1.1-2.10">Message-Payload-Cipher: The cipher used to encrypt the payload.<a href="#section-9.3.1.1-2.10" class="pilcrow">¶</a>
+</li>
+            </ul>
+</section>
+</div>
+<div id="content-headers">
+<section id="section-9.3.1.2">
+            <h5 id="name-content-headers">
+<a href="#section-9.3.1.2" class="section-number selfRef">9.3.1.2. </a><a href="#name-content-headers" class="section-name selfRef">Content Headers</a>
+            </h5>
+<p id="section-9.3.1.2-1">Envelope contains encrypted content headers. Once decrypted, the content headers may be:<a href="#section-9.3.1.2-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-9.3.1.2-2.1">Id: Message identifier, MUST match the envelope ID.<a href="#section-9.3.1.2-2.1" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-9.3.1.2-2.2">Author: The address of the author.<a href="#section-9.3.1.2-2.2" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-9.3.1.2-2.3">Date: The authored-on date.<a href="#section-9.3.1.2-2.3" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-9.3.1.2-2.4">Size: The size of the raw, decrypted content.<a href="#section-9.3.1.2-2.4" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-9.3.1.2-2.5">Checksum: Checksum of the raw content.<a href="#section-9.3.1.2-2.5" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-9.3.1.2-2.6">File-Name: If the body is a file, the original filename.<a href="#section-9.3.1.2-2.6" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-9.3.1.2-2.7">File-Type: If the body is a file, the file type.<a href="#section-9.3.1.2-2.7" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-9.3.1.2-2.8">File-Modified: If the body is a file, the original modification time.<a href="#section-9.3.1.2-2.8" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-9.3.1.2-2.9">Subject: Plain text subject line for the mesage.<a href="#section-9.3.1.2-2.9" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-9.3.1.2-2.10">Subject-Id: Unique subject identifier, equal to Message-ID on new messages unless specified.<a href="#section-9.3.1.2-2.10" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-9.3.1.2-2.11">Parent-Message-Id<a href="#section-9.3.1.2-2.11" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-9.3.1.2-2.12">Category: Categorization of the message (see below)<a href="#section-9.3.1.2-2.12" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-9.3.1.2-2.13">Readers: The email addresses of the readers, used for expanding the Message-Access envelope header.<a href="#section-9.3.1.2-2.13" class="pilcrow">¶</a>
+</li>
+            </ul>
+</section>
+</div>
+</section>
+</div>
+<div id="categorization">
+<section id="section-9.3.2">
+          <h4 id="name-categorization">
+<a href="#section-9.3.2" class="section-number selfRef">9.3.2. </a><a href="#name-categorization" class="section-name selfRef">Categorization</a>
+          </h4>
+<p id="section-9.3.2-1">The conventional approach to email treats all messages as equal, resulting in overloaded inboxes and the laborious task of sorting through them. Many users end up abandoning the effort and retaining all messages, which not only consumes unnecessary storage and contributes to a larger carbon footprint but also hinders an optimized user experience. Consequently, methods such as content detection have been employed, further increasing the processing power.<a href="#section-9.3.2-1" class="pilcrow">¶</a></p>
+<p id="section-9.3.2-2">By pre-categorizing messages at the source, it becomes possible to enhance how email clients display and handle these messages. Additionally, it enables better decision-making regarding whether or not to save them in archives.<a href="#section-9.3.2-2" class="pilcrow">¶</a></p>
+<p id="section-9.3.2-3">We define standard categories for mail objects:<a href="#section-9.3.2-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-9.3.2-4.1">"personal": Messages from the private circles that are likely to be saved for future reference.<a href="#section-9.3.2-4.1" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-9.3.2-4.2">"chat": Short, off-the-recotd messages that are not to be saved.<a href="#section-9.3.2-4.2" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-9.3.2-4.3">"transitory": TOTP, one time access links etc. These messages are not be saved by default.<a href="#section-9.3.2-4.3" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-9.3.2-4.4">"notification": Information of an event occurence such as system alert, sensor information, security notification, parcel shipping status etc. These messages are not to be saved by default.<a href="#section-9.3.2-4.4" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-9.3.2-4.5">"transaction": Messages related to a private or commercial transaction,, such as order confirmation, receipt, refund etc. These messages are valuable and are saved by default.<a href="#section-9.3.2-4.5" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-9.3.2-4.6">"promotion": Messages informing of new offerings, sales events etc. These messages are not to be saved by default.<a href="#section-9.3.2-4.6" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-9.3.2-4.7">"letter": Official communication from organizations, government as well anything that would have been sent as postal mail. These messages are usually valuable and are saved by default. While the term "letter" may evoke the idea of a PDF format, it's important to clarify that in this context, the message type does not specifically refer to PDFs. Instead, it pertains to plain text messages where the content is expected to be in the form of plain text within the message body. However, it is possible to include a PDF file as an additional message of type "file," which could be associated with the "letter" message. In such cases, the PDF file would appear as an attachment or related document, similar to how attachments are typically displayed in legacy email.<a href="#section-9.3.2-4.7" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-9.3.2-4.8">"file": Messages containing a single file of any fily type. These messages are to be saved by default.<a href="#section-9.3.2-4.8" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-9.3.2-4.9">"informational": Messages that are announcements, commonly broadcast that cannot be classifed under any other categories.<a href="#section-9.3.2-4.9" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-9.3.2-4.10">"pass": Messages containing a pass, such as as airplane tickets, theater tickets, invitations etc. The messages may be referenced by other messages containing pass files such as PDF, PKPASS etc.<a href="#section-9.3.2-4.10" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-9.3.2-4.11">"funds": This category serves as a placeholder for future developments and potential inclusion of such digital currency-related messages. It anticipates the possibility of incorporating messages that involve digital currency transactions, loyalty program points, or electronic cash in the future.<a href="#section-9.3.2-4.11" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-9.3.2-4.12">"encryption-key": Special messages containing a replacement private encryption key. These messages must be authored by the reader, duly encrypted and signed with current keys, and fetched only from the user's own email agent. Email clients MUST refuse to fetch remote messages of this type.<a href="#section-9.3.2-4.12" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-9.3.2-4.13">"signing-key": Special messages containing a replacement private signing key. These messages must be authored by the reader, duly encrypted and signed with current keys, and fetched only from the user's own email agent. Email clients MUST refuse to fetch remote messages of this type.<a href="#section-9.3.2-4.13" class="pilcrow">¶</a>
+</li>
+          </ul>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="anonymized-address-book">
+<section id="section-10">
+      <h2 id="name-anonymized-address-book">
+<a href="#section-10" class="section-number selfRef">10. </a><a href="#name-anonymized-address-book" class="section-name selfRef">Anonymized Address Book</a>
+      </h2>
+<p id="section-10-1">The user's address book consists of connection identifiers and is stored on the mail agent. This address book acts as a filter for notifications, allowing only notifications from known user connections to be accepted, should the user desire such setup. The mail agent itself does not verify the notifications since it cannot determine their origin. Instead, the verification process takes place in the email client, where notifications are checked for authenticity and validity before being displayed to the user.<a href="#section-10-1" class="pilcrow">¶</a></p>
+<p id="section-10-2">The address book is queryable by existing connections, enabling contact discovery. Users can use their address book to search for and find contacts with whom they have existing connections. This feature facilitates easy communication and interaction with known contacts, making it convenient for users to stay in touch with their network of connections.<a href="#section-10-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="message-notifications">
+<section id="section-11">
+      <h2 id="name-message-notifications">
+<a href="#section-11" class="section-number selfRef">11. </a><a href="#name-message-notifications" class="section-name selfRef">Message Notifications</a>
+      </h2>
+<p id="section-11-1">When an author creates a message intended for specific readers and uploads it to own home agent, the readers SHOULD be informed of the new message's presence. This can be accomplished through two methods:<a href="#section-11-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-11-2.1">Polling: In this approach, users periodically check all their contacts' mail agents to see if there are any updates or new messages waiting for them. They poll at regular intervals, either periodically or on-demand, to stay up-to-date with incoming messages. While this method is effective and doesn't rely on the reader's infrastructure, it may lead to some delays in message delivery if polling intervals are not frequent enough. Email clients have the freedom to implement their own polling logic according to their preferences.<a href="#section-11-2.1" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-11-2.2">Author Notifications: This method involves the author directly notifying the designated readers about the presence of the new message. When the author creates a message for specific readers, the author's mail client triggers notifications to inform the readers' mail agents about the message. Using notifications is more efficient and immediate, as readers receive notifications in real-time, reducing the need for constant polling and ensuring timely message discovery. However, it depends on the availability of the readers' mail agents.<a href="#section-11-2.2" class="pilcrow">¶</a>
+</li>
+      </ul>
+<div id="notification-object">
+<section id="section-11.1">
+        <h3 id="name-notification-object">
+<a href="#section-11.1" class="section-number selfRef">11.1. </a><a href="#name-notification-object" class="section-name selfRef">Notification Object</a>
+        </h3>
+<p id="section-11.1-1">Notifications are initiated from the Mail/HTTPS client of the author and sent directly to the mail agents of the readers.<a href="#section-11.1-1" class="pilcrow">¶</a></p>
+<p id="section-11.1-2">Each notification includes the author's email address, which is encrypted using the reader's public encryption key. This encrypted address serves a dual purpose: it's used for identifying new contact requests and verifying the authenticity of the notification when  retrieved by the reader's email client.<a href="#section-11.1-2" class="pilcrow">¶</a></p>
+<p id="section-11.1-3">The notification call is publicly authenticated with the remote mail agent, requiring a signed nonce in the HTTP headers. However, this nonce is only used for verifying the signature. The mail agent itself is unable to independently confirm the authenticity of notifications because it lacks information about their origin.<a href="#section-11.1-3" class="pilcrow">¶</a></p>
+<p id="section-11.1-4">If the reader configures their setup to accept notifications exclusively from their own connection identifiers, the mail agent may decline notification requests, essentially preventing the acceptance of new contact requests.<a href="#section-11.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="authentication">
+<section id="section-12">
+      <h2 id="name-authentication">
+<a href="#section-12" class="section-number selfRef">12. </a><a href="#name-authentication" class="section-name selfRef">Authentication</a>
+      </h2>
+<p id="section-12-1">Mail/HTTPS mandates authentication for accessing mail agents, whether as an author or reader. The same authentication method can be conveniently used to both home and remote agents.<a href="#section-12-1" class="pilcrow">¶</a></p>
+<p id="section-12-2">This authentication process requires the use of HTTPS and private signing key. The Nonce header is composed of three values, a construct of exactly three fields, separated by '$' (dollar) sign:<a href="#section-12-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-12-3.1">A random nonce, generated locally in the email client. The nonce is a random string of no less than 32 ASCII characters.<a href="#section-12-3.1" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-12-3.2">Signed nonce, using user's private signing key and as described in the Signing section of this document.<a href="#section-12-3.2" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-12-3.3">The public signing key of the user making the authentication.<a href="#section-12-3.3" class="pilcrow">¶</a>
+</li>
+      </ul>
+<p id="section-12-4">Upon authentification:<a href="#section-12-4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-12-5.1">The signed nonce is included as a header within the HTTP request, along with the user's public key.<a href="#section-12-5.1" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-12-5.2">The service being authenticated checks that the provided nonce hasn't been used in the past 24 hours. It also verifies the signature of the nonce using the provided public key.<a href="#section-12-5.2" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-12-5.3">On home mail agents, the verification is performed using the public signing key from the user's profile.<a href="#section-12-5.3" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-12-5.4">On remote mail agents, pending messages list readers' signing fingerprints which must match the nonce signing key fingerprint.<a href="#section-12-5.4" class="pilcrow">¶</a>
+</li>
+      </ul>
+<p id="section-12-6">There is no need to remember any passwords, and the use of signed nonces over HTTPS offers robust protection against both man-in-the-middle and replay attacks.<a href="#section-12-6" class="pilcrow">¶</a></p>
+<div id="example-3">
+<section id="section-12.1">
+        <h3 id="name-example-4">
+<a href="#section-12.1" class="section-number selfRef">12.1. </a><a href="#name-example-4" class="section-name selfRef">Example</a>
+      </h3>
+</section>
+</div>
+</section>
+</div>
+<section id="section-13">
+      <h2 id="name-references">
+<a href="#section-13" class="section-number selfRef">13. </a><a href="#name-references" class="section-name selfRef">References</a>
+      </h2>
+<section id="section-13.1">
+        <h3 id="name-normative-references">
+<a href="#section-13.1" class="section-number selfRef">13.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
+<dl class="references">
+<dt id="RFC5322">[RFC5322]</dt>
+        <dd>
+<span class="refAuthor">Resnick, P., Ed.</span>, <span class="refTitle">"Internet Message Format"</span>, <span class="seriesInfo">RFC 5322</span>, <span class="seriesInfo">DOI 10.17487/RFC5322</span>, <time datetime="2008-10" class="refDate">October 2008</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc5322">https://www.rfc-editor.org/info/rfc5322</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC4122">[RFC4122]</dt>
+        <dd>
+<span class="refAuthor">Leach, P.</span>, <span class="refAuthor">Mealling, M.</span>, and <span class="refAuthor">R. Salz</span>, <span class="refTitle">"A Universally Unique IDentifier (UUID) URN Namespace"</span>, <span class="seriesInfo">RFC 4122</span>, <span class="seriesInfo">DOI 10.17487/RFC4122</span>, <time datetime="2005-07" class="refDate">July 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc4122">https://www.rfc-editor.org/info/rfc4122</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6234">[RFC6234]</dt>
+        <dd>
+<span class="refAuthor">Eastlake 3rd, D.</span> and <span class="refAuthor">T. Hansen</span>, <span class="refTitle">"US Secure Hash Algorithms (SHA and SHA-based HMAC and HKDF)"</span>, <span class="seriesInfo">RFC 6234</span>, <span class="seriesInfo">DOI 10.17487/RFC6234</span>, <time datetime="2011-05" class="refDate">May 2011</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc6234">https://www.rfc-editor.org/info/rfc6234</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6376">[RFC6376]</dt>
+        <dd>
+<span class="refAuthor">Crocker, D., Ed.</span>, <span class="refAuthor">Hansen, T., Ed.</span>, and <span class="refAuthor">M. Kucherawy, Ed.</span>, <span class="refTitle">"DomainKeys Identified Mail (DKIM) Signatures"</span>, <span class="seriesInfo">STD 76</span>, <span class="seriesInfo">RFC 6376</span>, <span class="seriesInfo">DOI 10.17487/RFC6376</span>, <time datetime="2011-09" class="refDate">September 2011</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc6376">https://www.rfc-editor.org/info/rfc6376</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7033">[RFC7033]</dt>
+        <dd>
+<span class="refAuthor">Jones, P.</span>, <span class="refAuthor">Salgueiro, G.</span>, <span class="refAuthor">Jones, M.</span>, and <span class="refAuthor">J. Smarr</span>, <span class="refTitle">"WebFinger"</span>, <span class="seriesInfo">RFC 7033</span>, <span class="seriesInfo">DOI 10.17487/RFC7033</span>, <time datetime="2013-09" class="refDate">September 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7033">https://www.rfc-editor.org/info/rfc7033</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC7208">[RFC7208]</dt>
+        <dd>
+<span class="refAuthor">Kitterman, S.</span>, <span class="refTitle">"Sender Policy Framework (SPF) for Authorizing Use of Domains in Email, Version 1"</span>, <span class="seriesInfo">RFC 7208</span>, <span class="seriesInfo">DOI 10.17487/RFC7208</span>, <time datetime="2014-04" class="refDate">April 2014</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc7208">https://www.rfc-editor.org/info/rfc7208</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8032">[RFC8032]</dt>
+        <dd>
+<span class="refAuthor">Josefsson, S.</span> and <span class="refAuthor">I. Liusvaara</span>, <span class="refTitle">"Edwards-Curve Digital Signature Algorithm (EdDSA)"</span>, <span class="seriesInfo">RFC 8032</span>, <span class="seriesInfo">DOI 10.17487/RFC8032</span>, <time datetime="2017-01" class="refDate">January 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8032">https://www.rfc-editor.org/info/rfc8032</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8439">[RFC8439]</dt>
+        <dd>
+<span class="refAuthor">Nir, Y.</span> and <span class="refAuthor">A. Langley</span>, <span class="refTitle">"ChaCha20 and Poly1305 for IETF Protocols"</span>, <span class="seriesInfo">RFC 8439</span>, <span class="seriesInfo">DOI 10.17487/RFC8439</span>, <time datetime="2018-06" class="refDate">June 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8439">https://www.rfc-editor.org/info/rfc8439</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8615">[RFC8615]</dt>
+        <dd>
+<span class="refAuthor">Nottingham, M.</span>, <span class="refTitle">"Well-Known Uniform Resource Identifiers (URIs)"</span>, <span class="seriesInfo">RFC 8615</span>, <span class="seriesInfo">DOI 10.17487/RFC8615</span>, <time datetime="2019-05" class="refDate">May 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8615">https://www.rfc-editor.org/info/rfc8615</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9110">[RFC9110]</dt>
+      <dd>
+<span class="refAuthor">Fielding, R., Ed.</span>, <span class="refAuthor">Nottingham, M., Ed.</span>, and <span class="refAuthor">J. Reschke, Ed.</span>, <span class="refTitle">"HTTP Semantics"</span>, <span class="seriesInfo">STD 97</span>, <span class="seriesInfo">RFC 9110</span>, <span class="seriesInfo">DOI 10.17487/RFC9110</span>, <time datetime="2022-06" class="refDate">June 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc9110">https://www.rfc-editor.org/info/rfc9110</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+<section id="section-13.2">
+        <h3 id="name-informative-references">
+<a href="#section-13.2" class="section-number selfRef">13.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="RFC2119">[RFC2119]</dt>
+        <dd>
+<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC5234">[RFC5234]</dt>
+      <dd>
+<span class="refAuthor">Crocker, D., Ed.</span> and <span class="refAuthor">P. Overell</span>, <span class="refTitle">"Augmented BNF for Syntax Specifications: ABNF"</span>, <span class="seriesInfo">STD 68</span>, <span class="seriesInfo">RFC 5234</span>, <span class="seriesInfo">DOI 10.17487/RFC5234</span>, <time datetime="2008-01" class="refDate">January 2008</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc5234">https://www.rfc-editor.org/info/rfc5234</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</section>
+<div id="authors-addresses">
+<section id="appendix-A">
+      <h2 id="name-authors-address">
+<a href="#name-authors-address" class="section-name selfRef">Author's Address</a>
+      </h2>
+<address class="vcard">
+        <div dir="auto" class="left"><span class="fn nameRole">Dejan Strbac</span></div>
+<div dir="auto" class="left"><span class="org">Mercata SagL</span></div>
+<div dir="auto" class="left"><span class="street-address">via E. Bosia 5c.</span></div>
+<div dir="auto" class="left">CH-<span class="postal-code">6900</span> <span class="locality">Paradiso</span>
+</div>
+<div dir="auto" class="left"><span class="country-name">Switzerland</span></div>
+<div class="tel">
+<span>Phone:</span>
+<a href="tel:+41-78-6144568" class="tel">+41-78-6144568</a>
+</div>
+<div class="email">
+<span>Email:</span>
+<a href="mailto:dejan@mercata.com" class="email">dejan@mercata.com</a>
+</div>
+</address>
+</section>
+</div>
+<script>const toc = document.getElementById("toc");
+toc.querySelector("h2").addEventListener("click", e => {
+  toc.classList.toggle("active");
+});
+toc.querySelector("nav").addEventListener("click", e => {
+  toc.classList.remove("active");
+});
+</script>
+</body>
+</html>
