@@ -1924,8 +1924,7 @@ ed25519$98335b06f02440e9$pWHxd1/jCwkO5Ao5+sc+xDI01DWER2VAYBKCDEK/LgPBBwohiAcBENm
         <h3 id="name-encryption">
 <a href="#section-8.3" class="section-number selfRef">8.3. </a><a href="#name-encryption" class="section-name selfRef">Encryption</a>
         </h3>
-<p id="section-8.3-1">ANONYMOUS_ENCRYPTION_CIPHER + FIELD_SEPARATOR + Fingerprint(publicKey[:]) + FIELD_SEPARATOR + base64.StdEncoding.EncodeToString(encryptedData)<a href="#section-8.3-1" class="pilcrow">¶</a></p>
-<p id="section-8.3-2">Both the content (message payload) and the message content meta-data of private messages is encrypted. To avoid unneccessary copies of the same data, the data is encrypted using symmetric ciphers. The random encryption key is further encrypted for each reader using each reader's own public encryption key.<a href="#section-8.3-2" class="pilcrow">¶</a></p>
+<p id="section-8.3-1">Both the content (message payload) and the message content meta-data of private messages is encrypted. To avoid unneccessary copies of the same data, the data is encrypted using symmetric ciphers. The random encryption key is further encrypted for each reader using each reader's own public encryption key.<a href="#section-8.3-1" class="pilcrow">¶</a></p>
 <div id="symmetric-ciphers">
 <section id="section-8.3.1">
           <h4 id="name-symmetric-ciphers">
@@ -1973,10 +1972,10 @@ ed25519$98335b06f02440e9$pWHxd1/jCwkO5Ao5+sc+xDI01DWER2VAYBKCDEK/LgPBBwohiAcBENm
 </li>
             <li class="normal" id="section-8.3.2-6.2">Public key fingerprint, used to encrypt the message and needed to identify the needed reader's key pair to decrypt the message.<a href="#section-8.3.2-6.2" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-8.3.2-6.3">The encrypted data in Base64 encoding. The data includes the anonymized public key needed for decrypting.<a href="#section-8.3.2-6.3" class="pilcrow">¶</a>
+            <li class="normal" id="section-8.3.2-6.3">The encrypted data in Base64 encoding. The data includes already the anonymized public key needed for decrypting, conveniently embedded by the anonumous box cipher.<a href="#section-8.3.2-6.3" class="pilcrow">¶</a>
 </li>
           </ul>
-<p id="section-8.3.2-7">The dollar sign is not used by the fingerprint nor Base64 encoding used by the signed data, and can be safely used as a separator.<a href="#section-8.3.2-7" class="pilcrow">¶</a></p>
+<p id="section-8.3.2-7">The dollar sign is not used by the fingerprint nor Base64 encoding used by the encrypted data, and can be safely used as a separator.<a href="#section-8.3.2-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1999,7 +1998,7 @@ ed25519$98335b06f02440e9$pWHxd1/jCwkO5Ao5+sc+xDI01DWER2VAYBKCDEK/LgPBBwohiAcBENm
 <a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-message-id" class="section-name selfRef">Message-ID</a>
         </h3>
 <p id="section-9.1-1">SMTP-based email leaves too much freedom for choosing a message-ID.<a href="#section-9.1-1" class="pilcrow">¶</a></p>
-<p id="section-9.1-2">In Mail/HTTPS, all message-IDs are hex strings between 32 and 128 characters, containing only numbers and characters A to F. As hex strings, Message-IDs are anonymized and URL safe.<a href="#section-9.1-2" class="pilcrow">¶</a></p>
+<p id="section-9.1-2">In Mail/HTTPS, all message-IDs are hex strings between 32 and 128 characters, containing only numbers and characters A to F. As hex strings, Message-IDs are case insensitive, anonymized and URL safe.<a href="#section-9.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="content">
