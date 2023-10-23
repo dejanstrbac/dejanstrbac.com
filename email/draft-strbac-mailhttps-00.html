@@ -1558,14 +1558,15 @@ li > p:last-of-type:only-child {
           <li class="normal" id="section-2.3-3.3">Upon successful upload, if the message has a finite number of readers, author's email client notifies directly the mail agents of the readers of the presence of a new message.<a href="#section-2.3-3.3" class="pilcrow">¶</a>
 </li>
         </ul>
-<p id="section-2.3-4">On reader's side:
-  * Readers' email clients periodically poll all contacts' home agents directly for broadcast updates.<a href="#section-2.3-4" class="pilcrow">¶</a></p>
+<p id="section-2.3-4">On reader's side:<a href="#section-2.3-4" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-2.3-5.1">Readers' email clients occasionally check own home agents for notifications. Once client fetches the notification from the message author, it verifies their authenticity locally.<a href="#section-2.3-5.1" class="pilcrow">¶</a>
+<li class="normal" id="section-2.3-5.1">Readers' email clients periodically poll all contacts' home agents directly for broadcast updates.<a href="#section-2.3-5.1" class="pilcrow">¶</a>
 </li>
-          <li class="normal" id="section-2.3-5.2">Upon successful notification verification, the reader makes a list request of private messages to the author's home agent resulting in message URLs. Reader's email client verifies and retrieves (downloads) the provided resources to local storage.<a href="#section-2.3-5.2" class="pilcrow">¶</a>
+          <li class="normal" id="section-2.3-5.2">Readers' email clients occasionally check own home agents for notifications. Once client fetches the notification from the message author, it verifies their authenticity locally.<a href="#section-2.3-5.2" class="pilcrow">¶</a>
 </li>
-          <li class="normal" id="section-2.3-5.3">Once private messages are local, they are decrypted and presented.<a href="#section-2.3-5.3" class="pilcrow">¶</a>
+          <li class="normal" id="section-2.3-5.3">Upon successful notification verification, the reader makes a list request of private messages to the author's home agent resulting in message URLs. Reader's email client verifies and retrieves (downloads) the provided resources to local storage.<a href="#section-2.3-5.3" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-2.3-5.4">Once private messages are local, they are decrypted and presented.<a href="#section-2.3-5.4" class="pilcrow">¶</a>
 </li>
         </ul>
 <p id="section-2.3-6">The process scales up for any number of recipients and supports broadcast, where readers periodically poll for author updates.<a href="#section-2.3-6" class="pilcrow">¶</a></p>
