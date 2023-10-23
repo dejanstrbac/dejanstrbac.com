@@ -10,7 +10,7 @@
        We propose a pull-based messaging scheme leveraging the HTTP protocol over TLS (HTTPS) for universal message transfer. The primary objective of this new messaging overlay is to tackle the challenges encountered in messaging based on the SMTP protocol, including concerns related to security, authenticity, spam, privacy, size limitations and message lifecycle. Moreover, Mail/HTTPS is to make delivery, operation and maintenance of messaging systems no more complex than that of personal web sites. 
     " name="description">
 <meta content="xml2rfc 3.17.4" name="generator">
-<meta content="draft-strbac-totp2-00.txt" name="ietf.draft">
+<meta content="draft-strbac-mailhttps-00.txt" name="ietf.draft">
 <!-- Generator version information:
   xml2rfc 3.17.4
     Python 3.11.4
@@ -1215,7 +1215,7 @@ li > p:last-of-type:only-child {
 <dt class="label-workgroup">Workgroup:</dt>
 <dd class="workgroup">Network Working Group</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
-<dd class="internet-draft">draft-strbac-totp2-00.txt</dd>
+<dd class="internet-draft">draft-strbac-mailhttps-00.txt</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
 <time datetime="2023-10-23" class="published">23 October 2023</time>
@@ -1407,30 +1407,33 @@ li > p:last-of-type:only-child {
             <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-message-objects" class="internal xref">Message Objects</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.1">
-                <p id="section-toc.1-1.9.2.1.1"><a href="#section-9.1" class="auto internal xref">9.1</a>.  <a href="#name-message-id" class="internal xref">Message-ID</a></p>
+                <p id="section-toc.1-1.9.2.1.1"><a href="#section-9.1" class="auto internal xref">9.1</a>.  <a href="#name-message-lifetime" class="internal xref">Message Lifetime</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2">
-                <p id="section-toc.1-1.9.2.2.1"><a href="#section-9.2" class="auto internal xref">9.2</a>.  <a href="#name-content" class="internal xref">Content</a></p>
+                <p id="section-toc.1-1.9.2.2.1"><a href="#section-9.2" class="auto internal xref">9.2</a>.  <a href="#name-message-id" class="internal xref">Message-ID</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.3">
+                <p id="section-toc.1-1.9.2.3.1"><a href="#section-9.3" class="auto internal xref">9.3</a>.  <a href="#name-content" class="internal xref">Content</a></p>
 <ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2.2.1">
-                    <p id="section-toc.1-1.9.2.2.2.1.1"><a href="#section-9.2.1" class="auto internal xref">9.2.1</a>.  <a href="#name-encoding" class="internal xref">Encoding</a></p>
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.3.2.1">
+                    <p id="section-toc.1-1.9.2.3.2.1.1"><a href="#section-9.3.1" class="auto internal xref">9.3.1</a>.  <a href="#name-encoding" class="internal xref">Encoding</a></p>
 </li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2.2.2">
-                    <p id="section-toc.1-1.9.2.2.2.2.1"><a href="#section-9.2.2" class="auto internal xref">9.2.2</a>.  <a href="#name-html" class="internal xref">HTML</a></p>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.3.2.2">
+                    <p id="section-toc.1-1.9.2.3.2.2.1"><a href="#section-9.3.2" class="auto internal xref">9.3.2</a>.  <a href="#name-html" class="internal xref">HTML</a></p>
 </li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.2.2.3">
-                    <p id="section-toc.1-1.9.2.2.2.3.1"><a href="#section-9.2.3" class="auto internal xref">9.2.3</a>.  <a href="#name-size-restrictions" class="internal xref">Size Restrictions</a></p>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.3.2.3">
+                    <p id="section-toc.1-1.9.2.3.2.3.1"><a href="#section-9.3.3" class="auto internal xref">9.3.3</a>.  <a href="#name-size-restrictions" class="internal xref">Size Restrictions</a></p>
 </li>
                 </ul>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.3">
-                <p id="section-toc.1-1.9.2.3.1"><a href="#section-9.3" class="auto internal xref">9.3</a>.  <a href="#name-headers" class="internal xref">Headers</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.4">
+                <p id="section-toc.1-1.9.2.4.1"><a href="#section-9.4" class="auto internal xref">9.4</a>.  <a href="#name-headers" class="internal xref">Headers</a></p>
 <ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.3.2.1">
-                    <p id="section-toc.1-1.9.2.3.2.1.1"><a href="#section-9.3.1" class="auto internal xref">9.3.1</a>.  <a href="#name-reserved-headers" class="internal xref">Reserved Headers</a></p>
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.4.2.1">
+                    <p id="section-toc.1-1.9.2.4.2.1.1"><a href="#section-9.4.1" class="auto internal xref">9.4.1</a>.  <a href="#name-reserved-headers" class="internal xref">Reserved Headers</a></p>
 </li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.3.2.2">
-                    <p id="section-toc.1-1.9.2.3.2.2.1"><a href="#section-9.3.2" class="auto internal xref">9.3.2</a>.  <a href="#name-categorization" class="internal xref">Categorization</a></p>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9.2.4.2.2">
+                    <p id="section-toc.1-1.9.2.4.2.2.1"><a href="#section-9.4.2" class="auto internal xref">9.4.2</a>.  <a href="#name-categorization" class="internal xref">Categorization</a></p>
 </li>
                 </ul>
 </li>
@@ -1445,47 +1448,78 @@ li > p:last-of-type:only-child {
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1">
                 <p id="section-toc.1-1.11.2.1.1"><a href="#section-11.1" class="auto internal xref">11.1</a>.  <a href="#name-notification-object" class="internal xref">Notification Object</a></p>
 </li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.2">
+                <p id="section-toc.1-1.11.2.2.1"><a href="#section-11.2" class="auto internal xref">11.2</a>.  <a href="#name-pinned-messages" class="internal xref">Pinned Messages</a></p>
+</li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
-            <p id="section-toc.1-1.12.1"><a href="#section-12" class="auto internal xref">12</a>. <a href="#name-authentication" class="internal xref">Authentication</a></p>
+            <p id="section-toc.1-1.12.1"><a href="#section-12" class="auto internal xref">12</a>. <a href="#name-public-mail-agent-api" class="internal xref">Public Mail Agent API</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.1">
-                <p id="section-toc.1-1.12.2.1.1"><a href="#section-12.1" class="auto internal xref">12.1</a>.  <a href="#name-sotn-authenticating-scheme" class="internal xref">SOTN Authenticating Scheme</a></p>
+                <p id="section-toc.1-1.12.2.1.1"><a href="#section-12.1" class="auto internal xref">12.1</a>.  <a href="#name-profile" class="internal xref">Profile</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.1.2.1">
+                    <p id="section-toc.1-1.12.2.1.2.1.1"><a href="#section-12.1.1" class="auto internal xref">12.1.1</a>.  <a href="#name-notifications" class="internal xref">Notifications</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.2">
-                <p id="section-toc.1-1.12.2.2.1"><a href="#section-12.2" class="auto internal xref">12.2</a>.  <a href="#name-example-4" class="internal xref">Example</a></p>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.1.2.2">
+                    <p id="section-toc.1-1.12.2.1.2.2.1"><a href="#section-12.1.2" class="auto internal xref">12.1.2</a>.  <a href="#name-messages" class="internal xref">Messages</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.1.2.3">
+                    <p id="section-toc.1-1.12.2.1.2.3.1"><a href="#section-12.1.3" class="auto internal xref">12.1.3</a>.  <a href="#name-contacts" class="internal xref">Contacts</a></p>
+</li>
+                </ul>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
-            <p id="section-toc.1-1.13.1"><a href="#section-13" class="auto internal xref">13</a>. <a href="#name-key-rotations" class="internal xref">Key Rotations</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14">
-            <p id="section-toc.1-1.14.1"><a href="#section-14" class="auto internal xref">14</a>. <a href="#name-contact-exchange-and-discov" class="internal xref">Contact Exchange and Discovery</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15">
-            <p id="section-toc.1-1.15.1"><a href="#section-15" class="auto internal xref">15</a>. <a href="#name-derived-usage" class="internal xref">Derived Usage</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.16">
-            <p id="section-toc.1-1.16.1"><a href="#section-16" class="auto internal xref">16</a>. <a href="#name-usability-considerations" class="internal xref">Usability Considerations</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.17">
-            <p id="section-toc.1-1.17.1"><a href="#section-17" class="auto internal xref">17</a>. <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.18">
-            <p id="section-toc.1-1.18.1"><a href="#section-18" class="auto internal xref">18</a>. <a href="#name-references" class="internal xref">References</a></p>
+            <p id="section-toc.1-1.13.1"><a href="#section-13" class="auto internal xref">13</a>. <a href="#name-authentication" class="internal xref">Authentication</a></p>
 <ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.18.2.1">
-                <p id="section-toc.1-1.18.2.1.1"><a href="#section-18.1" class="auto internal xref">18.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13.2.1">
+                <p id="section-toc.1-1.13.2.1.1"><a href="#section-13.1" class="auto internal xref">13.1</a>.  <a href="#name-sotn-authenticating-scheme" class="internal xref">SOTN Authenticating Scheme</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.18.2.2">
-                <p id="section-toc.1-1.18.2.2.1"><a href="#section-18.2" class="auto internal xref">18.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13.2.2">
+                <p id="section-toc.1-1.13.2.2.1"><a href="#section-13.2" class="auto internal xref">13.2</a>.  <a href="#name-example-4" class="internal xref">Example</a></p>
 </li>
             </ul>
 </li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14">
+            <p id="section-toc.1-1.14.1"><a href="#section-14" class="auto internal xref">14</a>. <a href="#name-key-rotations" class="internal xref">Key Rotations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15">
+            <p id="section-toc.1-1.15.1"><a href="#section-15" class="auto internal xref">15</a>. <a href="#name-contact-exchange-and-discov" class="internal xref">Contact Exchange and Discovery</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.16">
+            <p id="section-toc.1-1.16.1"><a href="#section-16" class="auto internal xref">16</a>. <a href="#name-broadcast-usage" class="internal xref">Broadcast usage</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.17">
+            <p id="section-toc.1-1.17.1"><a href="#section-17" class="auto internal xref">17</a>. <a href="#name-derived-usage" class="internal xref">Derived Usage</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.18">
+            <p id="section-toc.1-1.18.1"><a href="#section-18" class="auto internal xref">18</a>. <a href="#name-enterprise-use" class="internal xref">Enterprise use</a></p>
+</li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.19">
-            <p id="section-toc.1-1.19.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
+            <p id="section-toc.1-1.19.1"><a href="#section-19" class="auto internal xref">19</a>. <a href="#name-usability-considerations" class="internal xref">Usability Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.20">
+            <p id="section-toc.1-1.20.1"><a href="#section-20" class="auto internal xref">20</a>. <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.21">
+            <p id="section-toc.1-1.21.1"><a href="#section-21" class="auto internal xref">21</a>. <a href="#name-newsletters-marketing-consi" class="internal xref">Newsletters &amp; Marketing Considerations</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.22">
+            <p id="section-toc.1-1.22.1"><a href="#section-22" class="auto internal xref">22</a>. <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.22.2.1">
+                <p id="section-toc.1-1.22.2.1.1"><a href="#section-22.1" class="auto internal xref">22.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.22.2.2">
+                <p id="section-toc.1-1.22.2.2.1"><a href="#section-22.2" class="auto internal xref">22.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.23">
+            <p id="section-toc.1-1.23.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
 </li>
         </ul>
 </nav>
@@ -2058,128 +2092,138 @@ ed25519$98335b06f02440e9$pWHxd1/jCwkO5Ao5+sc+xDI01DWER2VAYBKCDEK/LgPBBwohiAcBENm
 <p id="section-9-3">Message objects in Mail/HTTPS can be classified as either private or public. Public message objects are accessible to everyone. They lack specified readers and are signed by the author to ensure authenticity. These messages are akin to broadcasts, openly available to anyone interested in their content.<a href="#section-9-3" class="pilcrow">¶</a></p>
 <p id="section-9-4">On the other hand, private message objects are encrypted and can only be accessed by designated readers specified by the author. This encryption ensures the confidentiality and security of the message content, restricting access to authorized readers only.<a href="#section-9-4" class="pilcrow">¶</a></p>
 <p id="section-9-5">The metadata of a Mail/HTTPS object is efficiently transferred using HTTP headers, enabling a convenient and streamlined transmission of essential information about the message. While transfer-related metadata is not encrypted, message-specific data, including the author, readers, subject, and other confidential information, may be encrypted to ensure privacy and security during transmission.<a href="#section-9-5" class="pilcrow">¶</a></p>
-<div id="message-id">
+<div id="message-lifetime">
 <section id="section-9.1">
-        <h3 id="name-message-id">
-<a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-message-id" class="section-name selfRef">Message-ID</a>
+        <h3 id="name-message-lifetime">
+<a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-message-lifetime" class="section-name selfRef">Message Lifetime</a>
         </h3>
-<p id="section-9.1-1">SMTP-based email leaves too much freedom for choosing a message-ID.<a href="#section-9.1-1" class="pilcrow">¶</a></p>
-<p id="section-9.1-2">In Mail/HTTPS, all message-IDs are hex strings between 32 and 128 characters, containing only numbers and characters A to F. As hex strings, Message-IDs are case insensitive, anonymized and URL safe.<a href="#section-9.1-2" class="pilcrow">¶</a></p>
+<p id="section-9.1-1">Each Mail/HTTPS message has a fixed duration of exactly 7 days (168 hours) from the time of the upload.<a href="#section-9.1-1" class="pilcrow">¶</a></p>
+<p id="section-9.1-2">Should the reader be unable to retrieve the message within the 7 days, the message<a href="#section-9.1-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="message-id">
+<section id="section-9.2">
+        <h3 id="name-message-id">
+<a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-message-id" class="section-name selfRef">Message-ID</a>
+        </h3>
+<p id="section-9.2-1">SMTP-based email leaves too much freedom for choosing a message-ID.<a href="#section-9.2-1" class="pilcrow">¶</a></p>
+<p id="section-9.2-2">In Mail/HTTPS, all message-IDs are hex strings between 32 and 128 characters, containing only numbers and characters A to F. As hex strings, Message-IDs are case insensitive, anonymized and URL safe.<a href="#section-9.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="content">
-<section id="section-9.2">
+<section id="section-9.3">
         <h3 id="name-content">
-<a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-content" class="section-name selfRef">Content</a>
+<a href="#section-9.3" class="section-number selfRef">9.3. </a><a href="#name-content" class="section-name selfRef">Content</a>
         </h3>
-<p id="section-9.2-1">In the Mail/HTTPS system, private messages undergo a robust encryption process to ensure confidentiality and integrity. The author's email client encrypts the messages locally using a strong, randomly generated password and a symmetric cipher.<a href="#section-9.2-1" class="pilcrow">¶</a></p>
-<p id="section-9.2-2">For secure sharing with readers, the random password is individually encrypted for each reader. This is achieved by encrypting the password with the reader's public encryption key, obtained from the reader's public profile, and a randomly generated asymmetric key-pair. The private key involved in this encryption is discarded, while the corresponding public key is included alongside the ciphertext of the encrypted message.<a href="#section-9.2-2" class="pilcrow">¶</a></p>
-<p id="section-9.2-3">In Mail/HTTPS, the responsibility for message confidentiality is effectively shifted to the intended readers. Only authorized readers possessing the respective private keys can successfully decrypt and access the private message. The message content remains private and secure throughout transmission and storage.<a href="#section-9.2-3" class="pilcrow">¶</a></p>
+<p id="section-9.3-1">In the Mail/HTTPS system, private messages undergo a robust encryption process to ensure confidentiality and integrity. The author's email client encrypts the messages locally using a strong, randomly generated password and a symmetric cipher.<a href="#section-9.3-1" class="pilcrow">¶</a></p>
+<p id="section-9.3-2">For secure sharing with readers, the random password is individually encrypted for each reader. This is achieved by encrypting the password with the reader's public encryption key, obtained from the reader's public profile, and a randomly generated asymmetric key-pair. The private key involved in this encryption is discarded, while the corresponding public key is included alongside the ciphertext of the encrypted message.<a href="#section-9.3-2" class="pilcrow">¶</a></p>
+<p id="section-9.3-3">In Mail/HTTPS, the responsibility for message confidentiality is effectively shifted to the intended readers. Only authorized readers possessing the respective private keys can successfully decrypt and access the private message. The message content remains private and secure throughout transmission and storage.<a href="#section-9.3-3" class="pilcrow">¶</a></p>
 <div id="encoding">
-<section id="section-9.2.1">
+<section id="section-9.3.1">
           <h4 id="name-encoding">
-<a href="#section-9.2.1" class="section-number selfRef">9.2.1. </a><a href="#name-encoding" class="section-name selfRef">Encoding</a>
+<a href="#section-9.3.1" class="section-number selfRef">9.3.1. </a><a href="#name-encoding" class="section-name selfRef">Encoding</a>
           </h4>
-<p id="section-9.2.1-1">SMTP-email uses MIME for encoding messages and allowing use of character sets other than ASCII as well embedding additional content into single messages. This has made email messages unnecessarily complicated.<a href="#section-9.2.1-1" class="pilcrow">¶</a></p>
-<p id="section-9.2.1-2">Mail/HTTPS does not encode messages beyond encryption in private context. Body of messages, if present, natively supports Unicode.<a href="#section-9.2.1-2" class="pilcrow">¶</a></p>
-<p id="section-9.2.1-3">Mail/HTTPS does not allow embedding of additional content into a single message. In line with HTTP, each message is either a text file body or a binary file. Messages that are parts of a single top message SHOULD reference that parent message by its ID.<a href="#section-9.2.1-3" class="pilcrow">¶</a></p>
-<p id="section-9.2.1-4">The user interface MAY hide this implementation detail just as MIME hides the multipart nature of messages.<a href="#section-9.2.1-4" class="pilcrow">¶</a></p>
+<p id="section-9.3.1-1">SMTP-email uses MIME for encoding messages and allowing use of character sets other than ASCII as well embedding additional content into single messages. This has made email messages unnecessarily complicated.<a href="#section-9.3.1-1" class="pilcrow">¶</a></p>
+<p id="section-9.3.1-2">Mail/HTTPS does not encode messages beyond encryption in private context. Body of messages, if present, natively supports Unicode.<a href="#section-9.3.1-2" class="pilcrow">¶</a></p>
+<p id="section-9.3.1-3">Mail/HTTPS does not allow embedding of additional content into a single message. In line with HTTP, each message is either a text file body or a binary file. Messages that are parts of a single top message SHOULD reference that parent message by its ID.<a href="#section-9.3.1-3" class="pilcrow">¶</a></p>
+<p id="section-9.3.1-4">The user interface MAY hide this implementation detail just as MIME hides the multipart nature of messages.<a href="#section-9.3.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="html">
-<section id="section-9.2.2">
+<section id="section-9.3.2">
           <h4 id="name-html">
-<a href="#section-9.2.2" class="section-number selfRef">9.2.2. </a><a href="#name-html" class="section-name selfRef">HTML</a>
+<a href="#section-9.3.2" class="section-number selfRef">9.3.2. </a><a href="#name-html" class="section-name selfRef">HTML</a>
           </h4>
-<p id="section-9.2.2-1">No HTML, basic encoding<a href="#section-9.2.2-1" class="pilcrow">¶</a></p>
+<p id="section-9.3.2-1">No HTML, basic formatting<a href="#section-9.3.2-1" class="pilcrow">¶</a></p>
+<p id="section-9.3.2-2">todo<a href="#section-9.3.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="size-restrictions">
-<section id="section-9.2.3">
+<section id="section-9.3.3">
           <h4 id="name-size-restrictions">
-<a href="#section-9.2.3" class="section-number selfRef">9.2.3. </a><a href="#name-size-restrictions" class="section-name selfRef">Size Restrictions</a>
+<a href="#section-9.3.3" class="section-number selfRef">9.3.3. </a><a href="#name-size-restrictions" class="section-name selfRef">Size Restrictions</a>
           </h4>
-<p id="section-9.2.3-1">There are no message size limitations by the protocol itself. However, some absolute limit is expected and RECOMMENDED to avoid abuse. Considering the transient nature of messages on mail agents, the message size limit may be considerably high.<a href="#section-9.2.3-1" class="pilcrow">¶</a></p>
-<p id="section-9.2.3-2">Unlike in the SMTP-email, the size restrictions are imposed by author's own service, not the remote reader's infrastructure, so there is no guess work or trial and error when transfering large messages.<a href="#section-9.2.3-2" class="pilcrow">¶</a></p>
+<p id="section-9.3.3-1">There are no message size limitations by the protocol itself. However, some absolute limit is expected and RECOMMENDED to avoid abuse. Considering the transient nature of messages on mail agents, the message size limit may be considerably high.<a href="#section-9.3.3-1" class="pilcrow">¶</a></p>
+<p id="section-9.3.3-2">Unlike in the SMTP-email, the size restrictions are imposed by author's own service, not the remote reader's infrastructure, so there is no guess work or trial and error when transfering large messages.<a href="#section-9.3.3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
 </div>
 <div id="headers">
-<section id="section-9.3">
+<section id="section-9.4">
         <h3 id="name-headers">
-<a href="#section-9.3" class="section-number selfRef">9.3. </a><a href="#name-headers" class="section-name selfRef">Headers</a>
+<a href="#section-9.4" class="section-number selfRef">9.4. </a><a href="#name-headers" class="section-name selfRef">Headers</a>
         </h3>
-<p id="section-9.3-1">HTTP headers of the message object play a critical role in providing information about the transfer, payload, and nature of messages within the Mail/HTTPS system. These headers are essential for various purposes, including determining the authenticity of messages, establishing fetching rights for readers, and understanding the overall nature of the messages being exchanged.<a href="#section-9.3-1" class="pilcrow">¶</a></p>
-<p id="section-9.3-2">Confidential metadata is encapsulated within an encrypted object. The object is encrypted using the same randomly generated password that is used for encrypting the message content and is found in the "Message-Content-Headers" HTTP header.<a href="#section-9.3-2" class="pilcrow">¶</a></p>
-<p id="section-9.3-3">Reusing the same random password for encrypting both the content and metadata ensures consistency and simplifies the encryption process. It avoids the need for separate passwords and allows for efficient decryption of both the message content and metadata using the same shared key.<a href="#section-9.3-3" class="pilcrow">¶</a></p>
+<p id="section-9.4-1">HTTP headers of the message object play a critical role in providing information about the transfer, payload, and nature of messages within the Mail/HTTPS system. These headers are essential for various purposes, including determining the authenticity of messages, establishing fetching rights for readers, and understanding the overall nature of the messages being exchanged.<a href="#section-9.4-1" class="pilcrow">¶</a></p>
+<p id="section-9.4-2">Confidential metadata is encapsulated within an encrypted object. The object is encrypted using the same randomly generated password that is used for encrypting the message content and is found in the "Message-Content-Headers" HTTP header.<a href="#section-9.4-2" class="pilcrow">¶</a></p>
+<p id="section-9.4-3">Reusing the same random password for encrypting both the content and metadata ensures consistency and simplifies the encryption process. It avoids the need for separate passwords and allows for efficient decryption of both the message content and metadata using the same shared key.<a href="#section-9.4-3" class="pilcrow">¶</a></p>
 <div id="reserved-headers">
-<section id="section-9.3.1">
+<section id="section-9.4.1">
           <h4 id="name-reserved-headers">
-<a href="#section-9.3.1" class="section-number selfRef">9.3.1. </a><a href="#name-reserved-headers" class="section-name selfRef">Reserved Headers</a>
+<a href="#section-9.4.1" class="section-number selfRef">9.4.1. </a><a href="#name-reserved-headers" class="section-name selfRef">Reserved Headers</a>
           </h4>
 <div id="envelope">
-<section id="section-9.3.1.1">
+<section id="section-9.4.1.1">
             <h5 id="name-envelope">
-<a href="#section-9.3.1.1" class="section-number selfRef">9.3.1.1. </a><a href="#name-envelope" class="section-name selfRef">Envelope</a>
+<a href="#section-9.4.1.1" class="section-number selfRef">9.4.1.1. </a><a href="#name-envelope" class="section-name selfRef">Envelope</a>
             </h5>
-<p id="section-9.3.1.1-1">Envelope headers are directly provided as HTTP headers. In private messages, they do not reveal any information about the payload.<a href="#section-9.3.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-9.4.1.1-1">Envelope headers are directly provided as HTTP headers. In private messages, they do not reveal any information about the payload.<a href="#section-9.4.1.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-9.3.1.1-2.1">Message-Id: The unique message identifier.<a href="#section-9.3.1.1-2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-9.4.1.1-2.1">Message-Id: The unique message identifier.<a href="#section-9.4.1.1-2.1" class="pilcrow">¶</a>
 </li>
-              <li class="normal" id="section-9.3.1.1-2.2">Message-Stream: The public stream, tag or grouping of the message, a free-form value.<a href="#section-9.3.1.1-2.2" class="pilcrow">¶</a>
+              <li class="normal" id="section-9.4.1.1-2.2">Message-Stream: The public stream, tag or grouping of the message, a free-form value.<a href="#section-9.4.1.1-2.2" class="pilcrow">¶</a>
 </li>
-              <li class="normal" id="section-9.3.1.1-2.3">Message-Size: The content length of the message body (payload), used to indicate the size of HTTP request akin to Content-Length.<a href="#section-9.3.1.1-2.3" class="pilcrow">¶</a>
+              <li class="normal" id="section-9.4.1.1-2.3">Message-Size: The content length of the message body (payload), used to indicate the size of HTTP request akin to Content-Length.<a href="#section-9.4.1.1-2.3" class="pilcrow">¶</a>
 </li>
-              <li class="normal" id="section-9.3.1.1-2.4">Message-Checksum: The checksum of the payload, used for determining correct message transfer.<a href="#section-9.3.1.1-2.4" class="pilcrow">¶</a>
+              <li class="normal" id="section-9.4.1.1-2.4">Message-Checksum: The checksum of the payload, used for determining correct message transfer.<a href="#section-9.4.1.1-2.4" class="pilcrow">¶</a>
 </li>
-              <li class="normal" id="section-9.3.1.1-2.5">Message-Access: List of connection identifiers, their public keys and encrypted passwords for determining access rights.<a href="#section-9.3.1.1-2.5" class="pilcrow">¶</a>
+              <li class="normal" id="section-9.4.1.1-2.5">Message-Access: List of connection identifiers, their public keys and encrypted passwords for determining access rights.<a href="#section-9.4.1.1-2.5" class="pilcrow">¶</a>
 </li>
-              <li class="normal" id="section-9.3.1.1-2.6">Message-Content-Headers: Encrypted content headers.<a href="#section-9.3.1.1-2.6" class="pilcrow">¶</a>
+              <li class="normal" id="section-9.4.1.1-2.6">Message-Content-Headers: Encrypted content headers.<a href="#section-9.4.1.1-2.6" class="pilcrow">¶</a>
 </li>
-              <li class="normal" id="section-9.3.1.1-2.7">Message-Envelope-Order: Order of headers when evaluating Envelope-Checksum.<a href="#section-9.3.1.1-2.7" class="pilcrow">¶</a>
+              <li class="normal" id="section-9.4.1.1-2.7">Message-Envelope-Order: Order of headers when evaluating Envelope-Checksum.<a href="#section-9.4.1.1-2.7" class="pilcrow">¶</a>
 </li>
-              <li class="normal" id="section-9.3.1.1-2.8">Message-Envelope-Checksum: Checksum of these envelope headers.<a href="#section-9.3.1.1-2.8" class="pilcrow">¶</a>
+              <li class="normal" id="section-9.4.1.1-2.8">Message-Envelope-Checksum: Checksum of these envelope headers.<a href="#section-9.4.1.1-2.8" class="pilcrow">¶</a>
 </li>
-              <li class="normal" id="section-9.3.1.1-2.9">Message-Envelope-Checksum-Signature: Signature of the above checksum.<a href="#section-9.3.1.1-2.9" class="pilcrow">¶</a>
+              <li class="normal" id="section-9.4.1.1-2.9">Message-Envelope-Checksum-Signature: Signature of the above checksum.<a href="#section-9.4.1.1-2.9" class="pilcrow">¶</a>
 </li>
-              <li class="normal" id="section-9.3.1.1-2.10">Message-Payload-Cipher: The cipher used to encrypt the payload.<a href="#section-9.3.1.1-2.10" class="pilcrow">¶</a>
+              <li class="normal" id="section-9.4.1.1-2.10">Message-Payload-Cipher: The cipher used to encrypt the payload.<a href="#section-9.4.1.1-2.10" class="pilcrow">¶</a>
 </li>
             </ul>
 </section>
 </div>
 <div id="content-headers">
-<section id="section-9.3.1.2">
+<section id="section-9.4.1.2">
             <h5 id="name-content-headers">
-<a href="#section-9.3.1.2" class="section-number selfRef">9.3.1.2. </a><a href="#name-content-headers" class="section-name selfRef">Content Headers</a>
+<a href="#section-9.4.1.2" class="section-number selfRef">9.4.1.2. </a><a href="#name-content-headers" class="section-name selfRef">Content Headers</a>
             </h5>
-<p id="section-9.3.1.2-1">Envelope contains encrypted content headers. Once decrypted, the content headers may be:<a href="#section-9.3.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-9.4.1.2-1">Envelope contains encrypted content headers. Once decrypted, the content headers may be:<a href="#section-9.4.1.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-9.3.1.2-2.1">Id: Message identifier, MUST match the envelope ID.<a href="#section-9.3.1.2-2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-9.4.1.2-2.1">Id: Message identifier, MUST match the envelope ID.<a href="#section-9.4.1.2-2.1" class="pilcrow">¶</a>
 </li>
-              <li class="normal" id="section-9.3.1.2-2.2">Author: The address of the author.<a href="#section-9.3.1.2-2.2" class="pilcrow">¶</a>
+              <li class="normal" id="section-9.4.1.2-2.2">Author: The address of the author.<a href="#section-9.4.1.2-2.2" class="pilcrow">¶</a>
 </li>
-              <li class="normal" id="section-9.3.1.2-2.3">Date: The authored-on date.<a href="#section-9.3.1.2-2.3" class="pilcrow">¶</a>
+              <li class="normal" id="section-9.4.1.2-2.3">Date: The authored-on date.<a href="#section-9.4.1.2-2.3" class="pilcrow">¶</a>
 </li>
-              <li class="normal" id="section-9.3.1.2-2.4">Size: The size of the raw, decrypted content.<a href="#section-9.3.1.2-2.4" class="pilcrow">¶</a>
+              <li class="normal" id="section-9.4.1.2-2.4">Size: The size of the raw, decrypted content.<a href="#section-9.4.1.2-2.4" class="pilcrow">¶</a>
 </li>
-              <li class="normal" id="section-9.3.1.2-2.5">Checksum: Checksum of the raw content.<a href="#section-9.3.1.2-2.5" class="pilcrow">¶</a>
+              <li class="normal" id="section-9.4.1.2-2.5">Checksum: Checksum of the raw content.<a href="#section-9.4.1.2-2.5" class="pilcrow">¶</a>
 </li>
-              <li class="normal" id="section-9.3.1.2-2.6">File-Name: If the body is a file, the original filename.<a href="#section-9.3.1.2-2.6" class="pilcrow">¶</a>
+              <li class="normal" id="section-9.4.1.2-2.6">File-Name: If the body is a file, the original filename.<a href="#section-9.4.1.2-2.6" class="pilcrow">¶</a>
 </li>
-              <li class="normal" id="section-9.3.1.2-2.7">File-Type: If the body is a file, the file type.<a href="#section-9.3.1.2-2.7" class="pilcrow">¶</a>
+              <li class="normal" id="section-9.4.1.2-2.7">File-Type: If the body is a file, the file type.<a href="#section-9.4.1.2-2.7" class="pilcrow">¶</a>
 </li>
-              <li class="normal" id="section-9.3.1.2-2.8">File-Modified: If the body is a file, the original modification time.<a href="#section-9.3.1.2-2.8" class="pilcrow">¶</a>
+              <li class="normal" id="section-9.4.1.2-2.8">File-Modified: If the body is a file, the original modification time.<a href="#section-9.4.1.2-2.8" class="pilcrow">¶</a>
 </li>
-              <li class="normal" id="section-9.3.1.2-2.9">Subject: Plain text subject line for the mesage.<a href="#section-9.3.1.2-2.9" class="pilcrow">¶</a>
+              <li class="normal" id="section-9.4.1.2-2.9">Subject: Plain text subject line for the mesage.<a href="#section-9.4.1.2-2.9" class="pilcrow">¶</a>
 </li>
-              <li class="normal" id="section-9.3.1.2-2.10">Subject-Id: Unique subject identifier, equal to Message-ID on new messages unless specified.<a href="#section-9.3.1.2-2.10" class="pilcrow">¶</a>
+              <li class="normal" id="section-9.4.1.2-2.10">Subject-Id: Unique subject identifier, equal to Message-ID on new messages unless specified.<a href="#section-9.4.1.2-2.10" class="pilcrow">¶</a>
 </li>
-              <li class="normal" id="section-9.3.1.2-2.11">Parent-Message-Id<a href="#section-9.3.1.2-2.11" class="pilcrow">¶</a>
+              <li class="normal" id="section-9.4.1.2-2.11">Parent-Message-Id<a href="#section-9.4.1.2-2.11" class="pilcrow">¶</a>
 </li>
-              <li class="normal" id="section-9.3.1.2-2.12">Category: Categorization of the message (see below)<a href="#section-9.3.1.2-2.12" class="pilcrow">¶</a>
+              <li class="normal" id="section-9.4.1.2-2.12">Category: Categorization of the message (see below)<a href="#section-9.4.1.2-2.12" class="pilcrow">¶</a>
 </li>
-              <li class="normal" id="section-9.3.1.2-2.13">Readers: The email addresses of the readers, used for expanding the Message-Access envelope header.<a href="#section-9.3.1.2-2.13" class="pilcrow">¶</a>
+              <li class="normal" id="section-9.4.1.2-2.13">Readers: The email addresses of the readers, used for expanding the Message-Access envelope header.<a href="#section-9.4.1.2-2.13" class="pilcrow">¶</a>
 </li>
             </ul>
 </section>
@@ -2187,39 +2231,39 @@ ed25519$98335b06f02440e9$pWHxd1/jCwkO5Ao5+sc+xDI01DWER2VAYBKCDEK/LgPBBwohiAcBENm
 </section>
 </div>
 <div id="categorization">
-<section id="section-9.3.2">
+<section id="section-9.4.2">
           <h4 id="name-categorization">
-<a href="#section-9.3.2" class="section-number selfRef">9.3.2. </a><a href="#name-categorization" class="section-name selfRef">Categorization</a>
+<a href="#section-9.4.2" class="section-number selfRef">9.4.2. </a><a href="#name-categorization" class="section-name selfRef">Categorization</a>
           </h4>
-<p id="section-9.3.2-1">The conventional approach to email treats all messages as equal, resulting in overloaded inboxes and the laborious task of sorting through them. Many users end up abandoning the effort and retaining all messages, which not only consumes unnecessary storage and contributes to a larger carbon footprint but also hinders an optimized user experience. Consequently, methods such as content detection have been employed, further increasing the processing power.<a href="#section-9.3.2-1" class="pilcrow">¶</a></p>
-<p id="section-9.3.2-2">By pre-categorizing messages at the source, it becomes possible to enhance how email clients display and handle these messages. Additionally, it enables better decision-making regarding whether or not to save them in archives.<a href="#section-9.3.2-2" class="pilcrow">¶</a></p>
-<p id="section-9.3.2-3">We define standard categories for mail objects:<a href="#section-9.3.2-3" class="pilcrow">¶</a></p>
+<p id="section-9.4.2-1">The conventional approach to email treats all messages as equal, resulting in overloaded inboxes and the laborious task of sorting through them. Many users end up abandoning the effort and retaining all messages, which not only consumes unnecessary storage and contributes to a larger carbon footprint but also hinders an optimized user experience. Consequently, methods such as content detection have been employed, further increasing the processing power.<a href="#section-9.4.2-1" class="pilcrow">¶</a></p>
+<p id="section-9.4.2-2">By pre-categorizing messages at the source, it becomes possible to enhance how email clients display and handle these messages. Additionally, it enables better decision-making regarding whether or not to save them in archives.<a href="#section-9.4.2-2" class="pilcrow">¶</a></p>
+<p id="section-9.4.2-3">We define standard categories for mail objects:<a href="#section-9.4.2-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-9.3.2-4.1">"personal": Messages from the private circles that are likely to be saved for future reference.<a href="#section-9.3.2-4.1" class="pilcrow">¶</a>
+<li class="normal" id="section-9.4.2-4.1">"personal": Messages from the private circles that are likely to be saved for future reference.<a href="#section-9.4.2-4.1" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-9.3.2-4.2">"chat": Short, off-the-recotd messages that are not to be saved.<a href="#section-9.3.2-4.2" class="pilcrow">¶</a>
+            <li class="normal" id="section-9.4.2-4.2">"chat": Short, off-the-recotd messages that are not to be saved.<a href="#section-9.4.2-4.2" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-9.3.2-4.3">"transitory": TOTP, one time access links etc. These messages are not be saved by default.<a href="#section-9.3.2-4.3" class="pilcrow">¶</a>
+            <li class="normal" id="section-9.4.2-4.3">"transitory": TOTP, one time access links etc. These messages are not be saved by default.<a href="#section-9.4.2-4.3" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-9.3.2-4.4">"notification": Information of an event occurence such as system alert, sensor information, security notification, parcel shipping status etc. These messages are not to be saved by default.<a href="#section-9.3.2-4.4" class="pilcrow">¶</a>
+            <li class="normal" id="section-9.4.2-4.4">"notification": Information of an event occurence such as system alert, sensor information, security notification, parcel shipping status etc. These messages are not to be saved by default.<a href="#section-9.4.2-4.4" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-9.3.2-4.5">"transaction": Messages related to a private or commercial transaction,, such as order confirmation, receipt, refund etc. These messages are valuable and are saved by default.<a href="#section-9.3.2-4.5" class="pilcrow">¶</a>
+            <li class="normal" id="section-9.4.2-4.5">"transaction": Messages related to a private or commercial transaction,, such as order confirmation, receipt, refund etc. These messages are valuable and are saved by default.<a href="#section-9.4.2-4.5" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-9.3.2-4.6">"promotion": Messages informing of new offerings, sales events etc. These messages are not to be saved by default.<a href="#section-9.3.2-4.6" class="pilcrow">¶</a>
+            <li class="normal" id="section-9.4.2-4.6">"promotion": Messages informing of new offerings, sales events etc. These messages are not to be saved by default.<a href="#section-9.4.2-4.6" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-9.3.2-4.7">"letter": Official communication from organizations, government as well anything that would have been sent as postal mail. These messages are usually valuable and are saved by default. While the term "letter" may evoke the idea of a PDF format, it's important to clarify that in this context, the message type does not specifically refer to PDFs. Instead, it pertains to plain text messages where the content is expected to be in the form of plain text within the message body. However, it is possible to include a PDF file as an additional message of type "file," which could be associated with the "letter" message. In such cases, the PDF file would appear as an attachment or related document, similar to how attachments are typically displayed in legacy email.<a href="#section-9.3.2-4.7" class="pilcrow">¶</a>
+            <li class="normal" id="section-9.4.2-4.7">"letter": Official communication from organizations, government as well anything that would have been sent as postal mail. These messages are usually valuable and are saved by default. While the term "letter" may evoke the idea of a PDF format, it's important to clarify that in this context, the message type does not specifically refer to PDFs. Instead, it pertains to plain text messages where the content is expected to be in the form of plain text within the message body. However, it is possible to include a PDF file as an additional message of type "file," which could be associated with the "letter" message. In such cases, the PDF file would appear as an attachment or related document, similar to how attachments are typically displayed in legacy email.<a href="#section-9.4.2-4.7" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-9.3.2-4.8">"file": Messages containing a single file of any fily type. These messages are to be saved by default.<a href="#section-9.3.2-4.8" class="pilcrow">¶</a>
+            <li class="normal" id="section-9.4.2-4.8">"file": Messages containing a single file of any fily type. These messages are to be saved by default.<a href="#section-9.4.2-4.8" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-9.3.2-4.9">"informational": Messages that are announcements, commonly broadcast that cannot be classifed under any other categories.<a href="#section-9.3.2-4.9" class="pilcrow">¶</a>
+            <li class="normal" id="section-9.4.2-4.9">"informational": Messages that are announcements, commonly broadcast that cannot be classifed under any other categories.<a href="#section-9.4.2-4.9" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-9.3.2-4.10">"pass": Messages containing a pass, such as as airplane tickets, theater tickets, invitations etc. The messages may be referenced by other messages containing pass files such as PDF, PKPASS etc.<a href="#section-9.3.2-4.10" class="pilcrow">¶</a>
+            <li class="normal" id="section-9.4.2-4.10">"pass": Messages containing a pass, such as as airplane tickets, theater tickets, invitations etc. The messages may be referenced by other messages containing pass files such as PDF, PKPASS etc.<a href="#section-9.4.2-4.10" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-9.3.2-4.11">"funds": This category serves as a placeholder for future developments and potential inclusion of such digital currency-related messages. It anticipates the possibility of incorporating messages that involve digital currency transactions, loyalty program points, or electronic cash in the future.<a href="#section-9.3.2-4.11" class="pilcrow">¶</a>
+            <li class="normal" id="section-9.4.2-4.11">"funds": This category serves as a placeholder for future developments and potential inclusion of such digital currency-related messages. It anticipates the possibility of incorporating messages that involve digital currency transactions, loyalty program points, or electronic cash in the future.<a href="#section-9.4.2-4.11" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-9.3.2-4.12">"encryption-key": Special messages containing a replacement private encryption key. These messages must be authored by the reader, duly encrypted and signed with current keys, and fetched only from the user's own email agent. Email clients MUST refuse to fetch remote messages of this type.<a href="#section-9.3.2-4.12" class="pilcrow">¶</a>
+            <li class="normal" id="section-9.4.2-4.12">"encryption-key": Special messages containing a replacement private encryption key. These messages must be authored by the reader, duly encrypted and signed with current keys, and fetched only from the user's own email agent. Email clients MUST refuse to fetch remote messages of this type.<a href="#section-9.4.2-4.12" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-9.3.2-4.13">"signing-key": Special messages containing a replacement private signing key. These messages must be authored by the reader, duly encrypted and signed with current keys, and fetched only from the user's own email agent. Email clients MUST refuse to fetch remote messages of this type.<a href="#section-9.3.2-4.13" class="pilcrow">¶</a>
+            <li class="normal" id="section-9.4.2-4.13">"signing-key": Special messages containing a replacement private signing key. These messages must be authored by the reader, duly encrypted and signed with current keys, and fetched only from the user's own email agent. Email clients MUST refuse to fetch remote messages of this type.<a href="#section-9.4.2-4.13" class="pilcrow">¶</a>
 </li>
           </ul>
 </section>
@@ -2261,130 +2305,207 @@ ed25519$98335b06f02440e9$pWHxd1/jCwkO5Ao5+sc+xDI01DWER2VAYBKCDEK/LgPBBwohiAcBENm
 <p id="section-11.1-4">If the reader configures their setup to accept notifications exclusively from their own connection identifiers, the mail agent may decline notification requests, essentially preventing the acceptance of new contact requests.<a href="#section-11.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
+<div id="pinned-messages">
+<section id="section-11.2">
+        <h3 id="name-pinned-messages">
+<a href="#section-11.2" class="section-number selfRef">11.2. </a><a href="#name-pinned-messages" class="section-name selfRef">Pinned Messages</a>
+        </h3>
+<p id="section-11.2-1">todo<a href="#section-11.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="public-mail-agent-api">
+<section id="section-12">
+      <h2 id="name-public-mail-agent-api">
+<a href="#section-12" class="section-number selfRef">12. </a><a href="#name-public-mail-agent-api" class="section-name selfRef">Public Mail Agent API</a>
+      </h2>
+<div id="profile">
+<section id="section-12.1">
+        <h3 id="name-profile">
+<a href="#section-12.1" class="section-number selfRef">12.1. </a><a href="#name-profile" class="section-name selfRef">Profile</a>
+        </h3>
+<div id="notifications">
+<section id="section-12.1.1">
+          <h4 id="name-notifications">
+<a href="#section-12.1.1" class="section-number selfRef">12.1.1. </a><a href="#name-notifications" class="section-name selfRef">Notifications</a>
+        </h4>
+</section>
+</div>
+<div id="messages">
+<section id="section-12.1.2">
+          <h4 id="name-messages">
+<a href="#section-12.1.2" class="section-number selfRef">12.1.2. </a><a href="#name-messages" class="section-name selfRef">Messages</a>
+        </h4>
+</section>
+</div>
+<div id="contacts">
+<section id="section-12.1.3">
+          <h4 id="name-contacts">
+<a href="#section-12.1.3" class="section-number selfRef">12.1.3. </a><a href="#name-contacts" class="section-name selfRef">Contacts</a>
+        </h4>
+</section>
+</div>
+</section>
+</div>
 </section>
 </div>
 <div id="authentication">
-<section id="section-12">
+<section id="section-13">
       <h2 id="name-authentication">
-<a href="#section-12" class="section-number selfRef">12. </a><a href="#name-authentication" class="section-name selfRef">Authentication</a>
+<a href="#section-13" class="section-number selfRef">13. </a><a href="#name-authentication" class="section-name selfRef">Authentication</a>
       </h2>
-<p id="section-12-1">Mail/HTTPS mandates authentication for accessing mail agents, both as an author or reader.
-When authenticating as author, the home server permits uploading and controlling messages, fetching notifications, account as well keys management. When authenticating as reader however, authenticated treader may list and fetch designated messages, which also confirms pick-up by the reader's identity.<a href="#section-12-1" class="pilcrow">¶</a></p>
-<p id="section-12-2">The same authentication method can be conveniently used to both home and remote agents as it bases itself on possesion of valid private keys.<a href="#section-12-2" class="pilcrow">¶</a></p>
-<p id="section-12-3">Mail/HTTPS authentication bases itself on HTTP authentication <span>[<a href="#RFC7235" class="cite xref">RFC7235</a>]</span>, with own pending scheme named 'SOTN', an acronym for Signed-One-Time-Nonce.<a href="#section-12-3" class="pilcrow">¶</a></p>
+<p id="section-13-1">Mail/HTTPS mandates authentication for accessing mail agents, both as an author or reader.
+When authenticating as author, the home server permits uploading and controlling messages, fetching notifications, account as well keys management. When authenticating as reader however, authenticated treader may list and fetch designated messages, which also confirms pick-up by the reader's identity.<a href="#section-13-1" class="pilcrow">¶</a></p>
+<p id="section-13-2">The same authentication method can be conveniently used to both home and remote agents as it bases itself on possesion of valid private keys.<a href="#section-13-2" class="pilcrow">¶</a></p>
+<p id="section-13-3">Mail/HTTPS authentication bases itself on HTTP authentication <span>[<a href="#RFC7235" class="cite xref">RFC7235</a>]</span>, with own pending scheme named 'SOTN', an acronym for Signed-One-Time-Nonce.<a href="#section-13-3" class="pilcrow">¶</a></p>
 <div id="sotn-authenticating-scheme">
-<section id="section-12.1">
+<section id="section-13.1">
         <h3 id="name-sotn-authenticating-scheme">
-<a href="#section-12.1" class="section-number selfRef">12.1. </a><a href="#name-sotn-authenticating-scheme" class="section-name selfRef">SOTN Authenticating Scheme</a>
+<a href="#section-13.1" class="section-number selfRef">13.1. </a><a href="#name-sotn-authenticating-scheme" class="section-name selfRef">SOTN Authenticating Scheme</a>
         </h3>
-<p id="section-12.1-1">The SOTN authenticating scheme expects three values to be transfered in the 'Authorization' header:<a href="#section-12.1-1" class="pilcrow">¶</a></p>
+<p id="section-13.1-1">The SOTN authenticating scheme expects three values to be transfered in the 'Authorization' header:<a href="#section-13.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-12.1-2.1">A random nonce, as field 'nonce', generated locally in the email client. The nonce is a random string of no less than 32 ASCII characters. The nonce may not repeat for at least 24 hours with the same service.<a href="#section-12.1-2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-13.1-2.1">A random nonce, as field 'nonce', generated locally in the email client. The nonce is a random string of no less than 32 ASCII characters. The nonce may not repeat for at least 24 hours with the same service.<a href="#section-13.1-2.1" class="pilcrow">¶</a>
 </li>
-          <li class="normal" id="section-12.1-2.2">The signing algorithm as field 'algorithm', consistent with the Mail/HTTPS signing algorithms.<a href="#section-12.1-2.2" class="pilcrow">¶</a>
+          <li class="normal" id="section-13.1-2.2">The signing algorithm as field 'algorithm', consistent with the Mail/HTTPS signing algorithms.<a href="#section-13.1-2.2" class="pilcrow">¶</a>
 </li>
-          <li class="normal" id="section-12.1-2.3">Signature of the nonce as field 'signature', using user's private signing key. Unlike the Mail/HTTPS signatures, the SOTN signature does not include embedded algorithm and cipher as these are provided as separate fields.<a href="#section-12.1-2.3" class="pilcrow">¶</a>
+          <li class="normal" id="section-13.1-2.3">Signature of the nonce as field 'signature', using user's private signing key. Unlike the Mail/HTTPS signatures, the SOTN signature does not include embedded algorithm and cipher as these are provided as separate fields.<a href="#section-13.1-2.3" class="pilcrow">¶</a>
 </li>
-          <li class="normal" id="section-12.1-2.4">The public signing key of the user as field 'key', needed for verifying the signature. The public key MUST be simple Base64 encoded with padding.<a href="#section-12.1-2.4" class="pilcrow">¶</a>
+          <li class="normal" id="section-13.1-2.4">The public signing key of the user as field 'key', needed for verifying the signature. The public key MUST be simple Base64 encoded with padding.<a href="#section-13.1-2.4" class="pilcrow">¶</a>
 </li>
         </ul>
-<p id="section-12.1-3">The advantage of the SOTN scheme is in the lack of passwords, and the use of signed nonces over HTTPS which provides robust protection against both man-in-the-middle and replay attacks.<a href="#section-12.1-3" class="pilcrow">¶</a></p>
-<p id="section-12.1-4">Upon authentication:<a href="#section-12.1-4" class="pilcrow">¶</a></p>
+<p id="section-13.1-3">The advantage of the SOTN scheme is in the lack of passwords, and the use of signed nonces over HTTPS which provides robust protection against both man-in-the-middle and replay attacks.<a href="#section-13.1-3" class="pilcrow">¶</a></p>
+<p id="section-13.1-4">Upon authentication:<a href="#section-13.1-4" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-12.1-5.1">The service being authenticated checks that the provided nonce hasn't been used previously within the past 24 hours.<a href="#section-12.1-5.1" class="pilcrow">¶</a>
+<li class="normal" id="section-13.1-5.1">The service being authenticated checks that the provided nonce hasn't been used previously within the past 24 hours.<a href="#section-13.1-5.1" class="pilcrow">¶</a>
 </li>
-          <li class="normal" id="section-12.1-5.2">If the service being authenticated is home agent, it verifies whether the public key belongs to the user specified in the URL parameters. This verification SHOULD be made before verifying the authenticity of the signature.<a href="#section-12.1-5.2" class="pilcrow">¶</a>
+          <li class="normal" id="section-13.1-5.2">If the service being authenticated is home agent, it verifies whether the public key belongs to the user specified in the URL parameters. This verification SHOULD be made before verifying the authenticity of the signature.<a href="#section-13.1-5.2" class="pilcrow">¶</a>
 </li>
-          <li class="normal" id="section-12.1-5.3">If the service being authenticated is a remote mail agent, fingerprint of the public key is derived and compared to the readers list of pending messages. This verification SHOULD be made before verifying the authenticity of the signature.<a href="#section-12.1-5.3" class="pilcrow">¶</a>
+          <li class="normal" id="section-13.1-5.3">If the service being authenticated is a remote mail agent, fingerprint of the public key is derived and compared to the readers list of pending messages. This verification SHOULD be made before verifying the authenticity of the signature.<a href="#section-13.1-5.3" class="pilcrow">¶</a>
 </li>
-          <li class="normal" id="section-12.1-5.4">Finally, the service being authenticated verifies the signature of the nonce using the provided public key.<a href="#section-12.1-5.4" class="pilcrow">¶</a>
+          <li class="normal" id="section-13.1-5.4">Finally, the service being authenticated verifies the signature of the nonce using the provided public key.<a href="#section-13.1-5.4" class="pilcrow">¶</a>
 </li>
         </ul>
 </section>
 </div>
 <div id="example-3">
-<section id="section-12.2">
+<section id="section-13.2">
         <h3 id="name-example-4">
-<a href="#section-12.2" class="section-number selfRef">12.2. </a><a href="#name-example-4" class="section-name selfRef">Example</a>
+<a href="#section-13.2" class="section-number selfRef">13.2. </a><a href="#name-example-4" class="section-name selfRef">Example</a>
         </h3>
-<div class="alignLeft art-text artwork" id="section-12.2-1">
+<div class="alignLeft art-text artwork" id="section-13.2-1">
 <pre>
 Authorization: SOTN
   nonce="7ypf/xlj9XXwfDPEoM4URrv/xwf94BcCAzFZH4GiTo0v",
   algorithm="ed25519",
   signature="pWHxd1/jCwkO5Ao5+sc+xDI01DWER2VAYBKCDEK/LgPBBwohiAcBENmy32Dhj0sqCAuME87couIue5dTF1b4AEUyg",
   key="ZjoCijxLNI2ts3NgQKNyxNR3E+gROmyEFsI8YUGJGZs="
-</pre><a href="#section-12.2-1" class="pilcrow">¶</a>
+</pre><a href="#section-13.2-1" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 </section>
 </div>
 <div id="key-rotations">
-<section id="section-13">
+<section id="section-14">
       <h2 id="name-key-rotations">
-<a href="#section-13" class="section-number selfRef">13. </a><a href="#name-key-rotations" class="section-name selfRef">Key Rotations</a>
+<a href="#section-14" class="section-number selfRef">14. </a><a href="#name-key-rotations" class="section-name selfRef">Key Rotations</a>
       </h2>
-<p id="section-13-1">Email clients are responsible for periodic key rotation.<a href="#section-13-1" class="pilcrow">¶</a></p>
-<p id="section-13-2">It is assumed multiple clients will be using the email service in parallel, just as is the case with email IMAP clients. Proposed key rotation ensures connected clients self update.<a href="#section-13-2" class="pilcrow">¶</a></p>
-<p id="section-13-3">todo<a href="#section-13-3" class="pilcrow">¶</a></p>
+<p id="section-14-1">Email clients are responsible for periodic key rotation.<a href="#section-14-1" class="pilcrow">¶</a></p>
+<p id="section-14-2">It is assumed multiple clients will be using the email service in parallel, just as is the case with email IMAP clients. Proposed key rotation ensures connected clients self update.<a href="#section-14-2" class="pilcrow">¶</a></p>
+<p id="section-14-3">todo<a href="#section-14-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="contact-exchange-and-discovery">
-<section id="section-14">
+<section id="section-15">
       <h2 id="name-contact-exchange-and-discov">
-<a href="#section-14" class="section-number selfRef">14. </a><a href="#name-contact-exchange-and-discov" class="section-name selfRef">Contact Exchange and Discovery</a>
+<a href="#section-15" class="section-number selfRef">15. </a><a href="#name-contact-exchange-and-discov" class="section-name selfRef">Contact Exchange and Discovery</a>
       </h2>
-<p id="section-14-1">todo<a href="#section-14-1" class="pilcrow">¶</a></p>
+<p id="section-15-1">todo<a href="#section-15-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="broadcast-usage">
+<section id="section-16">
+      <h2 id="name-broadcast-usage">
+<a href="#section-16" class="section-number selfRef">16. </a><a href="#name-broadcast-usage" class="section-name selfRef">Broadcast usage</a>
+    </h2>
 </section>
 </div>
 <div id="derived-usage">
-<section id="section-15">
+<section id="section-17">
       <h2 id="name-derived-usage">
-<a href="#section-15" class="section-number selfRef">15. </a><a href="#name-derived-usage" class="section-name selfRef">Derived Usage</a>
+<a href="#section-17" class="section-number selfRef">17. </a><a href="#name-derived-usage" class="section-name selfRef">Derived Usage</a>
       </h2>
-<p id="section-15-1">todo<a href="#section-15-1" class="pilcrow">¶</a></p>
+<p id="section-17-1">todo<a href="#section-17-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-15-2.1">Email<a href="#section-15-2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-17-2.1">Email<a href="#section-17-2.1" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-15-2.2">Authentication with services<a href="#section-15-2.2" class="pilcrow">¶</a>
+        <li class="normal" id="section-17-2.2">Authentication with services<a href="#section-17-2.2" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-15-2.3">Chat<a href="#section-15-2.3" class="pilcrow">¶</a>
+        <li class="normal" id="section-17-2.3">Chat<a href="#section-17-2.3" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-15-2.4">File transfer<a href="#section-15-2.4" class="pilcrow">¶</a>
+        <li class="normal" id="section-17-2.4">File transfer<a href="#section-17-2.4" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-15-2.5">Blogging<a href="#section-15-2.5" class="pilcrow">¶</a>
+        <li class="normal" id="section-17-2.5">Blogging<a href="#section-17-2.5" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-15-2.6">Social media / content sharing<a href="#section-15-2.6" class="pilcrow">¶</a>
+        <li class="normal" id="section-17-2.6">Social media / content sharing<a href="#section-17-2.6" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-15-2.7">Bookmarking service<a href="#section-15-2.7" class="pilcrow">¶</a>
+        <li class="normal" id="section-17-2.7">Bookmarking service<a href="#section-17-2.7" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-17-2.8">Search<a href="#section-17-2.8" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-17-2.9">Personal websites<a href="#section-17-2.9" class="pilcrow">¶</a>
+</li>
+      </ul>
+</section>
+</div>
+<div id="enterprise-use">
+<section id="section-18">
+      <h2 id="name-enterprise-use">
+<a href="#section-18" class="section-number selfRef">18. </a><a href="#name-enterprise-use" class="section-name selfRef">Enterprise use</a>
+      </h2>
+<p id="section-18-1">todo<a href="#section-18-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-18-2.1">Webmail, always online clients<a href="#section-18-2.1" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-18-2.2">autoresponders<a href="#section-18-2.2" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-18-2.3">archiving, copies<a href="#section-18-2.3" class="pilcrow">¶</a>
 </li>
       </ul>
 </section>
 </div>
 <div id="usability-considerations">
-<section id="section-16">
+<section id="section-19">
       <h2 id="name-usability-considerations">
-<a href="#section-16" class="section-number selfRef">16. </a><a href="#name-usability-considerations" class="section-name selfRef">Usability Considerations</a>
+<a href="#section-19" class="section-number selfRef">19. </a><a href="#name-usability-considerations" class="section-name selfRef">Usability Considerations</a>
       </h2>
-<p id="section-16-1">todo<a href="#section-16-1" class="pilcrow">¶</a></p>
+<p id="section-19-1">todo<a href="#section-19-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="security-considerations">
-<section id="section-17">
+<section id="section-20">
       <h2 id="name-security-considerations">
-<a href="#section-17" class="section-number selfRef">17. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
+<a href="#section-20" class="section-number selfRef">20. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-17-1">todo<a href="#section-17-1" class="pilcrow">¶</a></p>
+<p id="section-20-1">todo<a href="#section-20-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<section id="section-18">
+<div id="newsletters-marketing-considerations">
+<section id="section-21">
+      <h2 id="name-newsletters-marketing-consi">
+<a href="#section-21" class="section-number selfRef">21. </a><a href="#name-newsletters-marketing-consi" class="section-name selfRef">Newsletters &amp; Marketing Considerations</a>
+    </h2>
+</section>
+</div>
+<section id="section-22">
       <h2 id="name-references">
-<a href="#section-18" class="section-number selfRef">18. </a><a href="#name-references" class="section-name selfRef">References</a>
+<a href="#section-22" class="section-number selfRef">22. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
-<section id="section-18.1">
+<section id="section-22.1">
         <h3 id="name-normative-references">
-<a href="#section-18.1" class="section-number selfRef">18.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+<a href="#section-22.1" class="section-number selfRef">22.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
 <dt id="RFC5322">[RFC5322]</dt>
@@ -2417,9 +2538,9 @@ Authorization: SOTN
 <dd class="break"></dd>
 </dl>
 </section>
-<section id="section-18.2">
+<section id="section-22.2">
         <h3 id="name-informative-references">
-<a href="#section-18.2" class="section-number selfRef">18.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+<a href="#section-22.2" class="section-number selfRef">22.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
 <dt id="RFC9110">[RFC9110]</dt>
