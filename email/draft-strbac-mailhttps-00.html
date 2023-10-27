@@ -1474,15 +1474,13 @@ li > p:last-of-type:only-child {
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
-            <p id="section-toc.1-1.11.1"><a href="#section-11" class="auto internal xref">11</a>. <a href="#name-message-notifications" class="internal xref">Message Notifications</a></p>
+            <p id="section-toc.1-1.11.1"><a href="#section-11" class="auto internal xref">11</a>. <a href="#name-notifications" class="internal xref">Notifications</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1">
                 <p id="section-toc.1-1.11.2.1.1"><a href="#section-11.1" class="auto internal xref">11.1</a>.  <a href="#name-payload-2" class="internal xref">Payload</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1.2.1">
-                    <p id="section-toc.1-1.11.2.1.2.1.1"><a href="#section-11.1.1" class="auto internal xref">11.1.1</a>.  <a href="#name-lifetime" class="internal xref">Lifetime</a></p>
 </li>
-                </ul>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.2">
+                <p id="section-toc.1-1.11.2.2.1"><a href="#section-11.2" class="auto internal xref">11.2</a>.  <a href="#name-lifetime" class="internal xref">Lifetime</a></p>
 </li>
             </ul>
 </li>
@@ -1510,7 +1508,7 @@ li > p:last-of-type:only-child {
                     <p id="section-toc.1-1.12.2.2.2.3.1"><a href="#section-12.2.3" class="auto internal xref">12.2.3</a>.  <a href="#name-links" class="internal xref">Links</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.2.2.4">
-                    <p id="section-toc.1-1.12.2.2.2.4.1"><a href="#section-12.2.4" class="auto internal xref">12.2.4</a>.  <a href="#name-notifications" class="internal xref">Notifications</a></p>
+                    <p id="section-toc.1-1.12.2.2.2.4.1"><a href="#section-12.2.4" class="auto internal xref">12.2.4</a>.  <a href="#name-notifications-2" class="internal xref">Notifications</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.2.2.5">
                     <p id="section-toc.1-1.12.2.2.2.5.1"><a href="#section-12.2.5" class="auto internal xref">12.2.5</a>.  <a href="#name-messages" class="internal xref">Messages</a></p>
@@ -1521,7 +1519,7 @@ li > p:last-of-type:only-child {
                 <p id="section-toc.1-1.12.2.3.1"><a href="#section-12.3" class="auto internal xref">12.3</a>.  <a href="#name-private-api" class="internal xref">Private API</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.3.2.1">
-                    <p id="section-toc.1-1.12.2.3.2.1.1"><a href="#section-12.3.1" class="auto internal xref">12.3.1</a>.  <a href="#name-notifications-2" class="internal xref">Notifications</a></p>
+                    <p id="section-toc.1-1.12.2.3.2.1.1"><a href="#section-12.3.1" class="auto internal xref">12.3.1</a>.  <a href="#name-notifications-3" class="internal xref">Notifications</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.3.2.2">
                     <p id="section-toc.1-1.12.2.3.2.2.1"><a href="#section-12.3.2" class="auto internal xref">12.3.2</a>.  <a href="#name-messages-2" class="internal xref">Messages</a></p>
@@ -2447,10 +2445,10 @@ Message-Envelope-Order: Message-Id,Message-Stream,Message-Size,Message-Checksum,
 </div>
 </section>
 </div>
-<div id="message-notifications">
+<div id="notifications">
 <section id="section-11">
-      <h2 id="name-message-notifications">
-<a href="#section-11" class="section-number selfRef">11. </a><a href="#name-message-notifications" class="section-name selfRef">Message Notifications</a>
+      <h2 id="name-notifications">
+<a href="#section-11" class="section-number selfRef">11. </a><a href="#name-notifications" class="section-name selfRef">Notifications</a>
       </h2>
 <p id="section-11-1">When an author creates a message intended for specific readers and uploads it to own home agent, the readers SHOULD be informed of the new message's presence. This can be accomplished through two methods:<a href="#section-11-1" class="pilcrow">¶</a></p>
 <ul class="normal">
@@ -2468,15 +2466,14 @@ Message-Envelope-Order: Message-Id,Message-Stream,Message-Size,Message-Checksum,
 <p id="section-11.1-2">Each notification includes the author's email address, which is encrypted using the reader's public encryption key. This encrypted address serves a dual purpose: it's used for identifying new contact requests and verifying the authenticity of the notification when retrieved by the reader's email client.<a href="#section-11.1-2" class="pilcrow">¶</a></p>
 <p id="section-11.1-3">The notification call is publicly authenticated with the remote mail agent, requiring a signed nonce in the HTTP headers. However, this nonce is only used for verifying the signature locally. The mail agent itself is unable to independently confirm the authenticity of notifications because it lacks information about their origin.<a href="#section-11.1-3" class="pilcrow">¶</a></p>
 <p id="section-11.1-4">If the reader configures their home agent to accept notifications exclusively from their own connection identifiers, the mail agent may decline notification requests, essentially also preventing the acceptance of new contact requests.<a href="#section-11.1-4" class="pilcrow">¶</a></p>
-<div id="lifetime">
-<section id="section-11.1.1">
-          <h4 id="name-lifetime">
-<a href="#section-11.1.1" class="section-number selfRef">11.1.1. </a><a href="#name-lifetime" class="section-name selfRef">Lifetime</a>
-          </h4>
-<p id="section-11.1.1-1"></p>
-<p id="section-11.1.1-2">Notification lifetime is consistent with the lifetime of messages and is valid for 7 days (168 hours).<a href="#section-11.1.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
+<div id="lifetime">
+<section id="section-11.2">
+        <h3 id="name-lifetime">
+<a href="#section-11.2" class="section-number selfRef">11.2. </a><a href="#name-lifetime" class="section-name selfRef">Lifetime</a>
+        </h3>
+<p id="section-11.2-1">Notification lifetime is consistent with the lifetime of messages and is valid for 7 days (168 hours).<a href="#section-11.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2594,10 +2591,10 @@ HTTPS GET /mail/HOST_PART/LOCAL_PART/link/LINK
 <p id="section-12.2.3-3">The contact querying API MUST NOT require authentication. The mail agent should respond either with HTTP 200 Ok status if the link exists, or HTTP 404 Not found status if the link does not exist or the mail agent user does not consent to public lookups.<a href="#section-12.2.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="notifications">
+<div id="notifications-1">
 <section id="section-12.2.4">
-          <h4 id="name-notifications">
-<a href="#section-12.2.4" class="section-number selfRef">12.2.4. </a><a href="#name-notifications" class="section-name selfRef">Notifications</a>
+          <h4 id="name-notifications-2">
+<a href="#section-12.2.4" class="section-number selfRef">12.2.4. </a><a href="#name-notifications-2" class="section-name selfRef">Notifications</a>
           </h4>
 <p id="section-12.2.4-1">Once an author makes a message available to readers, the author is expected to notify readers' mail agents of the presence of new messages.<a href="#section-12.2.4-1" class="pilcrow">¶</a></p>
 <p id="section-12.2.4-2">The notifications MUST be made available over HTTPS PUT requests requiring nonce (SOTN) authentication. The payload of the request is email address of the notifier, encrypted anonymously using the notifee public encryption key, as described previously in assymetric ciphers part of this document.<a href="#section-12.2.4-2" class="pilcrow">¶</a></p>
@@ -2722,17 +2719,19 @@ HTTPS GET /mail/HOST_PART/LOCAL_PART/messages/MESSAGE_ID
         </h3>
 <p id="section-12.3-1">While the public mail agent API defines interoperability between clients and mail agents of contacts, the private API defines a universal email clients communication with home mail agents.<a href="#section-12.3-1" class="pilcrow">¶</a></p>
 <p id="section-12.3-2">All private mail API requests are under the path /home and MUST be authenticated. In the following examples, it is assumed that the user's email address is LOCAL_PART@HOST_PART.<a href="#section-12.3-2" class="pilcrow">¶</a></p>
-<div id="notifications-1">
+<div id="notifications-2">
 <section id="section-12.3.1">
-          <h4 id="name-notifications-2">
-<a href="#section-12.3.1" class="section-number selfRef">12.3.1. </a><a href="#name-notifications-2" class="section-name selfRef">Notifications</a>
+          <h4 id="name-notifications-3">
+<a href="#section-12.3.1" class="section-number selfRef">12.3.1. </a><a href="#name-notifications-3" class="section-name selfRef">Notifications</a>
           </h4>
 <p id="section-12.3.1-1">The private notifications API lists received third party notifications.<a href="#section-12.3.1-1" class="pilcrow">¶</a></p>
 <p id="section-12.3.1-2">Each notification is listed on its own line as:<a href="#section-12.3.1-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-12.3.1-3.1">the payload sent by authors, containing encrypted author email address;<a href="#section-12.3.1-3.1" class="pilcrow">¶</a>
+<li class="normal" id="section-12.3.1-3.1">unique notification identifier, provided by the mail agent<a href="#section-12.3.1-3.1" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-12.3.1-3.2">fingerprint of author's public signing key, used for delivering the notification.<a href="#section-12.3.1-3.2" class="pilcrow">¶</a>
+            <li class="normal" id="section-12.3.1-3.2">the payload sent by authors, containing encrypted author email address;<a href="#section-12.3.1-3.2" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-12.3.1-3.3">fingerprint of author's public signing key, used for delivering the notification.<a href="#section-12.3.1-3.3" class="pilcrow">¶</a>
 </li>
           </ul>
 <p id="section-12.3.1-4">Retrieved notifications MUST be verified before being considered valid.<a href="#section-12.3.1-4" class="pilcrow">¶</a></p>
