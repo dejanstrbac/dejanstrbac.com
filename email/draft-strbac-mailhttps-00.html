@@ -1205,7 +1205,7 @@ li > p:last-of-type:only-child {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Strbac</td>
-<td class="center">Expires 30 April 2024</td>
+<td class="center">Expires 2 May 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1218,12 +1218,12 @@ li > p:last-of-type:only-child {
 <dd class="internet-draft">draft-strbac-mailhttps-00.txt</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-10-28" class="published">28 October 2023</time>
+<time datetime="2023-10-30" class="published">30 October 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-04-30">30 April 2024</time></dd>
+<dd class="expires"><time datetime="2024-05-02">2 May 2024</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1257,7 +1257,7 @@ li > p:last-of-type:only-child {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 30 April 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 2 May 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1581,7 +1581,7 @@ li > p:last-of-type:only-child {
 </li>
         <li class="normal" id="section-1-2.8">Connection identifier: a hash of two email addresses, uniquely identifying a connection between two email users.<a href="#section-1-2.8" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-1-2.9">Link: a synonym for connection identifiers.<a href="#section-1-2.9" class="pilcrow">¶</a>
+        <li class="normal" id="section-1-2.9">Link: a synonym for a connection identifier.<a href="#section-1-2.9" class="pilcrow">¶</a>
 </li>
       </ul>
 </section>
@@ -1641,7 +1641,7 @@ li > p:last-of-type:only-child {
           <li class="normal" id="section-2.3-5.4">Once private messages are local, they are decrypted and presented.<a href="#section-2.3-5.4" class="pilcrow">¶</a>
 </li>
         </ul>
-<p id="section-2.3-6">The process scales up for any number of recipients and supports broadcasts, where readers periodically poll for updates from own contacts.<a href="#section-2.3-6" class="pilcrow">¶</a></p>
+<p id="section-2.3-6">The process permits instant availability of messages for readers, without the need for relaying by intermediares as is the case in SMTP-based email. It scales up for any number of readers and supports broadcasts, where readers willingly poll for updates periodically from own contacts.<a href="#section-2.3-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="storage">
@@ -1690,6 +1690,7 @@ digit             = "0" | "1" | ... | "9"
 <p id="section-4.1-4">The local-part of a Mail/HTTPS address is case-insensitive and MUST NOT exceed a maximum length of 256 characters. Special characters are allowed. Local part MUST NOT start or end with a special character. Special characters MUST NOT be consecutive.<a href="#section-4.1-4" class="pilcrow">¶</a></p>
 <p id="section-4.1-5">Unicode characters MAY NOT be used in email addresses.<a href="#section-4.1-5" class="pilcrow">¶</a></p>
 <p id="section-4.1-6">The domain portion of an email address functions as an identifier for the location from which mail is retrieved. It is understood as the explicit DNS label of the particular host. The domain portion MAY NOT be an IP address.<a href="#section-4.1-6" class="pilcrow">¶</a></p>
+<p id="section-4.1-7">Mail/HTTPS email addresses intentionally do not include display names in the email addresses as these have been misused greatly in SMTP based email. The display name of an email address MUST be retrieved from its live profile.<a href="#section-4.1-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="examples">
