@@ -1568,18 +1568,31 @@ li > p:last-of-type:only-child {
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15">
-            <p id="section-toc.1-1.15.1"><a href="#section-15" class="auto internal xref">15</a>. <a href="#name-references" class="internal xref">References</a></p>
+            <p id="section-toc.1-1.15.1"><a href="#section-15" class="auto internal xref">15</a>. <a href="#name-message-archives-api" class="internal xref">Message Archives API</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15.2.1">
-                <p id="section-toc.1-1.15.2.1.1"><a href="#section-15.1" class="auto internal xref">15.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+                <p id="section-toc.1-1.15.2.1.1"><a href="#section-15.1" class="auto internal xref">15.1</a>.  <a href="#name-store-3" class="internal xref">Store</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15.2.1.2.1">
+                    <p id="section-toc.1-1.15.2.1.2.1.1"><a href="#section-15.1.1" class="auto internal xref">15.1.1</a>.  <a href="#name-fetch-4" class="internal xref">Fetch</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.15.2.2">
-                <p id="section-toc.1-1.15.2.2.1"><a href="#section-15.2" class="auto internal xref">15.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+                </ul>
 </li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.16">
-            <p id="section-toc.1-1.16.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
+            <p id="section-toc.1-1.16.1"><a href="#section-16" class="auto internal xref">16</a>. <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.16.2.1">
+                <p id="section-toc.1-1.16.2.1.1"><a href="#section-16.1" class="auto internal xref">16.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.16.2.2">
+                <p id="section-toc.1-1.16.2.2.1"><a href="#section-16.2" class="auto internal xref">16.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.17">
+            <p id="section-toc.1-1.17.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-authors-address" class="internal xref">Author's Address</a></p>
 </li>
         </ul>
 </nav>
@@ -1825,15 +1838,16 @@ https://HOST_PART/.well-known/mail.txt
 <p id="section-6.1-8">The well-known URI MUST be retrieved over HTTPS and over a trusted connection. File contents served over an un-trusted connection MUST be ignored.<a href="#section-6.1-8" class="pilcrow">¶</a></p>
 <p id="section-6.1-9">The retrieved file MUST be a valid text file representing Mail/HTTPS service configuration file. Invalid files are to be ignored in entirety.<a href="#section-6.1-9" class="pilcrow">¶</a></p>
 <p id="section-6.1-10">If the configuration file is present and valid, its content should be read to determine possible Mail/HTTPS service delegation. The configuration file is a simple text file with hostnames of delegated mail agents on each line. Multiple mail agent hostnames may be listed but no more than three. Should more be present, only the first three SHOULD be considered. The well-known file determines the order of accessing the mail agents.<a href="#section-6.1-10" class="pilcrow">¶</a></p>
-<p id="section-6.1-11">Each line of the well-known file is trimmed for surrounding whitespace before being considered.
-Lines starting with hash are ignored as comments. Invalid hostnames are ignored.<a href="#section-6.1-11" class="pilcrow">¶</a></p>
-<p id="section-6.1-12">All valid hostnames listed are assumed to have a copy of all users data. Upon authoring messages, email clients MUST respect the setting and MUST store authored messages on at least two of the listed mail agent hosts, respecting order in upload attempts.<a href="#section-6.1-12" class="pilcrow">¶</a></p>
-<p id="section-6.1-13">When querying and fetching messages, all mail agent hostnames listed in the well-known file MUST be queried.<a href="#section-6.1-13" class="pilcrow">¶</a></p>
-<p id="section-6.1-14">If the well-known file is not present or available, it is assumed the email address HOST_PART is the mail agent hostname under the subdomain 'mail'.<a href="#section-6.1-14" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-6.1-15">
+<p id="section-6.1-11">Each line of the well-known file MUST be trimmed for surrounding whitespace before being considered.
+Lines starting with hash MUST be ignored as comments. Invalid hostnames MUST be ignored.<a href="#section-6.1-11" class="pilcrow">¶</a></p>
+<p id="section-6.1-12">To be considered a valid Mail/HTTPS mail agent, it MUST list self in own well-known file.<a href="#section-6.1-12" class="pilcrow">¶</a></p>
+<p id="section-6.1-13">All valid hostnames listed are assumed to have a copy of all users data. Upon authoring messages, email clients MUST respect the setting and MUST store authored messages on at least two of the listed mail agent hosts, respecting order in upload attempts.<a href="#section-6.1-13" class="pilcrow">¶</a></p>
+<p id="section-6.1-14">When querying and fetching messages, all mail agent hostnames listed in the well-known file MUST be queried.<a href="#section-6.1-14" class="pilcrow">¶</a></p>
+<p id="section-6.1-15">If the well-known file is not present or available, it is assumed the email address HOST_PART is the mail agent hostname under the subdomain 'mail'.<a href="#section-6.1-15" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-6.1-16">
 <pre>
-https://mail.HOST_PART
-</pre><a href="#section-6.1-15" class="pilcrow">¶</a>
+https://mail.HOST_PART/.well-known/mail.txt
+</pre><a href="#section-6.1-16" class="pilcrow">¶</a>
 </div>
 <div id="example-configuration">
 <section id="section-6.1.1">
@@ -2392,7 +2406,7 @@ Message-Envelope-Order: Message-Id,Message-Stream,Message-Size,Message-Checksum,
             </ul>
 <p id="section-9.5.1.2-4">The following content headers depend on the nature of the message:<a href="#section-9.5.1.2-4" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-9.5.1.2-5.1">Readers: The email addresses of the readers, used for expanding the Message-Access envelope header. Present only in private messages.<a href="#section-9.5.1.2-5.1" class="pilcrow">¶</a>
+<li class="normal" id="section-9.5.1.2-5.1">Readers: The email addresses of the readers, comma separated, used for expanding the Message-Access envelope header. Present only in private messages. Expanded addresses are displayed in parentheses following the original address.<a href="#section-9.5.1.2-5.1" class="pilcrow">¶</a>
 </li>
               <li class="normal" id="section-9.5.1.2-5.2">File-Name: If the message payload is a file, the original filename with case preserved.<a href="#section-9.5.1.2-5.2" class="pilcrow">¶</a>
 </li>
@@ -2523,7 +2537,7 @@ Message-Envelope-Order: Message-Id,Message-Stream,Message-Size,Message-Checksum,
         <h3 id="name-lifetime">
 <a href="#section-11.2" class="section-number selfRef">11.2. </a><a href="#name-lifetime" class="section-name selfRef">Lifetime</a>
         </h3>
-<p id="section-11.2-1">Notification lifetime is consistent with the lifetime of messages and is valid for 7 days (168 hours).<a href="#section-11.2-1" class="pilcrow">¶</a></p>
+<p id="section-11.2-1">Notification lifetime is consistent with the lifetime of messages and is valid for minimum 7 days (168 hours).<a href="#section-11.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -3038,7 +3052,7 @@ The minimum total vault storage that each mail agent MUST permit is 128 MB.<a hr
 <p id="section-14.3.6.1-1">The store call will save any kind of data, storage permit, as KEY on the mail agent.<a href="#section-14.3.6.1-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-14.3.6.1-2">
 <pre>
-HTTPS PUT /mail/HOST_PART/LOCAL_PART/vault/KEY
+HTTPS PUT /home/HOST_PART/LOCAL_PART/vault/KEY
 </pre><a href="#section-14.3.6.1-2" class="pilcrow">¶</a>
 </div>
 </section>
@@ -3051,7 +3065,7 @@ HTTPS PUT /mail/HOST_PART/LOCAL_PART/vault/KEY
 <p id="section-14.3.6.2-1">Previously stored data under KEY can be recalled from the mail agent using the fetch call.<a href="#section-14.3.6.2-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-14.3.6.2-2">
 <pre>
-HTTPS GET /mail/HOST_PART/LOCAL_PART/vault/KEY
+HTTPS GET /home/HOST_PART/LOCAL_PART/vault/KEY
 </pre><a href="#section-14.3.6.2-2" class="pilcrow">¶</a>
 </div>
 </section>
@@ -3062,13 +3076,50 @@ HTTPS GET /mail/HOST_PART/LOCAL_PART/vault/KEY
 </div>
 </section>
 </div>
+<div id="message-archives-api">
 <section id="section-15">
-      <h2 id="name-references">
-<a href="#section-15" class="section-number selfRef">15. </a><a href="#name-references" class="section-name selfRef">References</a>
+      <h2 id="name-message-archives-api">
+<a href="#section-15" class="section-number selfRef">15. </a><a href="#name-message-archives-api" class="section-name selfRef">Message Archives API</a>
       </h2>
+<p id="section-15-1">Mail agents and local mail clients are not intended as permanent message storage. That role is expected to be given to an always online service which will store the messages and their index and serve as centralized syncing endpoint for all connected mail clients - Message Archiving Services (MAS).<a href="#section-15-1" class="pilcrow">¶</a></p>
+<p id="section-15-2">The API calls towards message archives are SOTN authenticated, just as with mail agents. Message archives authenticate the nonce signature with the public key available from the address profile. As such, they need no keys updates.<a href="#section-15-2" class="pilcrow">¶</a></p>
+<p id="section-15-3">Values stored are expected to be locally encrypted using a persisting anonymous public key encryption.<a href="#section-15-3" class="pilcrow">¶</a></p>
+<p id="section-15-4">No deletion is possible via the API.<a href="#section-15-4" class="pilcrow">¶</a></p>
+<div id="store-2">
 <section id="section-15.1">
+        <h3 id="name-store-3">
+<a href="#section-15.1" class="section-number selfRef">15.1. </a><a href="#name-store-3" class="section-name selfRef">Store</a>
+        </h3>
+<p id="section-15.1-1">The store call will save any kind of data, storage permit, as KEY on the message archive.<a href="#section-15.1-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-15.1-2">
+<pre>
+HTTPS PUT /mail/HOST_PART/LOCAL_PART/archive/KEY
+</pre><a href="#section-15.1-2" class="pilcrow">¶</a>
+</div>
+<div id="fetch-3">
+<section id="section-15.1.1">
+          <h4 id="name-fetch-4">
+<a href="#section-15.1.1" class="section-number selfRef">15.1.1. </a><a href="#name-fetch-4" class="section-name selfRef">Fetch</a>
+          </h4>
+<p id="section-15.1.1-1">Previously stored data under KEY can be recalled from the message storage using the fetch call.<a href="#section-15.1.1-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-15.1.1-2">
+<pre>
+HTTPS GET /mail/HOST_PART/LOCAL_PART/archive/KEY
+</pre><a href="#section-15.1.1-2" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+</section>
+</div>
+</section>
+</div>
+<section id="section-16">
+      <h2 id="name-references">
+<a href="#section-16" class="section-number selfRef">16. </a><a href="#name-references" class="section-name selfRef">References</a>
+      </h2>
+<section id="section-16.1">
         <h3 id="name-normative-references">
-<a href="#section-15.1" class="section-number selfRef">15.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+<a href="#section-16.1" class="section-number selfRef">16.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
 <dt id="RFC1866">[RFC1866]</dt>
@@ -3113,9 +3164,9 @@ HTTPS GET /mail/HOST_PART/LOCAL_PART/vault/KEY
 <dd class="break"></dd>
 </dl>
 </section>
-<section id="section-15.2">
+<section id="section-16.2">
         <h3 id="name-informative-references">
-<a href="#section-15.2" class="section-number selfRef">15.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+<a href="#section-16.2" class="section-number selfRef">16.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
         </h3>
 <dl class="references">
 <dt id="RFC9110">[RFC9110]</dt>
