@@ -1840,7 +1840,11 @@ https://HOST_PART/.well-known/mail.txt
 <p id="section-6.1-10">If the configuration file is present and valid, its content should be read to determine possible Mail/HTTPS service delegation. The configuration file is a simple text file with hostnames of delegated mail agents on each line. Multiple mail agent hostnames may be listed but no more than three. Should more be present, only the first three SHOULD be considered. The well-known file determines the order of accessing the mail agents.<a href="#section-6.1-10" class="pilcrow">¶</a></p>
 <p id="section-6.1-11">Each line of the well-known file MUST be trimmed for surrounding whitespace before being considered.
 Lines starting with hash MUST be ignored as comments. Invalid hostnames MUST be ignored.<a href="#section-6.1-11" class="pilcrow">¶</a></p>
-<p id="section-6.1-12">To be considered a valid Mail/HTTPS mail agent, it MUST list self in own well-known file.<a href="#section-6.1-12" class="pilcrow">¶</a></p>
+<ul class="normal ulEmpty">
+<li class="normal ulEmpty" id="section-6.1-12.1">
+            <p id="section-6.1-12.1.1">To be considered a valid Mail/HTTPS mail agent, it MUST list self in own well-known file.<a href="#section-6.1-12.1.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
 <p id="section-6.1-13">All valid hostnames listed are assumed to have a copy of all users data. Upon authoring messages, email clients MUST respect the setting and MUST store authored messages on at least two of the listed mail agent hosts, respecting order in upload attempts.<a href="#section-6.1-13" class="pilcrow">¶</a></p>
 <p id="section-6.1-14">When querying and fetching messages, all mail agent hostnames listed in the well-known file MUST be queried.<a href="#section-6.1-14" class="pilcrow">¶</a></p>
 <p id="section-6.1-15">If the well-known file is not present or available, it is assumed the email address HOST_PART is the mail agent hostname under the subdomain 'mail'.<a href="#section-6.1-15" class="pilcrow">¶</a></p>
