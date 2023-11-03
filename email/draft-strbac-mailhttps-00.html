@@ -1205,7 +1205,7 @@ li > p:last-of-type:only-child {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Strbac</td>
-<td class="center">Expires 5 May 2024</td>
+<td class="center">Expires 7 May 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1218,12 +1218,12 @@ li > p:last-of-type:only-child {
 <dd class="internet-draft">draft-strbac-mailhttps-00.txt</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-11-02" class="published">2 November 2023</time>
+<time datetime="2023-11-04" class="published">4 November 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-05-05">5 May 2024</time></dd>
+<dd class="expires"><time datetime="2024-05-07">7 May 2024</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1257,7 +1257,7 @@ li > p:last-of-type:only-child {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 5 May 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 7 May 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1825,10 +1825,10 @@ jimmy1988@weasy.net
 <a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-discovery" class="section-name selfRef">Discovery</a>
         </h3>
 <p id="section-6.1-1">To initiate communication, communicating parties must first discover each other's mail agents.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
-<p id="section-6.1-2">SMTP based email relies heavily on DNS records to discover the push destination of a given domain.<a href="#section-6.1-2" class="pilcrow">¶</a></p>
-<p id="section-6.1-3">In Mail/HTTPS, the discovery method serves the opposite purpose, to deduct the location from where to pull messages, profile information for a given email address, but also where to send notifications. The authenticity is self-validated by retrieving messages directly from the origin via strict HTTPS and may be further improved through usage of DNSSEC.<a href="#section-6.1-3" class="pilcrow">¶</a></p>
-<p id="section-6.1-4">Mail/HTTPS intentionally does not use DNS discovery. SMTP email predates the web and is incompatible with its document sharing ideas. To this day, direct interaction with email services from the web is not possible, and for well-known security reasons. To support new interactions, we design Mail/HTTPS as a web-native, so it can fully by used via the web and the browser, securely, from discovery up to message retrieval.<a href="#section-6.1-4" class="pilcrow">¶</a></p>
-<p id="section-6.1-5">To discover responsible mail agents for a host, mail clients MUST check for existence of a file at a well-known URI, deduced from the host part of a given email address. Well-Known URIs are defined in <span>[<a href="#RFC8615" class="cite xref">RFC8615</a>]</span>.<a href="#section-6.1-5" class="pilcrow">¶</a></p>
+<p id="section-6.1-2">SMTP based email relies heavily on DNS records to discover the email destination of a given domain.<a href="#section-6.1-2" class="pilcrow">¶</a></p>
+<p id="section-6.1-3">In Mail/HTTPS however, the discovery method serves the opposite purpose, to deduct the location from where to pull - messages, profile information for a given email address, but also where to send notifications. The authenticity is self-validated by retrieving messages directly from the origin via strict HTTPS and may be further improved through usage of DNSSEC.<a href="#section-6.1-3" class="pilcrow">¶</a></p>
+<p id="section-6.1-4">Mail/HTTPS intentionally does not use DNS discovery. SMTP email predates the web and is incompatible with its document sharing ideas. To this day, direct interaction with email services from the web is not possible, and for good security reasons. To support new interactions, we design Mail/HTTPS as a web-native, so it can fully by used via the web and the browser, securely, from discovery up to message retrieval.<a href="#section-6.1-4" class="pilcrow">¶</a></p>
+<p id="section-6.1-5">To discover responsible mail agents for an email address, mail clients MUST check for existence of a file at a well-known URI, deduced from the host part of a given email address. Well-known URIs are defined in <span>[<a href="#RFC8615" class="cite xref">RFC8615</a>]</span>.<a href="#section-6.1-5" class="pilcrow">¶</a></p>
 <p id="section-6.1-6">For a given address LOCAL_PART@HOST_PART, the Mail/HTTPS well-known file is expected at the following URI, on the root of the HOST_PART:<a href="#section-6.1-6" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-6.1-7">
 <pre>
@@ -1839,20 +1839,16 @@ https://HOST_PART/.well-known/mail.txt
 <p id="section-6.1-9">The retrieved file MUST be a valid text file representing Mail/HTTPS service configuration file. Invalid files are to be ignored in entirety.<a href="#section-6.1-9" class="pilcrow">¶</a></p>
 <p id="section-6.1-10">If the configuration file is present and valid, its content should be read to determine possible Mail/HTTPS service delegation. The configuration file is a simple text file with hostnames of delegated mail agents on each line. Multiple mail agent hostnames may be listed but no more than three. Should more be present, only the first three SHOULD be considered. The well-known file determines the order of accessing the mail agents.<a href="#section-6.1-10" class="pilcrow">¶</a></p>
 <p id="section-6.1-11">Each line of the well-known file MUST be trimmed for surrounding whitespace before being considered.
-Lines starting with hash MUST be ignored as comments. Invalid hostnames MUST be ignored.<a href="#section-6.1-11" class="pilcrow">¶</a></p>
-<ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-6.1-12.1">
-            <p id="section-6.1-12.1.1">To be considered a valid Mail/HTTPS mail agent, it MUST list self in own well-known file.<a href="#section-6.1-12.1.1" class="pilcrow">¶</a></p>
-</li>
-        </ul>
-<p id="section-6.1-13">All valid hostnames listed are assumed to have a copy of all users data. Upon authoring messages, email clients MUST respect the setting and MUST store authored messages on at least two of the listed mail agent hosts, respecting order in upload attempts.<a href="#section-6.1-13" class="pilcrow">¶</a></p>
-<p id="section-6.1-14">When querying and fetching messages, all mail agent hostnames listed in the well-known file MUST be queried.<a href="#section-6.1-14" class="pilcrow">¶</a></p>
-<p id="section-6.1-15">If the well-known file is not present or available, it is assumed the email address HOST_PART is the mail agent hostname under the subdomain 'mail'.<a href="#section-6.1-15" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-6.1-16">
+Lines starting with a hash (#) MUST be ignored as comments. Invalid hostnames MUST be ignored.<a href="#section-6.1-11" class="pilcrow">¶</a></p>
+<p id="section-6.1-12">If the well-known file is not present or available, it is assumed the email address HOST_PART is the mail agent hostname under the subdomain 'mail'.<a href="#section-6.1-12" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-6.1-13">
 <pre>
-https://mail.HOST_PART/.well-known/mail.txt
-</pre><a href="#section-6.1-16" class="pilcrow">¶</a>
+https://mail.HOST_PART
+</pre><a href="#section-6.1-13" class="pilcrow">¶</a>
 </div>
+<p id="section-6.1-14">To be considered a valid Mail/HTTPS mail agent for a given email address, the host MUST respond to a HEAD request for the email address profile with Ok status 200. The actual profile content is not to be considered.<a href="#section-6.1-14" class="pilcrow">¶</a></p>
+<p id="section-6.1-15">All determined valid hostnames are assumed to have a copy of all users data. Upon authoring messages, email clients MUST respect the setting and MUST store authored messages on at least two of the listed mail agent hosts, respecting order in upload attempts.<a href="#section-6.1-15" class="pilcrow">¶</a></p>
+<p id="section-6.1-16">When querying and fetching messages, all mail agent hostnames listed in the well-known file MUST be queried.<a href="#section-6.1-16" class="pilcrow">¶</a></p>
 <div id="example-configuration">
 <section id="section-6.1.1">
           <h4 id="name-example-configuration">
@@ -2229,7 +2225,7 @@ ed25519$98335b06f02440e9$pWHxd1/jCwkO5Ao5+sc+xDI01DWER2VAYBKCDEK/LgPBBwohiAcBENm
           <h4 id="name-private-messages">
 <a href="#section-9.1.1" class="section-number selfRef">9.1.1. </a><a href="#name-private-messages" class="section-name selfRef">Private Messages</a>
           </h4>
-<p id="section-9.1.1-1">Each private Mail/HTTPS message has a minimum duration of 7 days (168 hours) from the time of the upload. Longer duration MAY be permitted by mail agents but is NOT RECOMMENDED.<a href="#section-9.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-9.1.1-1">Each private Mail/HTTPS message has an exact duration of 7 days (168 hours) from the time of the upload<a href="#section-9.1.1-1" class="pilcrow">¶</a></p>
 <p id="section-9.1.1-2">Should the reader be unavailable to retrieve the message during the message lifetime, the author MAY NOT extend the duration of the already uploaded message but rather MUST make a new attempt by re-uploading and re-notifying readers. This may seem wasteful, but it permits simplicity in agent operations. Agents are simple transient message caches. Private messages SHOULD NOT be kept for longer periods.<a href="#section-9.1.1-2" class="pilcrow">¶</a></p>
 <p id="section-9.1.1-3">During the message lifetime on the mail agents, email clients MAY inquire the state of messages awaiting pickup. After the message has expired on the mail agent, the mail agent SHOULD clean up the expired messages automatically. However, the message would typically still be available as a Sent message. Mail clients MAY permit pickup inquiry of sent messages based on the 'status' private API of recently authored messages.<a href="#section-9.1.1-3" class="pilcrow">¶</a></p>
 <p id="section-9.1.1-4">Private messages MAY NOT be pinned.<a href="#section-9.1.1-4" class="pilcrow">¶</a></p>
@@ -2531,7 +2527,7 @@ Message-Envelope-Order: Message-Id,Message-Stream,Message-Size,Message-Checksum,
 <a href="#section-11.1" class="section-number selfRef">11.1. </a><a href="#name-payload-2" class="section-name selfRef">Payload</a>
         </h3>
 <p id="section-11.1-1">Notifications are initiated from the Mail/HTTPS client of the author and sent directly to the mail agents of the readers.<a href="#section-11.1-1" class="pilcrow">¶</a></p>
-<p id="section-11.1-2">Each notification includes the author's email address, which is encrypted using the reader's public encryption key. This encrypted address serves a dual purpose: it's used for identifying new contact requests and verifying the authenticity of the notification when retrieved by the reader's email client.<a href="#section-11.1-2" class="pilcrow">¶</a></p>
+<p id="section-11.1-2">Each notification includes the author's email address, which is encrypted anonymously using the reader's public encryption key. This encrypted address serves a dual purpose: it's used for identifying new contact requests and verifying the authenticity of the notification when retrieved by the reader's email client.<a href="#section-11.1-2" class="pilcrow">¶</a></p>
 <p id="section-11.1-3">The notification call is publicly authenticated with the remote mail agent, requiring a signed nonce in the HTTP headers. However, this nonce is only used for verifying the signature locally. The mail agent itself is unable to independently confirm the authenticity of notifications because it lacks information about their origin.<a href="#section-11.1-3" class="pilcrow">¶</a></p>
 <p id="section-11.1-4">If the reader configures their home agent to accept notifications exclusively from their own connection identifiers, the mail agent may decline notification requests, essentially also preventing the acceptance of new contact requests.<a href="#section-11.1-4" class="pilcrow">¶</a></p>
 </section>
@@ -2541,7 +2537,8 @@ Message-Envelope-Order: Message-Id,Message-Stream,Message-Size,Message-Checksum,
         <h3 id="name-lifetime">
 <a href="#section-11.2" class="section-number selfRef">11.2. </a><a href="#name-lifetime" class="section-name selfRef">Lifetime</a>
         </h3>
-<p id="section-11.2-1">Notification lifetime is consistent with the lifetime of messages and is valid for minimum 7 days (168 hours).<a href="#section-11.2-1" class="pilcrow">¶</a></p>
+<p id="section-11.2-1">Notification lifetime is consistent with the messages lifetime and is valid for exactly 7 days (168 hours) upon recieving. Should a known link (known author) repeat the notification, an existing notification SHOULD be reinstated for another notification lifetime, non-cumulatively, as if it were non-existing.<a href="#section-11.2-1" class="pilcrow">¶</a></p>
+<p id="section-11.2-2">Notifications of unknown (non-approved) authors be repeated, the notification MAY NOT be prolonged.<a href="#section-11.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2696,6 +2693,7 @@ Authorization: SOTN
 <div class="alignLeft art-text artwork" id="section-14.2.1-3">
 <pre>
 HTTPS GET /mail/HOST_PART/LOCAL_PART/profile
+HTTPS HEAD /mail/HOST_PART/LOCAL_PART/profile
 </pre><a href="#section-14.2.1-3" class="pilcrow">¶</a>
 </div>
 <p id="section-14.2.1-4">Common HTTP status responses apply. The plaintext response body is expected only with a HTTP 200 status.<a href="#section-14.2.1-4" class="pilcrow">¶</a></p>
