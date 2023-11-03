@@ -1846,7 +1846,7 @@ Lines starting with a hash (#) MUST be ignored as comments. Invalid hostnames MU
 https://mail.HOST_PART
 </pre><a href="#section-6.1-13" class="pilcrow">¶</a>
 </div>
-<p id="section-6.1-14">To be considered a valid Mail/HTTPS mail agent for a given email address, the host MUST respond to a HEAD request for the email address profile with Ok status 200. The actual profile content is not to be considered.<a href="#section-6.1-14" class="pilcrow">¶</a></p>
+<p id="section-6.1-14">To be considered a valid Mail/HTTPS mail agent for a given email address, the host MUST respond to a HEAD request for the email address profile with Ok status 200. The actual profile content is not to be returned or considered.<a href="#section-6.1-14" class="pilcrow">¶</a></p>
 <p id="section-6.1-15">All determined valid hostnames are assumed to have a copy of all users data. Upon authoring messages, email clients MUST respect the setting and MUST store authored messages on at least two of the listed mail agent hosts, respecting order in upload attempts.<a href="#section-6.1-15" class="pilcrow">¶</a></p>
 <p id="section-6.1-16">When querying and fetching messages, all mail agent hostnames listed in the well-known file MUST be queried.<a href="#section-6.1-16" class="pilcrow">¶</a></p>
 <div id="example-configuration">
@@ -2734,9 +2734,9 @@ HTTPS GET /mail/HOST_PART/LOCAL_PART/link/LINK
 <a href="#section-14.2.4" class="section-number selfRef">14.2.4. </a><a href="#name-notifications-2" class="section-name selfRef">Notifications</a>
           </h4>
 <p id="section-14.2.4-1">Once an author makes a message available to readers, the author is expected to notify readers' mail agents of the presence of new messages.<a href="#section-14.2.4-1" class="pilcrow">¶</a></p>
-<p id="section-14.2.4-2">The notifications MUST be made available over HTTPS PUT requests requiring nonce (SOTN) authentication. The payload of the request is email address of the notifier, encrypted anonymously using the notifee public encryption key, as described previously in asymmetric ciphers part of this document.<a href="#section-14.2.4-2" class="pilcrow">¶</a></p>
+<p id="section-14.2.4-2">The notifications MUST be made available over HTTPS PUT requests requiring nonce (SOTN) authentication. The payload of the request is email address of the notifier, encrypted anonymously using the reader's public encryption key, as described previously in asymmetric ciphers part of this document.<a href="#section-14.2.4-2" class="pilcrow">¶</a></p>
 <p id="section-14.2.4-3">Notifee's mail agent does not have enough data to verify the notification request and should accept the request even if unverified. The verification always happens locally on email clients using actual profile data.<a href="#section-14.2.4-3" class="pilcrow">¶</a></p>
-<p id="section-14.2.4-4">For a notifee email address of LOCAL_PART@HOST_PART and connection identifier LINK between notifier and notifee, the notify request is to be made at path:<a href="#section-14.2.4-4" class="pilcrow">¶</a></p>
+<p id="section-14.2.4-4">For a reader email address of LOCAL_PART@HOST_PART and connection identifier LINK between notifier (author) and reader, the notify request is to be made at path:<a href="#section-14.2.4-4" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-14.2.4-5">
 <pre>
 HTTPS PUT /mail/HOST_PART/LOCAL_PART/link/LINK/notifications
@@ -2744,8 +2744,10 @@ HTTPS PUT /mail/HOST_PART/LOCAL_PART/link/LINK/notifications
 </div>
 <p id="section-14.2.4-6">Response body is always ignored.<a href="#section-14.2.4-6" class="pilcrow">¶</a></p>
 <p id="section-14.2.4-7">Accepted notify requests are confirmed with a HTTP 201 Created status.<a href="#section-14.2.4-7" class="pilcrow">¶</a></p>
-<p id="section-14.2.4-8">Repeated requests for the same link MUST be ignored without updating or extending the lifetime of the initial notification. Such repeated requests are confirmed with HTTP 208 Already Reported status. Notifications past their lifetime are silently dropped.<a href="#section-14.2.4-8" class="pilcrow">¶</a></p>
-<p id="section-14.2.4-9">If the notifee does not accept public contact requests and the connection identifier (link) is not known to the notifee, the home agent MUST return HTTP 403 Forbidden status.<a href="#section-14.2.4-9" class="pilcrow">¶</a></p>
+<p id="section-14.2.4-8">Repeated requests for the same link, which exists in the reader's links, SHOULD extend the lifetime of the initial notification just as if the previous notification did not exist. Such repeated requests are confirmed with HTTP 208 Already Reported status.<a href="#section-14.2.4-8" class="pilcrow">¶</a></p>
+<p id="section-14.2.4-9">Repeated requests for non-existing links SHOULD NOT extend the lifetime of the initial notification.<a href="#section-14.2.4-9" class="pilcrow">¶</a></p>
+<p id="section-14.2.4-10">Notifications past their lifetime are silently dropped on the mail agent.<a href="#section-14.2.4-10" class="pilcrow">¶</a></p>
+<p id="section-14.2.4-11">If the reader does not accept public contact requests and the connection identifier (link) is not known to the reader, the home agent MUST return HTTP 403 Forbidden status.<a href="#section-14.2.4-11" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="messages">
