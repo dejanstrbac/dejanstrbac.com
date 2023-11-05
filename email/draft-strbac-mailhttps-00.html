@@ -1650,7 +1650,7 @@ li > p:last-of-type:only-child {
 <p id="section-2.2-1">Deliverability is one of the most important terms of SMTP based email. This invented word has erroneously entered the colloquial language due to the ever-present issues of push-email.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
 <p id="section-2.2-2">Deliverability stands for the ease of access to one's inbox. This ironically also represents the core issue of push-email, as interests of senders and recipients most often do not align. By any sane standards, access to one's top of the messages queue - inbox, should never be in the hands of anyone else but the queue owner.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
 <p id="section-2.2-3">It is time to forget the old terminology - spam filtering, blacklists, bounces, reputations (IP &amp; domain) &amp; deliverability. Messages should never be rejected, queued, quarantined or deferred, and especially not without final recipient's knowledge. The dependency on middle-men, providers and postmasters must be a fact of the past.<a href="#section-2.2-3" class="pilcrow">¶</a></p>
-<p id="section-2.2-4">In Mail/HTTPS, it is the final reader that determines "deliverability," and never the author/sender or the infrastructures in between.<a href="#section-2.2-4" class="pilcrow">¶</a></p>
+<p id="section-2.2-4">In Mail/HTTPS, it is the final reader that determines deliverability, subscriptions and mailbox access overall, and never the author (sender), or the infrastructures in between including that of the reader itself.<a href="#section-2.2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="flow-overview">
@@ -1824,8 +1824,8 @@ jimmy1988@weasy.net
         </h3>
 <p id="section-6.1-1">To initiate communication, communicating parties must first discover each other's mail agents.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
 <p id="section-6.1-2">SMTP based email relies heavily on DNS records to discover the email destination of a given domain.<a href="#section-6.1-2" class="pilcrow">¶</a></p>
-<p id="section-6.1-3">In Mail/HTTPS however, the discovery method serves the opposite purpose, to deduct the location from where to pull - messages, profile information for a given email address, but also where to send notifications. The authenticity is self-validated by retrieving messages directly from the origin via strict HTTPS and may be further improved through usage of DNSSEC.<a href="#section-6.1-3" class="pilcrow">¶</a></p>
-<p id="section-6.1-4">Mail/HTTPS intentionally does not use DNS discovery. SMTP email predates the web and is incompatible with its document sharing ideas. To this day, direct interaction with email services from the web is not possible, and for good security reasons. To support new interactions, we design Mail/HTTPS as a web-native, so it can fully by used via the web and the browser, securely, from discovery up to message retrieval.<a href="#section-6.1-4" class="pilcrow">¶</a></p>
+<p id="section-6.1-3">In Mail/HTTPS however, the discovery method serves the opposite purpose, to deduct the location from where to pull - messages, profile information for a given email address, but also where to send notifications. The authenticity is self-validated by retrieving messages directly from the origin via strict HTTPS and may be further improved through DNSSEC <span>[<a href="#RFC9364" class="cite xref">RFC9364</a>]</span> deployment.<a href="#section-6.1-3" class="pilcrow">¶</a></p>
+<p id="section-6.1-4">Mail/HTTPS intentionally does not use DNS based discovery. SMTP email predates the web and is incompatible with its document sharing ideas. To this day, direct interaction with email services from the web is not possible, and for good security reasons. To support new interactions, we design Mail/HTTPS as a web-native, so it can fully by used via the web and the browser, securely, from discovery up to message retrieval.<a href="#section-6.1-4" class="pilcrow">¶</a></p>
 <p id="section-6.1-5">To discover responsible mail agents for an email address, mail clients MUST check for existence of a file at a well-known URI, deduced from the host part of a given email address. Well-known URIs are defined in <span>[<a href="#RFC8615" class="cite xref">RFC8615</a>]</span>.<a href="#section-6.1-5" class="pilcrow">¶</a></p>
 <p id="section-6.1-6">For a given address LOCAL_PART@HOST_PART, the Mail/HTTPS well-known file is expected at the following URI, on the root of the HOST_PART:<a href="#section-6.1-6" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-6.1-7">
@@ -3161,8 +3161,12 @@ HTTPS GET /mail/HOST_PART/LOCAL_PART/archive/KEY
 <span class="refAuthor">Nir, Y.</span> and <span class="refAuthor">A. Langley</span>, <span class="refTitle">"ChaCha20 and Poly1305 for IETF Protocols"</span>, <span class="seriesInfo">RFC 8439</span>, <span class="seriesInfo">DOI 10.17487/RFC8439</span>, <time datetime="2018-06" class="refDate">June 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8439">https://www.rfc-editor.org/info/rfc8439</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8615">[RFC8615]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Nottingham, M.</span>, <span class="refTitle">"Well-Known Uniform Resource Identifiers (URIs)"</span>, <span class="seriesInfo">RFC 8615</span>, <span class="seriesInfo">DOI 10.17487/RFC8615</span>, <time datetime="2019-05" class="refDate">May 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8615">https://www.rfc-editor.org/info/rfc8615</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9364">[RFC9364]</dt>
+      <dd>
+<span class="refAuthor">Hoffman, P.</span>, <span class="refTitle">"DNS Security Extensions (DNSSEC)"</span>, <span class="seriesInfo">BCP 237</span>, <span class="seriesInfo">RFC 9364</span>, <span class="seriesInfo">DOI 10.17487/RFC9364</span>, <time datetime="2023-02" class="refDate">February 2023</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc9364">https://www.rfc-editor.org/info/rfc9364</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
