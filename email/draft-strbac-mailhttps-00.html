@@ -1310,7 +1310,7 @@ li > p:last-of-type:only-child {
             <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-authors-and-readers" class="internal xref">Authors and Readers</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-email-address" class="internal xref">Email Address</a></p>
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-address" class="internal xref">Address</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
                 <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-format" class="internal xref">Format</a></p>
@@ -1617,7 +1617,7 @@ li > p:last-of-type:only-child {
 </li>
         <li class="normal" id="section-1-2.7">Reader: person or system authorized to fetch and read messages.<a href="#section-1-2.7" class="pilcrow">¶</a>
 </li>
-        <li class="normal" id="section-1-2.8">Connection identifier: a hash of two email addresses, uniquely identifying a connection between two email users.<a href="#section-1-2.8" class="pilcrow">¶</a>
+        <li class="normal" id="section-1-2.8">Connection identifier: a hash of two addresses, uniquely identifying a connection between two email users.<a href="#section-1-2.8" class="pilcrow">¶</a>
 </li>
         <li class="normal" id="section-1-2.9">Link: a synonym for a connection identifier.<a href="#section-1-2.9" class="pilcrow">¶</a>
 </li>
@@ -1702,20 +1702,21 @@ li > p:last-of-type:only-child {
 <p id="section-3-2">This shift in terminology promotes a more dynamic and user-centric approach to email communication, where users have full control over their interactions and messages.<a href="#section-3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="email-address">
+<div id="address">
 <section id="section-4">
-      <h2 id="name-email-address">
-<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-email-address" class="section-name selfRef">Email Address</a>
+      <h2 id="name-address">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-address" class="section-name selfRef">Address</a>
       </h2>
-<p id="section-4-1">Mail/HTTPS retains the traditional email addressing scheme used in SMTP-email systems, with minor normalization based on de-facto accepted addressing scheme by the majority.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-1">Mail/HTTPS retains the traditional addressing scheme used in SMTP-email systems, with minor normalization based on de-facto accepted addressing scheme by the majority.<a href="#section-4-1" class="pilcrow">¶</a></p>
 <p id="section-4-2">This dual usage allows for the convenience of seamlessly transitioning between legacy and Mail/HTTPS systems without the need for significant changes in the user experience. The address space compatibility also facilitates transitioning.<a href="#section-4-2" class="pilcrow">¶</a></p>
+<p id="section-4-3">SMTP-email refers to addresses as "email" addreses due to their exclusive email applicability. Their scope is however extended in Mail/HTTPS. They represent users, their online account, profile, public information, broadcasts, data etc, not just mere email addresses. In this document we will refer to what is commonly called "email address" as just address.<a href="#section-4-3" class="pilcrow">¶</a></p>
 <div id="format">
 <section id="section-4.1">
         <h3 id="name-format">
 <a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-format" class="section-name selfRef">Format</a>
         </h3>
-<p id="section-4.1-1">Email addresses serve a purpose beyond mere message transmission. They have evolved into a fundamental digital identity, functioning as the primary identifier and recovery mechanism throughout the online realm. Although certain companies attempt to monopolize email addresses by necessitating users to create accounts on their exclusive domains, the reality is that email addresses are inherently decentralized and accessible to all individuals.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
-<p id="section-4.1-2">Unlike <span>[<a href="#RFC5322" class="cite xref">RFC5322</a>]</span> email addresses, which have a very liberal format due to historical reasons and long-obsolete features, the streamlined format of Mail/HTTPS reduces unnecessary challenges in validating and parsing email addresses, as well as minimizing discrepancies between different systems. Mail/HTTPS employs a simplified address format that has proven to be easy to understand and "good-enough" over time:<a href="#section-4.1-2" class="pilcrow">¶</a></p>
+<p id="section-4.1-1">Addresses serve a purpose beyond mere message transmission. They have evolved into a fundamental digital identity, functioning as the primary identifier and recovery mechanism throughout the online realm. Although BigTech attempts to monopolize email addresses by necessitating users to create accounts on their exclusive domains, the reality is that email addresses are inherently decentralized and accessible to all individuals.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+<p id="section-4.1-2">Unlike <span>[<a href="#RFC5322" class="cite xref">RFC5322</a>]</span> email addresses, which have a very liberal format due to historical reasons and long-obsolete features, the streamlined format of Mail/HTTPS reduces unnecessary challenges in validating and parsing addresses, as well as minimizing discrepancies between different systems. Mail/HTTPS employs a simplified address format that has proven to be easy to understand and "good-enough" over time:<a href="#section-4.1-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-4.1-3">
 <pre>
 addr-spec         = local-part "@" hostname
@@ -1726,9 +1727,9 @@ digit             = "0" | "1" | ... | "9"
 </pre><a href="#section-4.1-3" class="pilcrow">¶</a>
 </div>
 <p id="section-4.1-4">The local-part of a Mail/HTTPS address is case-insensitive and MUST NOT exceed a maximum length of 256 characters. Special characters are allowed. Local part MUST NOT start or end with a special character. Special characters MUST NOT be consecutive.<a href="#section-4.1-4" class="pilcrow">¶</a></p>
-<p id="section-4.1-5">Unicode characters MAY NOT be used in email addresses.<a href="#section-4.1-5" class="pilcrow">¶</a></p>
-<p id="section-4.1-6">The domain portion of an email address functions as an identifier for the location from which mail is retrieved. It is understood as the explicit DNS label of the particular host. The domain portion MAY NOT be an IP address.<a href="#section-4.1-6" class="pilcrow">¶</a></p>
-<p id="section-4.1-7">Mail/HTTPS email addresses intentionally do not include display names in the email addresses as these have been misused greatly in SMTP based email. The display name of an email address MUST be retrieved from its live profile.<a href="#section-4.1-7" class="pilcrow">¶</a></p>
+<p id="section-4.1-5">Unicode characters MAY NOT be used in Mail/HTTPS addresses.<a href="#section-4.1-5" class="pilcrow">¶</a></p>
+<p id="section-4.1-6">The domain portion of an address functions as an identifier for the location from which mail is retrieved. It is understood as the explicit DNS label of the particular host. The domain portion MAY NOT be an IP address.<a href="#section-4.1-6" class="pilcrow">¶</a></p>
+<p id="section-4.1-7">Mail/HTTPS addresses intentionally do not include display names in the addresses as these have been misused greatly in SMTP based email. The display name of an address MUST be retrieved from its live profile.<a href="#section-4.1-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="examples">
@@ -1754,8 +1755,8 @@ jimmy1988@weasy.net
 <a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-address-secrecy" class="section-name selfRef">Address Secrecy</a>
         </h3>
 <p id="section-4.3-1">In traditional SMTP-email systems, preserving the secrecy of email addresses is vital, especially for famous individuals, commonly sought-after institutions and public figures. Exposed email addresses are nowadays susceptible to spam, phishing, ransomware and unsolicited messages, leading to privacy concerns and potential security risks.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
-<p id="section-4.3-2">However, in the Mail/HTTPS system, exposing an email address doesn't pose the same risks as in SMTP-email and it does not grant inbox access. This distinction ensures a higher level of security and privacy for users, allowing them to share their email addresses publicly with confidence.<a href="#section-4.3-2" class="pilcrow">¶</a></p>
-<p id="section-4.3-3">The implementation of this restriction is achieved through the use of an address book containing mutual connection identifiers, calculated from the email addresses pair. These identifiers serve as "links" between email users and act as an anonymized allowlist. Such anonymization hides communication logs and metadata from eventual third party providers.<a href="#section-4.3-3" class="pilcrow">¶</a></p>
+<p id="section-4.3-2">However, in the Mail/HTTPS system, exposing an address doesn't pose the same risks as in SMTP-email and it does not grant inbox access. This distinction ensures a higher level of security and privacy for users, allowing them to share their addresses publicly with confidence.<a href="#section-4.3-2" class="pilcrow">¶</a></p>
+<p id="section-4.3-3">The implementation of this restriction is achieved through the use of an address book containing mutual connection identifiers, calculated from the addresses pair. These identifiers serve as "links" between email users and act as an anonymized allowlist. Such anonymization hides communication logs and metadata from eventual third party providers.<a href="#section-4.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1766,18 +1767,18 @@ jimmy1988@weasy.net
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-connection-identifiers-link" class="section-name selfRef">Connection Identifiers (Links)</a>
       </h2>
 <p id="section-5-1">Mail/HTTPS restricts messaging to parties that have mutually agreed to engage in a message exchange. Messages are shared only among authorized and consenting parties, enhancing privacy and security in the communication process.<a href="#section-5-1" class="pilcrow">¶</a></p>
-<p id="section-5-2">To safeguard users from unauthorized messages while preserving the privacy of correspondents' identities from third parties such as service or infrastructure providers, a distinct and constant connection identifier is created for each email connection established between two parties. This identifier is called a mail "link" and is derived from two email addresses.<a href="#section-5-2" class="pilcrow">¶</a></p>
+<p id="section-5-2">To safeguard users from unauthorized messages while preserving the privacy of correspondents' identities from third parties such as service or infrastructure providers, a distinct and constant connection identifier is created for each email connection established between two parties. This identifier is called a mail "link" and is derived from two addresses.<a href="#section-5-2" class="pilcrow">¶</a></p>
 <p id="section-5-3">Mail/HTTPS links ensure that the identities of the correspondents remain confidential and undisclosed to the email service providers throughout the duration of the email exchange, while still allowing service providers to determine whether a request is authorized or not.<a href="#section-5-3" class="pilcrow">¶</a></p>
-<p id="section-5-4">The link is generated by taking two email addresses, lowercasing them, ordering them alphabetically, concatenating them, and then applying the bare SHA2 hash function defined in <span>[<a href="#RFC6234" class="cite xref">RFC6234</a>]</span>, with its result represented in hex encoding. The use of SHA2 hash function ensures that the original email addresses are transformed into irreversible, fixed-length hash values, protecting the correspondents' identities from direct exposure to the email service providers. The resulting hash MUST be considered case insensitive.<a href="#section-5-4" class="pilcrow">¶</a></p>
+<p id="section-5-4">The link is generated by taking two addresses, lowercasing them, ordering them alphabetically, concatenating them, and then applying the bare SHA2 hash function defined in <span>[<a href="#RFC6234" class="cite xref">RFC6234</a>]</span>, with its result represented in hex encoding. The use of SHA2 hash function ensures that the original addresses are transformed into irreversible, fixed-length hash values, protecting the correspondents' identities from direct exposure to the email service providers. The resulting hash MUST be considered case insensitive.<a href="#section-5-4" class="pilcrow">¶</a></p>
 <p id="section-5-5">The deliberate omission of a hashing salt is intentional. Utilizing common connection identifiers between two parties allows for efficient access rights determination and facilitates the discovery of network connections, as further elaborated in this document.<a href="#section-5-5" class="pilcrow">¶</a></p>
 <div id="example">
 <section id="section-5.1">
         <h3 id="name-example">
 <a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-example" class="section-name selfRef">Example</a>
         </h3>
-<p id="section-5.1-1">For two example email addresses "user2@Domain2.tld" and "USER1@domain1.tld.", the resulting link or connection identifier is constructed as following:<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.1-1">For two example addresses "user2@Domain2.tld" and "USER1@domain1.tld.", the resulting link or connection identifier is constructed as following:<a href="#section-5.1-1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-5.1-2">
-<li id="section-5.1-2.1">The lowercased email addresses are order alphabetically:<a href="#section-5.1-2.1" class="pilcrow">¶</a>
+<li id="section-5.1-2.1">The lowercased addresses are order alphabetically:<a href="#section-5.1-2.1" class="pilcrow">¶</a>
 </li>
         </ol>
 <div class="alignLeft art-text artwork" id="section-5.1-3">
@@ -1787,7 +1788,7 @@ jimmy1988@weasy.net
 </pre><a href="#section-5.1-3" class="pilcrow">¶</a>
 </div>
 <ol start="1" type="1" class="normal type-1" id="section-5.1-4">
-<li id="section-5.1-4.1">The two email addresses are concatenated without any separators:<a href="#section-5.1-4.1" class="pilcrow">¶</a>
+<li id="section-5.1-4.1">The two addresses are concatenated without any separators:<a href="#section-5.1-4.1" class="pilcrow">¶</a>
 </li>
         </ol>
 <div class="alignLeft art-text artwork" id="section-5.1-5">
@@ -1824,27 +1825,28 @@ jimmy1988@weasy.net
         </h3>
 <p id="section-6.1-1">To initiate communication, communicating parties must first discover each other's mail agents.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
 <p id="section-6.1-2">SMTP based email relies heavily on DNS records to discover the email destination of a given domain.<a href="#section-6.1-2" class="pilcrow">¶</a></p>
-<p id="section-6.1-3">In Mail/HTTPS however, the discovery method serves the opposite purpose, to deduct the location from where to pull - messages, profile information for a given email address, but also where to send notifications. The authenticity is self-validated by retrieving messages directly from the origin via strict HTTPS and may be further improved through DNSSEC <span>[<a href="#RFC9364" class="cite xref">RFC9364</a>]</span> deployment.<a href="#section-6.1-3" class="pilcrow">¶</a></p>
+<p id="section-6.1-3">In Mail/HTTPS however, the discovery method serves the opposite purpose, to deduct the location from where to pull - messages, profile information for a given address, but also where to send notifications. The authenticity is self-validated by retrieving messages directly from the origin via strict HTTPS and may be further improved through DNSSEC <span>[<a href="#RFC9364" class="cite xref">RFC9364</a>]</span> deployment.<a href="#section-6.1-3" class="pilcrow">¶</a></p>
 <p id="section-6.1-4">Mail/HTTPS intentionally does not use DNS based discovery. SMTP email predates the web and is incompatible with its document sharing ideas. To this day, direct interaction with email services from the web is not possible, and for good security reasons. To support new interactions, we design Mail/HTTPS as a web-native, so it can fully by used via the web and the browser, securely, from discovery up to message retrieval.<a href="#section-6.1-4" class="pilcrow">¶</a></p>
-<p id="section-6.1-5">To discover responsible mail agents for an email address, mail clients MUST check for existence of a file at a well-known URI, deduced from the host part of a given email address. Well-known URIs are defined in <span>[<a href="#RFC8615" class="cite xref">RFC8615</a>]</span>.<a href="#section-6.1-5" class="pilcrow">¶</a></p>
-<p id="section-6.1-6">For a given address LOCAL_PART@HOST_PART, the Mail/HTTPS well-known file is expected at the following URI, on the root of the HOST_PART:<a href="#section-6.1-6" class="pilcrow">¶</a></p>
+<p id="section-6.1-5">To discover responsible mail agents for an address, mail clients MUST check for existence of a file at a well-known URI, deduced from the host part of a given address. Well-known URIs are defined in <span>[<a href="#RFC8615" class="cite xref">RFC8615</a>]</span>.<a href="#section-6.1-5" class="pilcrow">¶</a></p>
+<p id="section-6.1-6">For a given address LOCAL_PART@HOST_PART, the Mail/HTTPS well-known file is attempted at the following URIs in fail-over manner:<a href="#section-6.1-6" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-6.1-7">
 <pre>
 https://HOST_PART/.well-known/mail.txt
+https://mail.HOST_PART/.well-known/mail.txt
 </pre><a href="#section-6.1-7" class="pilcrow">¶</a>
 </div>
 <p id="section-6.1-8">The well-known URI MUST be retrieved over HTTPS and over a trusted connection. File contents served over an un-trusted connection MUST be ignored.<a href="#section-6.1-8" class="pilcrow">¶</a></p>
-<p id="section-6.1-9">The retrieved file MUST be a valid text file representing Mail/HTTPS service configuration file. Invalid files are to be ignored in entirety.<a href="#section-6.1-9" class="pilcrow">¶</a></p>
+<p id="section-6.1-9">The retrieved file MUST be a valid text file representing Mail/HTTPS service configuration file. Invalid contents are to be ignored in their entirety.<a href="#section-6.1-9" class="pilcrow">¶</a></p>
 <p id="section-6.1-10">If the configuration file is present and valid, its content should be read to determine possible Mail/HTTPS service delegation. The configuration file is a simple text file with hostnames of delegated mail agents on each line. Multiple mail agent hostnames may be listed but no more than three. Should more be present, only the first three SHOULD be considered. The well-known file determines the order of accessing the mail agents.<a href="#section-6.1-10" class="pilcrow">¶</a></p>
 <p id="section-6.1-11">Each line of the well-known file MUST be trimmed for surrounding whitespace before being considered.
 Lines starting with a hash (#) MUST be ignored as comments. Invalid hostnames MUST be ignored.<a href="#section-6.1-11" class="pilcrow">¶</a></p>
-<p id="section-6.1-12">If the well-known file is not present or available, it is assumed the email address HOST_PART is the mail agent hostname under the subdomain 'mail'.<a href="#section-6.1-12" class="pilcrow">¶</a></p>
+<p id="section-6.1-12">If no well-known files are available, for a given address LOCAL_PART@HOST_PART, it is assumed mail agent is available at the following URI:<a href="#section-6.1-12" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-6.1-13">
 <pre>
 https://mail.HOST_PART
 </pre><a href="#section-6.1-13" class="pilcrow">¶</a>
 </div>
-<p id="section-6.1-14">To be considered a valid Mail/HTTPS mail agent for a given email address, the host MUST respond to a HEAD request for the email address profile with Ok status 200. The actual profile content is not to be returned or considered.<a href="#section-6.1-14" class="pilcrow">¶</a></p>
+<p id="section-6.1-14">To be considered a valid Mail/HTTPS mail agent for a given address, the host MUST respond to a HEAD request for the address profile with Ok status 200. The actual profile content is not to be returned or considered.<a href="#section-6.1-14" class="pilcrow">¶</a></p>
 <p id="section-6.1-15">All determined valid hostnames are assumed to have a copy of all users data. Upon authoring messages, email clients MUST respect the setting and MUST store authored messages on at least two of the listed mail agent hosts, respecting order in upload attempts.<a href="#section-6.1-15" class="pilcrow">¶</a></p>
 <p id="section-6.1-16">When querying and fetching messages, all mail agent hostnames listed in the well-known file MUST be queried.<a href="#section-6.1-16" class="pilcrow">¶</a></p>
 <div id="example-configuration">
@@ -1884,7 +1886,7 @@ otherdomain2.tld
 <p id="section-7-2">In today's interconnected world, it is immensely valuable to have insights into someone's current status, availability, and sometimes even their location. This information aids in establishing effective communication and helps individuals understand the context in which they are interacting. Additionally, certain details may extend beyond personal contact lists and be publicly visible, contributing to a person's online presence.<a href="#section-7-2" class="pilcrow">¶</a></p>
 <p id="section-7-3">Traditional email systems were not originally designed to accommodate additional information about email address holders. To address this limitation, various initiatives were undertaken to introduce add-ons like proprietary solutions such as <a href="http://en.gravatar.com/">Gravatar</a>, and proposed standards like WebFinger defined in <span>[<a href="#RFC7033" class="cite xref">RFC7033</a>]</span> and <a href="https://www.ietf.org/archive/id/draft-brand-indicators-for-message-identification-03.txt">BIMI</a>. These efforts aimed to provide user information, profile data, or brand images within email communications.<a href="#section-7-3" class="pilcrow">¶</a></p>
 <p id="section-7-4">Despite these endeavors, widespread adoption of these solutions did not materialize. As a result, the most common approach to include supplementary information has been to add a substantial footer in emails. Additionally, relying on provider-dependent profiles and profile images has become a prevailing practice in the absence of widely adopted standards for enhanced email address information and metadata presentation.<a href="#section-7-4" class="pilcrow">¶</a></p>
-<p id="section-7-5">Mail/HTTPS takes inspiration from previous efforts to enhance email functionality by introducing user profiles. In this new scheme, each Mail/HTTPS address is linked to a public profile hosted at a standardized URI. The management of these profiles is handled by the individual's mail agent, providing a centralized and standardized way to access and display user information associated with the email address.<a href="#section-7-5" class="pilcrow">¶</a></p>
+<p id="section-7-5">Mail/HTTPS takes inspiration from previous efforts to enhance email functionality by introducing user profiles. In this new scheme, each Mail/HTTPS address is linked to a public profile hosted at a standardized URI. The management of these profiles is handled by the individual's mail agent, providing a centralized and standardized way to access and display user information associated with the address.<a href="#section-7-5" class="pilcrow">¶</a></p>
 <div id="format-1">
 <section id="section-7.1">
         <h3 id="name-format-2">
@@ -1901,8 +1903,8 @@ otherdomain2.tld
 <a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-multiplicity" class="section-name selfRef">Multiplicity</a>
         </h3>
 <p id="section-7.2-1">In contrast to social media platforms which typically limit users to a single identity, Mail/HTTPS natively allows use of multiple profiles through multiple addresses.<a href="#section-7.2-1" class="pilcrow">¶</a></p>
-<p id="section-7.2-2">Each email address has its own single distinct profile and separate addresses allow users to create and manage different personas for various contexts. This separation of profiles empowers users to maintain distinct presentations for private, fun, casual, and professional interactions, providing greater control over their online identity and presentation.<a href="#section-7.2-2" class="pilcrow">¶</a></p>
-<p id="section-7.2-3">Users can adapt their communication style and information sharing based on the specific context, just by using different email addresses. This is already the norm today with existing email addresses, but without attached profiles, it is assumed one single persona shares the addresses. Mail/HTTPS inverts that relation.<a href="#section-7.2-3" class="pilcrow">¶</a></p>
+<p id="section-7.2-2">Each address has its own single distinct profile and separate addresses allow users to create and manage different personas for various contexts. This separation of profiles empowers users to maintain distinct presentations for private, fun, casual, and professional interactions, providing greater control over their online identity and presentation.<a href="#section-7.2-2" class="pilcrow">¶</a></p>
+<p id="section-7.2-3">Users can adapt their communication style and information sharing based on the specific context, just by using different addresses. This is already the norm today with existing addresses, but without attached profiles, it is assumed one single persona shares the addresses. Mail/HTTPS inverts that relation.<a href="#section-7.2-3" class="pilcrow">¶</a></p>
 <div id="required-profile-attributes">
 <section id="section-7.2.1">
           <h4 id="name-required-profile-attributes">
@@ -1913,7 +1915,7 @@ otherdomain2.tld
 <ul class="normal">
 <li class="normal" id="section-7.2.1-3.1">Signing-Key: This attribute provides information about the user's public signing key, which is utilized to verify the authenticity of messages. Digital signatures enable readers to validate that a message indeed originated from the claimed sender and has remained unaltered during transmission. It is mandatory for this attribute not to be empty.<a href="#section-7.2.1-3.1" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.2.1-3.2">Encryption-Key: This attribute holds the user's public encryption key, which is utilized for encrypting messages intended for the email address holder. Encrypting messages ensures that only the intended reader can decrypt and read the contents, providing a high level of confidentiality and data protection. An empty encryption key indicates that the profile does not accept incoming messages.<a href="#section-7.2.1-3.2" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.2.1-3.2">Encryption-Key: This attribute holds the user's public encryption key, which is utilized for encrypting messages intended for the address holder. Encrypting messages ensures that only the intended reader can decrypt and read the contents, providing a high level of confidentiality and data protection. An empty encryption key indicates that the profile does not accept incoming messages.<a href="#section-7.2.1-3.2" class="pilcrow">¶</a>
 </li>
           </ul>
 </section>
@@ -1929,7 +1931,7 @@ otherdomain2.tld
 <ul class="normal">
 <li class="normal" id="section-7.2.2-4.1">About: The attribute provides a brief description or summary of the profile owner's background, interests, or personal statement. It is a free-form attribute.<a href="#section-7.2.2-4.1" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.2.2-4.2">Address-Expansion: If the address serves as a grouping of other addresses, or is a pointer for forwarding further, this attribute holds comma separated destination email addresses. If the profile address is meant to receive a copy too, it is expected to be included in the list.<a href="#section-7.2.2-4.2" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.2.2-4.2">Address-Expansion: If the address serves as a grouping of other addresses, or is a pointer for forwarding further, this attribute holds comma separated destination addresses. If the profile address is meant to receive a copy too, it is expected to be included in the list.<a href="#section-7.2.2-4.2" class="pilcrow">¶</a>
 </li>
             <li class="normal" id="section-7.2.2-4.3">Away-Until: If set, the attribute indicates that the user may not read messages until the date given in ISO 8601 format (YYYYMMDD). Mail clients SHOULD warn authors from authoring messages for away readers. Address-Expansion MAY be used for indicating delegations.<a href="#section-7.2.2-4.3" class="pilcrow">¶</a>
 </li>
@@ -1955,13 +1957,13 @@ otherdomain2.tld
 </li>
             <li class="normal" id="section-7.2.2-4.14">Location: The attribute represents the geographical location or address of the profile owner. It is a free-form attribute.<a href="#section-7.2.2-4.14" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.2.2-4.15">Mailing-Address: The attribute represents the physical address or mailing address of the profile owner. The field SHOULD NOT be an email address as the email address is implicit. It is a free-form attribute.<a href="#section-7.2.2-4.15" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.2.2-4.15">Mailing-Address: The attribute represents the physical address or mailing address of the profile owner. The field SHOULD NOT be confused with profile's Mail/HTTPS address which is implicit and not neccessary in the profile. It is a free-form attribute.<a href="#section-7.2.2-4.15" class="pilcrow">¶</a>
 </li>
             <li class="normal" id="section-7.2.2-4.16">Movies: The attribute lists films or movie genres that the profile owner enjoys. It is a free-form attribute.<a href="#section-7.2.2-4.16" class="pilcrow">¶</a>
 </li>
             <li class="normal" id="section-7.2.2-4.17">Music: The attribute indicates the profile owner's preferred music genres, artists, or songs. It is a free-form attribute.<a href="#section-7.2.2-4.17" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.2.2-4.18">Name: This attribute represents the display name associated with the email address. Previously, it was typically written as "name" &lt;address&gt;. The name helps identify the user or entity behind the email address and it SHOULD NOT be empty.<a href="#section-7.2.2-4.18" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.2.2-4.18">Name: This attribute represents the display name associated with the address. Previously, in SMTP-email it was typically written as "name" &lt;address&gt;. The name helps identify the user or entity behind the address and it SHOULD NOT be empty.<a href="#section-7.2.2-4.18" class="pilcrow">¶</a>
 </li>
             <li class="normal" id="section-7.2.2-4.19">Notes: The attribute allows for additional remarks or notes about the profile owner, such as preferences, interests, or specific instructions. It is a free-form attribute.<a href="#section-7.2.2-4.19" class="pilcrow">¶</a>
 </li>
@@ -2001,7 +2003,7 @@ otherdomain2.tld
         <h3 id="name-profile-image">
 <a href="#section-7.3" class="section-number selfRef">7.3. </a><a href="#name-profile-image" class="section-name selfRef">Profile Image</a>
         </h3>
-<p id="section-7.3-1">Each email address may provide a profile image to be used as a thumbnail as well as profile banner. It serves to clearly identify the user of a given email address. It is RECOMMENDED for all email addresses to provide a profile image.<a href="#section-7.3-1" class="pilcrow">¶</a></p>
+<p id="section-7.3-1">Each address may provide a profile image to be used as a thumbnail as well as profile banner. It serves to clearly identify the user of a given address. It is RECOMMENDED for all addresses to provide a profile image.<a href="#section-7.3-1" class="pilcrow">¶</a></p>
 <p id="section-7.3-2">Just as the profile, the profile image MUST be served over HTTPS. Profile images served over insecure connections are ignored.<a href="#section-7.3-2" class="pilcrow">¶</a></p>
 <p id="section-7.3-3">The profile image format MAY be one of the following: JPEG, GIF, PNG, or WebP.<a href="#section-7.3-3" class="pilcrow">¶</a></p>
 <p id="section-7.3-4">The profile image size SHOULD not exceed 512KB in size. If this size limit is exceeded, the profile image MAY be omitted for a placeholder.<a href="#section-7.3-4" class="pilcrow">¶</a></p>
@@ -2387,7 +2389,7 @@ Message-Envelope-Order: Message-Id,Message-Stream,Message-Size,Message-Checksum,
 <ul class="normal">
 <li class="normal" id="section-9.5.1.2-3.1">Id: Message identifier, SHOULD match the envelope Message-ID unless the message is forwarded in which case it MAY differ.<a href="#section-9.5.1.2-3.1" class="pilcrow">¶</a>
 </li>
-              <li class="normal" id="section-9.5.1.2-3.2">Author: The email address of the author as a valid Mail/HTTPS email address.<a href="#section-9.5.1.2-3.2" class="pilcrow">¶</a>
+              <li class="normal" id="section-9.5.1.2-3.2">Author: The address of the author as a valid Mail/HTTPS address.<a href="#section-9.5.1.2-3.2" class="pilcrow">¶</a>
 </li>
               <li class="normal" id="section-9.5.1.2-3.3">Date: The authored-on date in ISO 8601 UTC format, for example "2023-10-24T19:04:31Z"<a href="#section-9.5.1.2-3.3" class="pilcrow">¶</a>
 </li>
@@ -2404,7 +2406,7 @@ Message-Envelope-Order: Message-Id,Message-Stream,Message-Size,Message-Checksum,
             </ul>
 <p id="section-9.5.1.2-4">The following content headers depend on the nature of the message:<a href="#section-9.5.1.2-4" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-9.5.1.2-5.1">Readers: The email addresses of the readers, comma separated, used for expanding the Message-Access envelope header. Present only in private messages. Expanded addresses are displayed in parentheses following the original address.<a href="#section-9.5.1.2-5.1" class="pilcrow">¶</a>
+<li class="normal" id="section-9.5.1.2-5.1">Readers: The addresses of the readers, comma separated, used for expanding the Message-Access envelope header. Present only in private messages. Expanded addresses are displayed in parentheses following the original address.<a href="#section-9.5.1.2-5.1" class="pilcrow">¶</a>
 </li>
               <li class="normal" id="section-9.5.1.2-5.2">File-Name: If the message payload is a file, the original filename with case preserved.<a href="#section-9.5.1.2-5.2" class="pilcrow">¶</a>
 </li>
@@ -2525,7 +2527,7 @@ Message-Envelope-Order: Message-Id,Message-Stream,Message-Size,Message-Checksum,
 <a href="#section-11.1" class="section-number selfRef">11.1. </a><a href="#name-payload-2" class="section-name selfRef">Payload</a>
         </h3>
 <p id="section-11.1-1">Notifications are initiated from the Mail/HTTPS client of the author and sent directly to the mail agents of the readers.<a href="#section-11.1-1" class="pilcrow">¶</a></p>
-<p id="section-11.1-2">Each notification includes the author's email address, which is encrypted anonymously using the reader's public encryption key. This encrypted address serves a dual purpose: it's used for identifying new contact requests and verifying the authenticity of the notification when retrieved by the reader's email client.<a href="#section-11.1-2" class="pilcrow">¶</a></p>
+<p id="section-11.1-2">Each notification includes the author's address, which is encrypted anonymously using the reader's public encryption key. This encrypted address serves a dual purpose: it's used for identifying new contact requests and verifying the authenticity of the notification when retrieved by the reader's email client.<a href="#section-11.1-2" class="pilcrow">¶</a></p>
 <p id="section-11.1-3">The notification call is publicly authenticated with the remote mail agent, requiring a signed nonce in the HTTP headers. However, this nonce is only used for verifying the signature locally. The mail agent itself is unable to independently confirm the authenticity of notifications because it lacks information about their origin.<a href="#section-11.1-3" class="pilcrow">¶</a></p>
 <p id="section-11.1-4">If the reader configures their home agent to accept notifications exclusively from their own connection identifiers, the mail agent may decline notification requests, essentially also preventing the acceptance of new contact requests.<a href="#section-11.1-4" class="pilcrow">¶</a></p>
 </section>
@@ -2549,7 +2551,7 @@ Message-Envelope-Order: Message-Id,Message-Stream,Message-Size,Message-Checksum,
 <p id="section-12-1">In SMTP-email, messages are often automatically forwarded to other addresses or sent to virtual alias addresses which then distribute the message to multiple recipients. Such setups hide the final readers from the author, who may have disapproved of the message distribution. Moreover, automatic forwarding breaks email protections and increases likelihood of being rejected or silently dropped as spam.<a href="#section-12-1" class="pilcrow">¶</a></p>
 <p id="section-12-2">There are valid cases for aliasing/forwarding however:<a href="#section-12-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-12-3.1">The user may have changed email address, and would like to receive messages on the new address.<a href="#section-12-3.1" class="pilcrow">¶</a>
+<li class="normal" id="section-12-3.1">The user may have changed address, and would like to receive messages on the new address.<a href="#section-12-3.1" class="pilcrow">¶</a>
 </li>
         <li class="normal" id="section-12-3.2">While away, messages could be delegated to a responsible substitute, a common case in business.<a href="#section-12-3.2" class="pilcrow">¶</a>
 </li>
@@ -2687,7 +2689,7 @@ Authorization: SOTN
 <a href="#section-14.2.1" class="section-number selfRef">14.2.1. </a><a href="#name-profile" class="section-name selfRef">Profile</a>
           </h4>
 <p id="section-14.2.1-1">The user's profile is served by the user's mail agents. The profile MUST be made available over HTTPS for public GET requests requiring no authentication.<a href="#section-14.2.1-1" class="pilcrow">¶</a></p>
-<p id="section-14.2.1-2">For an email address LOCAL_PART@HOST_PART, the profile is expected at the path:<a href="#section-14.2.1-2" class="pilcrow">¶</a></p>
+<p id="section-14.2.1-2">For a given address LOCAL_PART@HOST_PART, the profile is expected at the path:<a href="#section-14.2.1-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-14.2.1-3">
 <pre>
 HTTPS GET /mail/HOST_PART/LOCAL_PART/profile
@@ -2703,7 +2705,7 @@ HTTPS HEAD /mail/HOST_PART/LOCAL_PART/profile
 <a href="#section-14.2.2" class="section-number selfRef">14.2.2. </a><a href="#name-profile-image-2" class="section-name selfRef">Profile Image</a>
           </h4>
 <p id="section-14.2.2-1">The profile image MUST be made available over HTTPS for public GET requests requiring no authentication.<a href="#section-14.2.2-1" class="pilcrow">¶</a></p>
-<p id="section-14.2.2-2">For an email address LOCAL_PART@HOST_PART, the profile image is expected at the path:<a href="#section-14.2.2-2" class="pilcrow">¶</a></p>
+<p id="section-14.2.2-2">For a given address LOCAL_PART@HOST_PART, the profile image is expected at the path:<a href="#section-14.2.2-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-14.2.2-3">
 <pre>
 HTTPS GET /mail/HOST_PART/LOCAL_PART/image
@@ -2717,7 +2719,7 @@ HTTPS GET /mail/HOST_PART/LOCAL_PART/image
           <h4 id="name-links">
 <a href="#section-14.2.3" class="section-number selfRef">14.2.3. </a><a href="#name-links" class="section-name selfRef">Links</a>
           </h4>
-<p id="section-14.2.3-1">Any Mail/HTTPS may query any LOCAL_PART@HOST_PART user's mail agent for the existence of connection identifier of a specific email address QUERY_LOCAL_PART@QUERY_HOST_PART. The connection identifier LINK is derived from two addresses (LOCAL_PART@HOST_PART and QUERY_LOCAL_PART@QUERY_HOST_PART).<a href="#section-14.2.3-1" class="pilcrow">¶</a></p>
+<p id="section-14.2.3-1">Any Mail/HTTPS may query any LOCAL_PART@HOST_PART user's mail agent for the existence of connection identifier of a given address QUERY_LOCAL_PART@QUERY_HOST_PART. The connection identifier LINK is derived from two addresses (LOCAL_PART@HOST_PART and QUERY_LOCAL_PART@QUERY_HOST_PART).<a href="#section-14.2.3-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-14.2.3-2">
 <pre>
 HTTPS GET /mail/HOST_PART/LOCAL_PART/link/LINK
@@ -2732,9 +2734,9 @@ HTTPS GET /mail/HOST_PART/LOCAL_PART/link/LINK
 <a href="#section-14.2.4" class="section-number selfRef">14.2.4. </a><a href="#name-notifications-2" class="section-name selfRef">Notifications</a>
           </h4>
 <p id="section-14.2.4-1">Once an author makes a message available to readers, the author is expected to notify readers' mail agents of the presence of new messages.<a href="#section-14.2.4-1" class="pilcrow">¶</a></p>
-<p id="section-14.2.4-2">The notifications MUST be made available over HTTPS PUT requests requiring nonce (SOTN) authentication. The payload of the request is email address of the notifier, encrypted anonymously using the reader's public encryption key, as described previously in asymmetric ciphers part of this document.<a href="#section-14.2.4-2" class="pilcrow">¶</a></p>
+<p id="section-14.2.4-2">The notifications MUST be made available over HTTPS PUT requests requiring nonce (SOTN) authentication. The payload of the request is the address of the notifier, encrypted anonymously using the reader's public encryption key, as described previously in asymmetric ciphers part of this document.<a href="#section-14.2.4-2" class="pilcrow">¶</a></p>
 <p id="section-14.2.4-3">Notifee's mail agent does not have enough data to verify the notification request and should accept the request even if unverified. The verification always happens locally on email clients using actual profile data.<a href="#section-14.2.4-3" class="pilcrow">¶</a></p>
-<p id="section-14.2.4-4">For a reader email address of LOCAL_PART@HOST_PART and connection identifier LINK between notifier (author) and reader, the notify request is to be made at path:<a href="#section-14.2.4-4" class="pilcrow">¶</a></p>
+<p id="section-14.2.4-4">For a given reader's address of LOCAL_PART@HOST_PART and connection identifier LINK between notifier (author) and reader, the notify request is to be made at path:<a href="#section-14.2.4-4" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-14.2.4-5">
 <pre>
 HTTPS PUT /mail/HOST_PART/LOCAL_PART/link/LINK/notifications
@@ -2765,7 +2767,7 @@ HTTPS PUT /mail/HOST_PART/LOCAL_PART/link/LINK/notifications
               <h6 id="name-list">
 <a href="#section-14.2.5.1.1" class="section-number selfRef">14.2.5.1.1. </a><a href="#name-list" class="section-name selfRef">List</a>
               </h6>
-<p id="section-14.2.5.1.1-1">For a given author email address of LOCAL_PART@HOST_PART, and connection identifier LINK between author and reader, the reader may request a list of available messages at the path:<a href="#section-14.2.5.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-14.2.5.1.1-1">For a given author's address of LOCAL_PART@HOST_PART, and connection identifier LINK between author and reader, the reader may request a list of available messages at the path:<a href="#section-14.2.5.1.1-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-14.2.5.1.1-2">
 <pre>
 HTTPS GET /mail/HOST_PART/LOCAL_PART/link/LINK/messages
@@ -2812,7 +2814,7 @@ HTTPS GET /mail/HOST_PART/LOCAL_PART/link/LINK/messages/MESSAGE_ID
               <h6 id="name-list-2">
 <a href="#section-14.2.5.2.1" class="section-number selfRef">14.2.5.2.1. </a><a href="#name-list-2" class="section-name selfRef">List</a>
               </h6>
-<p id="section-14.2.5.2.1-1">For a given author email address of LOCAL_PART@HOST_PART, the reader may request a list of available broadcast messages at the path:<a href="#section-14.2.5.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-14.2.5.2.1-1">For a given author's address of LOCAL_PART@HOST_PART, the reader may request a list of available broadcast messages at the path:<a href="#section-14.2.5.2.1-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-14.2.5.2.1-2">
 <pre>
 HTTPS GET /mail/HOST_PART/LOCAL_PART/messages
@@ -2834,7 +2836,7 @@ of message identifiers, each identifier on its own line.<a href="#section-14.2.5
               <h6 id="name-fetch-2">
 <a href="#section-14.2.5.2.2" class="section-number selfRef">14.2.5.2.2. </a><a href="#name-fetch-2" class="section-name selfRef">Fetch</a>
               </h6>
-<p id="section-14.2.5.2.2-1">For a given author email address of LOCAL_PART@HOST_PART, and previously obtained message identifier MESSAGE_ID, the reader may fetch the relevant broadcast messages at the path:<a href="#section-14.2.5.2.2-1" class="pilcrow">¶</a></p>
+<p id="section-14.2.5.2.2-1">For a given author's address of LOCAL_PART@HOST_PART, and previously obtained message identifier MESSAGE_ID, the reader may fetch the relevant broadcast messages at the path:<a href="#section-14.2.5.2.2-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-14.2.5.2.2-2">
 <pre>
 HTTPS GET /mail/HOST_PART/LOCAL_PART/messages/MESSAGE_ID
@@ -2856,7 +2858,7 @@ HTTPS GET /mail/HOST_PART/LOCAL_PART/messages/MESSAGE_ID
 <a href="#section-14.3" class="section-number selfRef">14.3. </a><a href="#name-private-api" class="section-name selfRef">Private API</a>
         </h3>
 <p id="section-14.3-1">While the public mail agent API defines interoperability between clients and mail agents of contacts, the private API defines a universal email clients communication with home mail agents.<a href="#section-14.3-1" class="pilcrow">¶</a></p>
-<p id="section-14.3-2">All private mail API requests are under the path /home and MUST be authenticated. In the following examples, it is assumed that the user's email address is LOCAL_PART@HOST_PART.<a href="#section-14.3-2" class="pilcrow">¶</a></p>
+<p id="section-14.3-2">All private mail API requests are under the path /home and MUST be authenticated. In the following examples, it is assumed that the user's address is LOCAL_PART@HOST_PART.<a href="#section-14.3-2" class="pilcrow">¶</a></p>
 <div id="notifications-2">
 <section id="section-14.3.1">
           <h4 id="name-notifications-3">
@@ -2867,7 +2869,7 @@ HTTPS GET /mail/HOST_PART/LOCAL_PART/messages/MESSAGE_ID
 <ul class="normal">
 <li class="normal" id="section-14.3.1-3.1">unique notification identifier, provided by the mail agent<a href="#section-14.3.1-3.1" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-14.3.1-3.2">the payload sent by authors, containing encrypted author email address;<a href="#section-14.3.1-3.2" class="pilcrow">¶</a>
+            <li class="normal" id="section-14.3.1-3.2">the payload sent by authors, containing encrypted author address;<a href="#section-14.3.1-3.2" class="pilcrow">¶</a>
 </li>
             <li class="normal" id="section-14.3.1-3.3">fingerprint of author's public signing key, used for delivering the notification.<a href="#section-14.3.1-3.3" class="pilcrow">¶</a>
 </li>
