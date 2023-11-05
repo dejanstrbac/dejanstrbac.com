@@ -1837,10 +1837,10 @@ https://mail.HOST_PART/.well-known/mail.txt
 </div>
 <p id="section-6.1-8">The well-known URI MUST be retrieved over HTTPS and over a trusted connection. File contents served over an un-trusted connection MUST be ignored.<a href="#section-6.1-8" class="pilcrow">¶</a></p>
 <p id="section-6.1-9">The retrieved file MUST be a valid text file representing Mail/HTTPS service configuration file. Invalid contents are to be ignored in their entirety.<a href="#section-6.1-9" class="pilcrow">¶</a></p>
-<p id="section-6.1-10">If the configuration file is present and valid, its content should be read to determine possible Mail/HTTPS service delegation. The configuration file is a simple text file with hostnames of delegated mail agents on each line. Multiple mail agent hostnames may be listed but no more than three. Should more be present, only the first three SHOULD be considered. The well-known file determines the order of accessing the mail agents.<a href="#section-6.1-10" class="pilcrow">¶</a></p>
+<p id="section-6.1-10">If the configuration file is present and valid, its content should be read to determine possible Mail/HTTPS service delegation. The configuration file is a simple text file with hostnames of delegated mail agents on each line. Multiple mail agent hostnames MAY be listed. Should more be present, only the first three SHOULD be considered. The well-known file determines the order of accessing the mail agents.<a href="#section-6.1-10" class="pilcrow">¶</a></p>
 <p id="section-6.1-11">Each line of the well-known file MUST be trimmed for surrounding whitespace before being considered.
 Lines starting with a hash (#) MUST be ignored as comments. Invalid hostnames MUST be ignored.<a href="#section-6.1-11" class="pilcrow">¶</a></p>
-<p id="section-6.1-12">If no well-known files are available, for a given address LOCAL_PART@HOST_PART, it is assumed mail agent is available at the following URI:<a href="#section-6.1-12" class="pilcrow">¶</a></p>
+<p id="section-6.1-12">If no well-known files are available or no valid mail agents are determined for a given address LOCAL_PART@HOST_PART, final attempt for mail agent should be made at the following URI:<a href="#section-6.1-12" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-6.1-13">
 <pre>
 https://mail.HOST_PART
@@ -1915,8 +1915,6 @@ otherdomain2.tld
 <ul class="normal">
 <li class="normal" id="section-7.2.1-3.1">Signing-Key: This attribute provides information about the user's public signing key, which is utilized to verify the authenticity of messages. Digital signatures enable readers to validate that a message indeed originated from the claimed sender and has remained unaltered during transmission. It is mandatory for this attribute not to be empty.<a href="#section-7.2.1-3.1" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.2.1-3.2">Encryption-Key: This attribute holds the user's public encryption key, which is utilized for encrypting messages intended for the address holder. Encrypting messages ensures that only the intended reader can decrypt and read the contents, providing a high level of confidentiality and data protection. An empty encryption key indicates that the profile does not accept incoming messages.<a href="#section-7.2.1-3.2" class="pilcrow">¶</a>
-</li>
           </ul>
 </section>
 </div>
@@ -1945,45 +1943,49 @@ otherdomain2.tld
 </li>
             <li class="normal" id="section-7.2.2-4.8">Education: The attribute provides information about the educational background of the profile owner, including schools attended and degrees earned. It is a free-form attribute.<a href="#section-7.2.2-4.8" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.2.2-4.9">Gender: The attribute represents the gender identity or gender expression of the profile owner. It is a free-form attribute.<a href="#section-7.2.2-4.9" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.2.2-4.9">Encryption-Key: This attribute holds the user's public encryption key, which is required for reading encrypting messages intended for the address holder. Encrypting messages ensures that only the intended reader can decrypt and read the contents, providing a high level of confidentiality and data protection. An empty or non present encryption key indicates that the profile does not accept incoming messages, typically reserved for "no-reply" addresses.<a href="#section-7.2.2-4.9" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.2.2-4.10">Interests: The attribute lists hobbies, activities, or topics of interest that the profile owner has indicated. It is a free-form attribute.<a href="#section-7.2.2-4.10" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.2.2-4.10">Gender: The attribute represents the gender identity or gender expression of the profile owner. It is a free-form attribute.<a href="#section-7.2.2-4.10" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.2.2-4.11">Job-Title: The attribute specifies the job title or position held by the profile owner within their organization. It is a free-form attribute.<a href="#section-7.2.2-4.11" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.2.2-4.11">Interests: The attribute lists hobbies, activities, or topics of interest that the profile owner has indicated. It is a free-form attribute.<a href="#section-7.2.2-4.11" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.2.2-4.12">Languages: The attribute indicates the languages spoken or understood by the profile owner. It is a free-form attribute.<a href="#section-7.2.2-4.12" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.2.2-4.12">Job-Title: The attribute specifies the job title or position held by the profile owner within their organization. It is a free-form attribute.<a href="#section-7.2.2-4.12" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.2.2-4.13">Last-Signing-Key: This attribute provides information about the user's previous signing key. The attribute serves the purpose of verifying messages that were authored during key rotations, as well as verifying the user's own API requests on mail agents from their email clients that are still awaiting key updates.<a href="#section-7.2.2-4.13" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.2.2-4.13">Languages: The attribute indicates the languages spoken or understood by the profile owner. It is a free-form attribute.<a href="#section-7.2.2-4.13" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.2.2-4.14">Location: The attribute represents the geographical location or address of the profile owner. It is a free-form attribute.<a href="#section-7.2.2-4.14" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.2.2-4.14">Last-Signing-Key: This attribute provides information about the user's previous signing key. The attribute serves the purpose of verifying messages that were authored during key rotations, as well as verifying the user's own API requests on mail agents from their email clients that are still awaiting key updates.<a href="#section-7.2.2-4.14" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.2.2-4.15">Mailing-Address: The attribute represents the physical address or mailing address of the profile owner. The field SHOULD NOT be confused with profile's Mail/HTTPS address which is implicit and not neccessary in the profile. It is a free-form attribute.<a href="#section-7.2.2-4.15" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.2.2-4.15">Location: The attribute represents the geographical location or address of the profile owner. It is a free-form attribute.<a href="#section-7.2.2-4.15" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.2.2-4.16">Movies: The attribute lists films or movie genres that the profile owner enjoys. It is a free-form attribute.<a href="#section-7.2.2-4.16" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.2.2-4.16">Mailing-Address: The attribute represents the physical address or mailing address of the profile owner. The field SHOULD NOT be confused with profile's Mail/HTTPS address which is implicit and not neccessary in the profile. It is a free-form attribute.<a href="#section-7.2.2-4.16" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.2.2-4.17">Music: The attribute indicates the profile owner's preferred music genres, artists, or songs. It is a free-form attribute.<a href="#section-7.2.2-4.17" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.2.2-4.17">Movies: The attribute lists films or movie genres that the profile owner enjoys. It is a free-form attribute.<a href="#section-7.2.2-4.17" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.2.2-4.18">Name: This attribute represents the display name associated with the address. Previously, in SMTP-email it was typically written as "name" &lt;address&gt;. The name helps identify the user or entity behind the address and it SHOULD NOT be empty.<a href="#section-7.2.2-4.18" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.2.2-4.18">Music: The attribute indicates the profile owner's preferred music genres, artists, or songs. It is a free-form attribute.<a href="#section-7.2.2-4.18" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.2.2-4.19">Notes: The attribute allows for additional remarks or notes about the profile owner, such as preferences, interests, or specific instructions. It is a free-form attribute.<a href="#section-7.2.2-4.19" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.2.2-4.19">Name: This attribute represents the display name associated with the address. Previously, in SMTP-email it was typically written as "name" &lt;address&gt;. The name helps identify the user or entity behind the address and its presence is RECOMMENDED.<a href="#section-7.2.2-4.19" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.2.2-4.20">Organization: The attribute denotes the name of the company, organization, or institution the profile owner is affiliated with. It is a free-form attribute.<a href="#section-7.2.2-4.20" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.2.2-4.20">Notes: The attribute allows for additional remarks or notes about the profile owner, such as preferences, interests, or specific instructions. It is a free-form attribute.<a href="#section-7.2.2-4.20" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.2.2-4.21">Phone: The attribute represents the contact number associated with the profile owner. This attribute may appear multiple times to include different phone numbers. The phone number is a free-form attribute. To label a phone number (e.g. "mobile", "work"), prefix by a single label in square brackets, e.g. "[work] +804-500-7000 ".<a href="#section-7.2.2-4.21" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.2.2-4.21">Organization: The attribute denotes the name of the company, organization, or institution the profile owner is affiliated with. It is a free-form attribute.<a href="#section-7.2.2-4.21" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.2.2-4.22">Places-Lived: The attribute encompasses information about the profile owner's previous or current places of residence or significant locations in their life. This attribute is designed to be free-form, meaning that there are no specific formatting requirements or constraints imposed. Users have the flexibility to input the relevant location data in a way that best suits their preferences, allowing for a customizable representation of their lived experiences and important geographical information.<a href="#section-7.2.2-4.22" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.2.2-4.22">Phone: The attribute represents the contact number associated with the profile owner. This attribute may appear multiple times to include different phone numbers. The phone number is a free-form attribute. To label a phone number (e.g. "mobile", "work"), prefix by a single label in square brackets, e.g. "[work] +804-500-7000 ".<a href="#section-7.2.2-4.22" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.2.2-4.23">Relationship-Status: The attribute is a free-form attribute and indicates the current relationship status of the profile owner (e.g., single, in a relationship, married, looking, etc.).<a href="#section-7.2.2-4.23" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.2.2-4.23">Places-Lived: The attribute encompasses information about the profile owner's previous or current places of residence or significant locations in their life. This attribute is designed to be free-form, meaning that there are no specific formatting requirements or constraints imposed. Users have the flexibility to input the relevant location data in a way that best suits their preferences, allowing for a customizable representation of their lived experiences and important geographical information.<a href="#section-7.2.2-4.23" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.2.2-4.24">Sports: The attribute is a free-form and may lists sports activities or teams that the profile owner follows or participates in.<a href="#section-7.2.2-4.24" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.2.2-4.24">Public-Access: The attribute indicates whether the profile owner accepts notifications from unknown links as contact requests. Possible values are "Yes" and "No". The attribute assumes value "Yes" if not present.<a href="#section-7.2.2-4.24" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.2.2-4.25">Status: The attribute provides the current status of the profile owner. It is a free-form attribute.<a href="#section-7.2.2-4.25" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.2.2-4.25">Relationship-Status: The attribute is a free-form attribute and indicates the current relationship status of the profile owner (e.g., single, in a relationship, married, looking, etc.).<a href="#section-7.2.2-4.25" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.2.2-4.26">Streams: The "attribute provides a collection of free-form tags that readers can use to filter messages during the message pulling process. These tags allow for flexible categorization and organization of messages and can include various labels such as "familyphotos," "notes," "events," "location," and more.<a href="#section-7.2.2-4.26" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.2.2-4.26">Sports: The attribute is a free-form and may lists sports activities or teams that the profile owner follows or participates in.<a href="#section-7.2.2-4.26" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.2.2-4.27">Website: The attribute represents the website associated with the profile owner.<a href="#section-7.2.2-4.27" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.2.2-4.27">Status: The attribute provides the current status of the profile owner. It is a free-form attribute.<a href="#section-7.2.2-4.27" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.2.2-4.28">Work: The attribute provides details about the professional work experience of the profile owner. It is a free-form attribute.<a href="#section-7.2.2-4.28" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.2.2-4.28">Streams: The "attribute provides a collection of free-form tags that readers can use to filter messages during the message pulling process. These tags allow for flexible categorization and organization of messages and can include various labels such as "familyphotos," "notes," "events," "location," and more.<a href="#section-7.2.2-4.28" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-7.2.2-4.29">Website: The attribute represents the website associated with the profile owner.<a href="#section-7.2.2-4.29" class="pilcrow">¶</a>
+</li>
+            <li class="normal" id="section-7.2.2-4.30">Work: The attribute provides details about the professional work experience of the profile owner. It is a free-form attribute.<a href="#section-7.2.2-4.30" class="pilcrow">¶</a>
 </li>
           </ul>
 </section>
