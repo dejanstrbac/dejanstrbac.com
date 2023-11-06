@@ -1840,7 +1840,7 @@ HTTPS GET https://mail.HOST_PART/.well-known/mail.txt
 <p id="section-6.1-9">The retrieved file MUST be a valid text file representing Mail/HTTPS service configuration file. Invalid contents are to be ignored in their entirety.<a href="#section-6.1-9" class="pilcrow">¶</a></p>
 <p id="section-6.1-10">If the configuration file is present and valid, its content should be read to determine possible Mail/HTTPS service delegation. The configuration file is a simple text file with hostnames of delegated mail agents on each line. Multiple mail agent hostnames MAY be listed. Should more be present, only the first three SHOULD be considered. The well-known file determines the order of accessing the mail agents.<a href="#section-6.1-10" class="pilcrow">¶</a></p>
 <p id="section-6.1-11">Each line of the well-known file MUST be trimmed for surrounding whitespace before being considered.
-Lines starting with a hash (#) MUST be ignored as comments. Invalid hostnames MUST be ignored.<a href="#section-6.1-11" class="pilcrow">¶</a></p>
+Emtpy lines and those starting with a hash (#) MUST be ignored as comments. Invalid hostnames MUST be ignored.<a href="#section-6.1-11" class="pilcrow">¶</a></p>
 <p id="section-6.1-12">If no well-known files are available or no valid mail agents are determined for a given address LOCAL_PART@HOST_PART, final attempt for mail agent should be assumed for hostname "mail.HOST_PART", a subdomain "mail" of the address HOST_PART.<a href="#section-6.1-12" class="pilcrow">¶</a></p>
 <p id="section-6.1-13">For a selected MAIL_AGENT_HOSTNAME to be considered a valid Mail/HTTPS mail agent for a HOST_PART, the host MUST respond with an HTTP OK status 200 to a domain delegation check via a HEAD request at URI:<a href="#section-6.1-13" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-6.1-14">
@@ -1848,14 +1848,8 @@ Lines starting with a hash (#) MUST be ignored as comments. Invalid hostnames MU
 HTTPS HEAD https://MAIL_AGENT_HOSTNAME/mail/HOST_PART
 </pre><a href="#section-6.1-14" class="pilcrow">¶</a>
 </div>
-<p id="section-6.1-15">If a more specific test is required for a selected MAIL_AGENT_HOSTNAME to be considered a valid mail agent for an existing address, the host MUST respond with an HTTP OK status 200 to a user delegation check via a HEAD request at URI:<a href="#section-6.1-15" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-6.1-16">
-<pre>
-HTTPS HEAD https://MAIL_AGENT_HOSTNAME/mail/HOST_PART/LOCAL_PART
-</pre><a href="#section-6.1-16" class="pilcrow">¶</a>
-</div>
-<p id="section-6.1-17">All determined valid hostnames are assumed to have a copy of all users data. Upon authoring messages, email clients MUST respect the setting and MUST store authored messages on at least two of the listed mail agent hosts, respecting order in upload attempts.<a href="#section-6.1-17" class="pilcrow">¶</a></p>
-<p id="section-6.1-18">When querying and fetching messages, all mail agent hostnames listed in the well-known file MUST be queried.<a href="#section-6.1-18" class="pilcrow">¶</a></p>
+<p id="section-6.1-15">All determined valid hostnames are assumed to have a copy of all users data. Upon authoring messages, email clients MUST respect the setting and MUST store authored messages on at least two of the listed mail agent hosts, respecting order in upload attempts.<a href="#section-6.1-15" class="pilcrow">¶</a></p>
+<p id="section-6.1-16">When querying and fetching messages, all mail agent hostnames listed in the well-known file MUST be queried.<a href="#section-6.1-16" class="pilcrow">¶</a></p>
 <div id="example-configuration">
 <section id="section-6.1.1">
           <h4 id="name-example-configuration">
