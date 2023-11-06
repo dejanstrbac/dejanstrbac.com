@@ -1842,7 +1842,7 @@ HTTPS GET https://mail.HOST_PART/.well-known/mail.txt
 <p id="section-6.1-11">Each line of the well-known file MUST be trimmed for surrounding whitespace before being considered.
 Emtpy lines and those starting with a hash (#) MUST be ignored as comments. Invalid hostnames MUST be ignored.<a href="#section-6.1-11" class="pilcrow">¶</a></p>
 <p id="section-6.1-12">If no well-known files are available or no valid mail agents are determined for a given address LOCAL_PART@HOST_PART, final attempt for mail agent should be assumed for hostname "mail.HOST_PART", a subdomain "mail" of the address HOST_PART.<a href="#section-6.1-12" class="pilcrow">¶</a></p>
-<p id="section-6.1-13">For a selected MAIL_AGENT_HOSTNAME to be considered a valid Mail/HTTPS mail agent for a HOST_PART, the host MUST respond with an HTTP OK status 200 to a domain delegation check via a HEAD request at URI:<a href="#section-6.1-13" class="pilcrow">¶</a></p>
+<p id="section-6.1-13">For a selected MAIL_AGENT_HOSTNAME to be considered a valid Mail/HTTPS mail agent for a HOST_PART, the host MUST respond with an HTTP OK status 200 to a domain delegation check via a HEAD (or GET) request at URI:<a href="#section-6.1-13" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-6.1-14">
 <pre>
 HTTPS HEAD https://MAIL_AGENT_HOSTNAME/mail/HOST_PART
@@ -2704,10 +2704,11 @@ Authorization: SOTN
             <h5 id="name-domain">
 <a href="#section-14.2.1.1" class="section-number selfRef">14.2.1.1. </a><a href="#name-domain" class="section-name selfRef">Domain</a>
             </h5>
-<p id="section-14.2.1.1-1">To determine existence of a HOST_PART of a given address LOCAL_PART@HOST_PART on a determined mail agent MAIL_AGENT_HOSTNAME, a HEAD request SHOULD be made to the following URI:<a href="#section-14.2.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-14.2.1.1-1">To determine existence of a HOST_PART of a given address LOCAL_PART@HOST_PART on a determined mail agent MAIL_AGENT_HOSTNAME, a HEAD or GET request SHOULD be made to the following URI:<a href="#section-14.2.1.1-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-14.2.1.1-2">
 <pre>
 HTTPS HEAD https://MAIL_AGENT_HOSTNAME/mail/HOST_PART
+HTTPS GET  https://MAIL_AGENT_HOSTNAME/mail/HOST_PART
 </pre><a href="#section-14.2.1.1-2" class="pilcrow">¶</a>
 </div>
 <p id="section-14.2.1.1-3">An HTTP 200 status response indicates presence of the address while HTTP 404 status its absence.<a href="#section-14.2.1.1-3" class="pilcrow">¶</a></p>
@@ -2718,10 +2719,11 @@ HTTPS HEAD https://MAIL_AGENT_HOSTNAME/mail/HOST_PART
             <h5 id="name-address-2">
 <a href="#section-14.2.1.2" class="section-number selfRef">14.2.1.2. </a><a href="#name-address-2" class="section-name selfRef">Address</a>
             </h5>
-<p id="section-14.2.1.2-1">To determine existence of a given address LOCAL_PART@HOST_PART on a determined mail agent MAIL_AGENT_HOSTNAME, a HEAD request SHOULD be made to the following URI:<a href="#section-14.2.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-14.2.1.2-1">To determine existence of a given address LOCAL_PART@HOST_PART on a determined mail agent MAIL_AGENT_HOSTNAME, a HEAD or GET request SHOULD be made to the following URI:<a href="#section-14.2.1.2-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-14.2.1.2-2">
 <pre>
 HTTPS HEAD https://MAIL_AGENT_HOSTNAME/mail/HOST_PART/LOCAL_PART
+HTTPS GET  https://MAIL_AGENT_HOSTNAME/mail/HOST_PART/LOCAL_PART
 </pre><a href="#section-14.2.1.2-2" class="pilcrow">¶</a>
 </div>
 <p id="section-14.2.1.2-3">An HTTP 200 status response indicates presence of the address while HTTP 404 status its absence.<a href="#section-14.2.1.2-3" class="pilcrow">¶</a></p>
