@@ -1205,7 +1205,7 @@ li > p:last-of-type:only-child {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Strbac</td>
-<td class="center">Expires 9 May 2024</td>
+<td class="center">Expires 10 May 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1218,12 +1218,12 @@ li > p:last-of-type:only-child {
 <dd class="internet-draft">draft-strbac-mailhttps-00.txt</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-11-06" class="published">6 November 2023</time>
+<time datetime="2023-11-07" class="published">7 November 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-05-09">9 May 2024</time></dd>
+<dd class="expires"><time datetime="2024-05-10">10 May 2024</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1257,7 +1257,7 @@ li > p:last-of-type:only-child {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 9 May 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 10 May 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1491,7 +1491,16 @@ li > p:last-of-type:only-child {
                 <p id="section-toc.1-1.11.2.1.1"><a href="#section-11.1" class="auto internal xref">11.1</a>.  <a href="#name-payload-2" class="internal xref">Payload</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.2">
-                <p id="section-toc.1-1.11.2.2.1"><a href="#section-11.2" class="auto internal xref">11.2</a>.  <a href="#name-lifetime-2" class="internal xref">Lifetime</a></p>
+                <p id="section-toc.1-1.11.2.2.1"><a href="#section-11.2" class="auto internal xref">11.2</a>.  <a href="#name-identifier" class="internal xref">Identifier</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.3">
+                <p id="section-toc.1-1.11.2.3.1"><a href="#section-11.3" class="auto internal xref">11.3</a>.  <a href="#name-lifetime-2" class="internal xref">Lifetime</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.4">
+                <p id="section-toc.1-1.11.2.4.1"><a href="#section-11.4" class="auto internal xref">11.4</a>.  <a href="#name-verification" class="internal xref">Verification</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.5">
+                <p id="section-toc.1-1.11.2.5.1"><a href="#section-11.5" class="auto internal xref">11.5</a>.  <a href="#name-suppressions" class="internal xref">Suppressions</a></p>
 </li>
             </ul>
 </li>
@@ -1666,16 +1675,16 @@ li > p:last-of-type:only-child {
 </li>
           <li class="normal" id="section-2.3-3.2">Upon authoring a message, the author uploads the outgoing message to at least one of own domain's mail agents.<a href="#section-2.3-3.2" class="pilcrow">¶</a>
 </li>
-          <li class="normal" id="section-2.3-3.3">Upon successful upload, if the message has a finite number of readers, author's email client notifies directly the mail agents of the readers of the presence of a new message.<a href="#section-2.3-3.3" class="pilcrow">¶</a>
+          <li class="normal" id="section-2.3-3.3">Upon successful upload, if the message has a finite number of readers, author's mail client notifies directly the mail agents of the readers of the presence of a new message.<a href="#section-2.3-3.3" class="pilcrow">¶</a>
 </li>
         </ul>
 <p id="section-2.3-4">On reader's side:<a href="#section-2.3-4" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-2.3-5.1">Readers' email clients periodically poll all contacts' home agents directly for broadcast updates.<a href="#section-2.3-5.1" class="pilcrow">¶</a>
+<li class="normal" id="section-2.3-5.1">Readers' mail clients periodically poll all contacts' home agents directly for broadcast updates.<a href="#section-2.3-5.1" class="pilcrow">¶</a>
 </li>
-          <li class="normal" id="section-2.3-5.2">Readers' email clients occasionally check own home agents for notifications. Once client fetches the notification from the message author, it verifies their authenticity locally.<a href="#section-2.3-5.2" class="pilcrow">¶</a>
+          <li class="normal" id="section-2.3-5.2">Readers' mail clients occasionally check own home agents for notifications. Once client fetches the notification from the message author, it verifies their authenticity locally.<a href="#section-2.3-5.2" class="pilcrow">¶</a>
 </li>
-          <li class="normal" id="section-2.3-5.3">Upon successful notification verification, the reader makes a list request of private messages to the author's home agent resulting in message URLs. Reader's email client verifies and retrieves (downloads) the provided resources to local storage.<a href="#section-2.3-5.3" class="pilcrow">¶</a>
+          <li class="normal" id="section-2.3-5.3">Upon successful notification verification, the reader makes a list request of private messages to the author's home agent resulting in message URLs. Reader's mail client verifies and retrieves (downloads) the provided resources to local storage.<a href="#section-2.3-5.3" class="pilcrow">¶</a>
 </li>
           <li class="normal" id="section-2.3-5.4">Once private messages are local, they are decrypted and presented.<a href="#section-2.3-5.4" class="pilcrow">¶</a>
 </li>
@@ -1689,7 +1698,7 @@ li > p:last-of-type:only-child {
 <a href="#section-2.4" class="section-number selfRef">2.4. </a><a href="#name-storage" class="section-name selfRef">Storage</a>
         </h3>
 <p id="section-2.4-1">Mail/HTTPS concerns itself only with the transfer of messages from authors to readers. Permanent storage of messages is intentionally not part of the messaging scheme. For a comparison, SMTP-email always binds message relaying to a storage of the very same provider.<a href="#section-2.4-1" class="pilcrow">¶</a></p>
-<p id="section-2.4-2">Users may at their convenience configure own email clients to re-encrypt messages and sync with a central storage of their choice, effectively maintaining the desired level of privacy throughout the message lifecycle.<a href="#section-2.4-2" class="pilcrow">¶</a></p>
+<p id="section-2.4-2">Users may at their convenience configure own mail clients to re-encrypt messages and sync with a central storage of their choice, effectively maintaining the desired level of privacy throughout the message lifecycle.<a href="#section-2.4-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1848,7 +1857,7 @@ Emtpy lines and those starting with a hash (#) MUST be ignored as comments. Inva
 HTTPS HEAD https://MAIL_AGENT_HOSTNAME/mail/HOST_PART
 </pre><a href="#section-6.1-14" class="pilcrow">¶</a>
 </div>
-<p id="section-6.1-15">All determined valid hostnames are assumed to have a copy of all users data. Upon authoring messages, email clients MUST respect the setting and MUST store authored messages on at least two of the listed mail agent hosts, respecting order in upload attempts.<a href="#section-6.1-15" class="pilcrow">¶</a></p>
+<p id="section-6.1-15">All determined valid hostnames are assumed to have a copy of all users data. Upon authoring messages, mail clients MUST respect the setting and MUST store authored messages on at least two of the listed mail agent hosts, respecting order in upload attempts.<a href="#section-6.1-15" class="pilcrow">¶</a></p>
 <p id="section-6.1-16">When querying and fetching messages, all mail agent hostnames listed in the well-known file MUST be queried.<a href="#section-6.1-16" class="pilcrow">¶</a></p>
 <div id="example-configuration">
 <section id="section-6.1.1">
@@ -1895,7 +1904,7 @@ otherdomain2.tld
         </h3>
 <p id="section-7.1-1">The public email profile is a plain text file in which each line contains key-value pairs. The pairs are separated by a single colon character, with the key and its corresponding value. The order of the lines does not matter.<a href="#section-7.1-1" class="pilcrow">¶</a></p>
 <p id="section-7.1-2">The profile MUST contain mandatory attributes as keys and MAY contain additional optional attributes. The attribute keys are case insensitive.<a href="#section-7.1-2" class="pilcrow">¶</a></p>
-<p id="section-7.1-3">Profile total size SHOULD not exceed 64KB in size. If this size limit is exceeded, the profile MAY be truncated. The actual maximum size permitted is left to email clients.<a href="#section-7.1-3" class="pilcrow">¶</a></p>
+<p id="section-7.1-3">Profile total size SHOULD not exceed 64KB in size. If this size limit is exceeded, the profile MAY be truncated. The actual maximum size permitted is left to mail clients.<a href="#section-7.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="multiplicity">
@@ -1941,7 +1950,7 @@ otherdomain2.tld
 </li>
             <li class="normal" id="section-7.3.2-4.3">Away-Until: If set, the attribute indicates that the user may not read messages until the date given in ISO 8601 format (YYYYMMDD). Mail clients SHOULD warn authors from authoring messages for away readers. Address-Expansion MAY be used for indicating delegations.<a href="#section-7.3.2-4.3" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.3.2-4.4">Away-Warning: If set, an attempt to author a message for away reader SHOULD bring up the custom warning which SHOULD be displayed by email clients.<a href="#section-7.3.2-4.4" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.3.2-4.4">Away-Warning: If set, an attempt to author a message for away reader SHOULD bring up the custom warning which SHOULD be displayed by mail clients.<a href="#section-7.3.2-4.4" class="pilcrow">¶</a>
 </li>
             <li class="normal" id="section-7.3.2-4.5">Birthday: The attribute indicates the date of birth or birthdate of the profile owner in ISO 8601 format (YYYYMMDD).<a href="#section-7.3.2-4.5" class="pilcrow">¶</a>
 </li>
@@ -1961,7 +1970,7 @@ otherdomain2.tld
 </li>
             <li class="normal" id="section-7.3.2-4.13">Languages: The attribute indicates the languages spoken or understood by the profile owner. It is a free-form attribute.<a href="#section-7.3.2-4.13" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.3.2-4.14">Last-Signing-Key: This attribute provides information about the user's previous signing key. The attribute serves the purpose of verifying messages that were authored during key rotations, as well as verifying the user's own API requests on mail agents from their email clients that are still awaiting key updates.<a href="#section-7.3.2-4.14" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.3.2-4.14">Last-Signing-Key: This attribute provides information about the user's previous signing key. The attribute serves the purpose of verifying messages that were authored during key rotations, as well as verifying the user's own API requests on mail agents from their mail clients that are still awaiting key updates.<a href="#section-7.3.2-4.14" class="pilcrow">¶</a>
 </li>
             <li class="normal" id="section-7.3.2-4.15">Location: The attribute represents the geographical location or address of the profile owner. It is a free-form attribute.<a href="#section-7.3.2-4.15" class="pilcrow">¶</a>
 </li>
@@ -2003,7 +2012,7 @@ otherdomain2.tld
           <h4 id="name-custom">
 <a href="#section-7.3.3" class="section-number selfRef">7.3.3. </a><a href="#name-custom" class="section-name selfRef">Custom</a>
           </h4>
-<p id="section-7.3.3-1">Any non-reserved attribute present in the user's profile is considered custom profile attribute. Such custom attributes MAY be presented by email clients following the standard, reserved attributes.<a href="#section-7.3.3-1" class="pilcrow">¶</a></p>
+<p id="section-7.3.3-1">Any non-reserved attribute present in the user's profile is considered custom profile attribute. Such custom attributes MAY be presented by mail clients following the standard, reserved attributes.<a href="#section-7.3.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2016,8 +2025,8 @@ otherdomain2.tld
 <p id="section-7.4-1">Each address may provide a profile image to be used as a thumbnail as well as profile banner. It serves to clearly identify the user of a given address. It is RECOMMENDED for all addresses to provide a profile image.<a href="#section-7.4-1" class="pilcrow">¶</a></p>
 <p id="section-7.4-2">Just as the profile, the profile image MUST be served over HTTPS. Profile images served over insecure connections are ignored.<a href="#section-7.4-2" class="pilcrow">¶</a></p>
 <p id="section-7.4-3">The profile image format MAY be one of the following: JPEG, GIF, PNG, or WebP.<a href="#section-7.4-3" class="pilcrow">¶</a></p>
-<p id="section-7.4-4">The profile image size SHOULD not exceed 512KB in size. If this size limit is exceeded, the profile image SHOULD be omitted for a placeholder in the email client. Mail agents MUST NOT serve placeholders for non existing or invalid profile images.<a href="#section-7.4-4" class="pilcrow">¶</a></p>
-<p id="section-7.4-5">The profile image should be square, of equal height and width. The RECOMMENDED image size is 400x400 pixels. The mail agents do not provide alternative sizes of the profile image. It is the responsibility of email clients to retrieve, resize and cache the profile images.<a href="#section-7.4-5" class="pilcrow">¶</a></p>
+<p id="section-7.4-4">The profile image size SHOULD not exceed 512KB in size. If this size limit is exceeded, the profile image SHOULD be omitted for a placeholder in the mail client. Mail agents MUST NOT serve placeholders for non existing or invalid profile images.<a href="#section-7.4-4" class="pilcrow">¶</a></p>
+<p id="section-7.4-5">The profile image should be square, of equal height and width. The RECOMMENDED image size is 400x400 pixels. The mail agents do not provide alternative sizes of the profile image. It is the responsibility of mail clients to retrieve, resize and cache the profile images.<a href="#section-7.4-5" class="pilcrow">¶</a></p>
 <div id="privacy-concerns">
 <section id="section-7.4.1">
           <h4 id="name-privacy-concerns">
@@ -2150,7 +2159,7 @@ ed25519$98335b06f02440e9$pWHxd1/jCwkO5Ao5+sc+xDI01DWER2VAYBKCDEK/LgPBBwohiAcBENm
           <h4 id="name-symmetric">
 <a href="#section-8.4.1" class="section-number selfRef">8.4.1. </a><a href="#name-symmetric" class="section-name selfRef">Symmetric</a>
           </h4>
-<p id="section-8.4.1-1">The choice of the symmetric cipher depends on the size of the data and email client capabilities.<a href="#section-8.4.1-1" class="pilcrow">¶</a></p>
+<p id="section-8.4.1-1">The choice of the symmetric cipher depends on the size of the data and mail client capabilities.<a href="#section-8.4.1-1" class="pilcrow">¶</a></p>
 <div id="aes256-gcm">
 <section id="section-8.4.1.1">
             <h5 id="name-aes256-gcm">
@@ -2204,9 +2213,9 @@ ed25519$98335b06f02440e9$pWHxd1/jCwkO5Ao5+sc+xDI01DWER2VAYBKCDEK/LgPBBwohiAcBENm
             </h5>
 <p id="section-8.4.2.1-1">It is RECOMMENDED every user's keys (encryption, signing) should be rotated at least once every 30 days. The rotation MUST NOT be repeated more than once within 7 days, which is the minimum message lifetime duration.<a href="#section-8.4.2.1-1" class="pilcrow">¶</a></p>
 <p id="section-8.4.2.1-2">Email clients are responsible for suggesting and conducting such periodic key rotations to the end user.<a href="#section-8.4.2.1-2" class="pilcrow">¶</a></p>
-<p id="section-8.4.2.1-3">It is assumed multiple clients will be using the email service in parallel, just as is the case with email IMAP clients. Upon keys rotation, connected email clients will stop operation unless they receive key updates. Such updates are provided in special messages of categories "encryption-key" &amp; "signing-key", addressed to self, duly encrypted and signed with existing keys.<a href="#section-8.4.2.1-3" class="pilcrow">¶</a></p>
+<p id="section-8.4.2.1-3">It is assumed multiple clients will be using the email service in parallel, just as is the case with email IMAP clients. Upon keys rotation, connected mail clients will stop operation unless they receive key updates. Such updates are provided in special messages of categories "encryption-key" &amp; "signing-key", addressed to self, duly encrypted and signed with existing keys.<a href="#section-8.4.2.1-3" class="pilcrow">¶</a></p>
 <p id="section-8.4.2.1-4">The keys do not have to be rotated at the same time, but there are no repercussions if they are.<a href="#section-8.4.2.1-4" class="pilcrow">¶</a></p>
-<p id="section-8.4.2.1-5">Once an email client retrieves and verifies a new key message, it SHOULD prompt the reader before updating the existing keys. After the maximum message lifetime, any not-yet updated client has to be updated manually.<a href="#section-8.4.2.1-5" class="pilcrow">¶</a></p>
+<p id="section-8.4.2.1-5">Once an mail client retrieves and verifies a new key message, it SHOULD prompt the reader before updating the existing keys. After the maximum message lifetime, any not-yet updated client has to be updated manually.<a href="#section-8.4.2.1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2235,9 +2244,9 @@ ed25519$98335b06f02440e9$pWHxd1/jCwkO5Ao5+sc+xDI01DWER2VAYBKCDEK/LgPBBwohiAcBENm
           <h4 id="name-private-messages">
 <a href="#section-9.1.1" class="section-number selfRef">9.1.1. </a><a href="#name-private-messages" class="section-name selfRef">Private Messages</a>
           </h4>
-<p id="section-9.1.1-1">Each private Mail/HTTPS message MUST have an exact duration of 7 days (168 hours) from the time of the upload.<a href="#section-9.1.1-1" class="pilcrow">¶</a></p>
-<p id="section-9.1.1-2">Should the reader be unavailable to retrieve the message during the message lifetime, the author MAY NOT extend the duration of the already uploaded message but rather MUST make a new attempt by re-uploading and re-notifying readers. This may seem wasteful, but it permits simplicity in mail agent operations. Agents are simple transient message caches. Private messages SHOULD NOT be kept for longer periods.<a href="#section-9.1.1-2" class="pilcrow">¶</a></p>
-<p id="section-9.1.1-3">During the message lifetime on the mail agents, email clients MAY inquire the state of messages awaiting pickup. After the message has expired on the mail agent, the mail agent SHOULD clean up the expired messages automatically. However, the message would typically still be available as a Sent message. Mail clients MAY permit pickup inquiry of sent messages based on the 'status' private API of recently authored messages.<a href="#section-9.1.1-3" class="pilcrow">¶</a></p>
+<p id="section-9.1.1-1">It is RECOMMENDED that private Mail/HTTPS messages have a default duration of 7 days (168 hours) from the time of the upload on the mail agent. Authors and their mail clients MAY decide the actual duraton of messages on mail agents. Mail agents on their own MUST NOT enforce messages duration. Removal of messages MUST be exclusively reserved for mail clients.<a href="#section-9.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-9.1.1-2">Should the reader be unavailable to retrieve the message during the message lifetime, author's mail client SHOULD notify author of the lack of retrieval. Author may decide to re-notify the readers and keep the message for a longer period. Alternatively, author may drop the message.<a href="#section-9.1.1-2" class="pilcrow">¶</a></p>
+<p id="section-9.1.1-3">Author's mail client MAY be configured to automatically remove messages collected by all designated readers.<a href="#section-9.1.1-3" class="pilcrow">¶</a></p>
 <p id="section-9.1.1-4">Unlike broadcast messages, private messages MAY NOT be pinned.<a href="#section-9.1.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2277,7 +2286,7 @@ ed25519$98335b06f02440e9$pWHxd1/jCwkO5Ao5+sc+xDI01DWER2VAYBKCDEK/LgPBBwohiAcBENm
         <h3 id="name-payload">
 <a href="#section-9.4" class="section-number selfRef">9.4. </a><a href="#name-payload" class="section-name selfRef">Payload</a>
         </h3>
-<p id="section-9.4-1">In the Mail/HTTPS system, private messages undergo a robust encryption process to ensure confidentiality and integrity. The author's email client encrypts the messages locally using a strong, randomly generated password and a symmetric cipher.<a href="#section-9.4-1" class="pilcrow">¶</a></p>
+<p id="section-9.4-1">In the Mail/HTTPS system, private messages undergo a robust encryption process to ensure confidentiality and integrity. The author's mail client encrypts the messages locally using a strong, randomly generated password and a symmetric cipher.<a href="#section-9.4-1" class="pilcrow">¶</a></p>
 <p id="section-9.4-2">For secure sharing with readers, the random password is individually encrypted for each reader. This is achieved by encrypting the password with the reader's public encryption key, obtained from the reader's public profile, and a randomly generated asymmetric key-pair. The private key involved in this encryption is discarded, while the corresponding public key is included alongside the cipher-text of the encrypted message.<a href="#section-9.4-2" class="pilcrow">¶</a></p>
 <p id="section-9.4-3">In Mail/HTTPS, the responsibility for message confidentiality is effectively shifted to the intended readers. Only authorized readers possessing the respective private keys can successfully decrypt and access the private message. The message content remains private and secure throughout transmission and storage.<a href="#section-9.4-3" class="pilcrow">¶</a></p>
 <div id="encoding">
@@ -2307,7 +2316,7 @@ If the message content is determined not to be of text content type, the content
           <h4 id="name-size">
 <a href="#section-9.4.3" class="section-number selfRef">9.4.3. </a><a href="#name-size" class="section-name selfRef">Size</a>
           </h4>
-<p id="section-9.4.3-1">Mail/HTTPS imposes no message size limitations. Any limitations are outcome of either author's own home agent service provider or reader's email client. Considering the transient nature of messages on mail agents, the message size limit may be considerably high.<a href="#section-9.4.3-1" class="pilcrow">¶</a></p>
+<p id="section-9.4.3-1">Mail/HTTPS imposes no message size limitations. Any limitations are outcome of either author's own home agent service provider or reader's mail client. Considering the transient nature of messages on mail agents, the message size limit may be considerably high.<a href="#section-9.4.3-1" class="pilcrow">¶</a></p>
 <p id="section-9.4.3-2">Unlike in SMTP-email, the size restrictions are not imposed by the remote reader's infrastructure. There is no guess work or trial and error when transferring large messages.<a href="#section-9.4.3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2437,7 +2446,7 @@ Message-Envelope-Order: Message-Id,Message-Stream,Message-Size,Message-Checksum,
 <a href="#section-9.5.2" class="section-number selfRef">9.5.2. </a><a href="#name-categorization" class="section-name selfRef">Categorization</a>
           </h4>
 <p id="section-9.5.2-1">The conventional approach to email treats all messages as equal, resulting in overloaded inboxes and the laborious task of sorting through them. Many users end up abandoning the effort and retaining all messages, which not only consumes unnecessary storage and contributes to a larger carbon footprint but also hinders an optimized user experience. Consequently, methods such as content detection have been employed, further increasing the processing power.<a href="#section-9.5.2-1" class="pilcrow">¶</a></p>
-<p id="section-9.5.2-2">By pre-categorizing messages at the source, it becomes possible to enhance how email clients display and handle these messages. Additionally, it enables better decision-making regarding whether or not to save them in archives.<a href="#section-9.5.2-2" class="pilcrow">¶</a></p>
+<p id="section-9.5.2-2">By pre-categorizing messages at the source, it becomes possible to enhance how mail clients display and handle these messages. Additionally, it enables better decision-making regarding whether or not to save them in archives.<a href="#section-9.5.2-2" class="pilcrow">¶</a></p>
 <p id="section-9.5.2-3">We define standard categories for mail objects:<a href="#section-9.5.2-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-9.5.2-4.1">"personal": Messages from the private circles that are likely to be saved for future reference.<a href="#section-9.5.2-4.1" class="pilcrow">¶</a>
@@ -2475,7 +2484,7 @@ Message-Envelope-Order: Message-Id,Message-Stream,Message-Size,Message-Checksum,
 <a href="#section-9.5.3" class="section-number selfRef">9.5.3. </a><a href="#name-streams" class="section-name selfRef">Streams</a>
           </h4>
 <p id="section-9.5.3-1">Some messages may have meaning only as a part of a particular grouping. Email/HTTPS offers streams for such grouping. Author may define private or public streams of messages, identified by a freely chosen stream tag. Any URL safe string may be used as a stream tag. Stream tags are considered case-insensitive.<a href="#section-9.5.3-1" class="pilcrow">¶</a></p>
-<p id="section-9.5.3-2">Streams are not separated from regular private and broadcast messages. To list or fetch stream messages, the stream MUST be explicitly requested. Readers' email clients must keep track of streams subscriptions in their address books.<a href="#section-9.5.3-2" class="pilcrow">¶</a></p>
+<p id="section-9.5.3-2">Streams are not separated from regular private and broadcast messages. To list or fetch stream messages, the stream MUST be explicitly requested. Readers' mail clients must keep track of streams subscriptions in their address books.<a href="#section-9.5.3-2" class="pilcrow">¶</a></p>
 <p id="section-9.5.3-3">Individual streams are commonly prefixed with a tilde sign '~' to be identified as such, but the tilde sign SHALL NOT be considered part of the tag. Some examples of streams would be ~family_photos, ~announcements, ~releases, ~writing.<a href="#section-9.5.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2497,7 +2506,7 @@ Message-Envelope-Order: Message-Id,Message-Stream,Message-Size,Message-Checksum,
 <a href="#section-10" class="section-number selfRef">10. </a><a href="#name-public-links" class="section-name selfRef">Public Links</a>
       </h2>
 <p id="section-10-1">Connection links on the mail agent are anonymized contact identifiers that have multiple uses.<a href="#section-10-1" class="pilcrow">¶</a></p>
-<p id="section-10-2">Should the user desire such setup, the connection links serve as filters for notifications, allowing only notifications from known connections to be accepted on the mail agent. It's important to note though that the mail agent itself is not capable of verifying the notifications authenticity since it cannot determine their origin. The verification process takes place in the email client, where notifications are checked for authenticity and validity before being processed.<a href="#section-10-2" class="pilcrow">¶</a></p>
+<p id="section-10-2">Should the user desire such setup, the connection links serve as filters for notifications, allowing only notifications from known connections to be accepted on the mail agent. It's important to note though that the mail agent itself is not capable of verifying the notifications authenticity since it cannot determine their origin. The verification process takes place in the mail client, where notifications are checked for authenticity and validity before being processed.<a href="#section-10-2" class="pilcrow">¶</a></p>
 <p id="section-10-3">These links MAY be queryable publicly for their existence only, without revealing any additional information. It is RECOMMENDED that such querying is enabled by default on mail agents as they do not leak any private information.<a href="#section-10-3" class="pilcrow">¶</a></p>
 <div id="link-sniffing">
 <section id="section-10.1">
@@ -2505,7 +2514,7 @@ Message-Envelope-Order: Message-Id,Message-Stream,Message-Size,Message-Checksum,
 <a href="#section-10.1" class="section-number selfRef">10.1. </a><a href="#name-link-sniffing" class="section-name selfRef">Link Sniffing</a>
         </h3>
 <p id="section-10.1-1">Users can query other users for existence of the mutual link, effectively detecting if the communication is mutually permitted. Email clients SHOULD use this information for providing a better user experience.<a href="#section-10.1-1" class="pilcrow">¶</a></p>
-<p id="section-10.1-2">Should an author want to write a message for a given reader, it is useful to know if the reader has the author among own links. Before authoring a message, author's email client SHOULD query and warn the author if the reader does not have the author in contact list. If the reader does not accept contact requests, it is pointless to even author. The email client SHOULD refuse adding such reader to a message.<a href="#section-10.1-2" class="pilcrow">¶</a></p>
+<p id="section-10.1-2">Should an author want to write a message for a given reader, it is useful to know if the reader has the author among own links. Before authoring a message, author's mail client SHOULD query and warn the author if the reader does not have the author in contact list. If the reader does not accept contact requests, it is pointless to even author. The mail client SHOULD refuse adding such reader to a message.<a href="#section-10.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="contact-discovery">
@@ -2514,7 +2523,7 @@ Message-Envelope-Order: Message-Id,Message-Stream,Message-Size,Message-Checksum,
 <a href="#section-10.2" class="section-number selfRef">10.2. </a><a href="#name-contact-discovery" class="section-name selfRef">Contact Discovery</a>
         </h3>
 <p id="section-10.2-1">Social networking builds on connections of others. While email is the mother of all social networks, discovering connections was never possible. In Mail/HTTPS, users can use their address book to detect mutual connections with profiles of interest. These public lookups allow for introductions as they naturally happen offline, by inquiring an existing connection to make an introduction to another one through an introductory message.<a href="#section-10.2-1" class="pilcrow">¶</a></p>
-<p id="section-10.2-2">When a message arrives with additional readers which are not in own contact book, these SHOULD be highlighted and suggested by the email client for adding to the address book.<a href="#section-10.2-2" class="pilcrow">¶</a></p>
+<p id="section-10.2-2">When a message arrives with additional readers which are not in own contact book, these SHOULD be highlighted and suggested by the mail client for adding to the address book.<a href="#section-10.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2537,18 +2546,67 @@ Message-Envelope-Order: Message-Id,Message-Stream,Message-Size,Message-Checksum,
 <a href="#section-11.1" class="section-number selfRef">11.1. </a><a href="#name-payload-2" class="section-name selfRef">Payload</a>
         </h3>
 <p id="section-11.1-1">Notifications are initiated from the Mail/HTTPS client of the author and sent directly to the mail agents of the readers.<a href="#section-11.1-1" class="pilcrow">¶</a></p>
-<p id="section-11.1-2">Each notification includes the author's address, which is encrypted anonymously using the reader's public encryption key. This encrypted address serves a dual purpose: it's used for identifying new contact requests and verifying the authenticity of the notification when retrieved by the reader's email client.<a href="#section-11.1-2" class="pilcrow">¶</a></p>
+<p id="section-11.1-2">Each notification includes the author's address, which is encrypted anonymously using the reader's public encryption key. This encrypted address serves a dual purpose: it's used for identifying new contact requests and verifying the authenticity of the notification when retrieved by the reader's mail client.<a href="#section-11.1-2" class="pilcrow">¶</a></p>
 <p id="section-11.1-3">The notification call is publicly authenticated with the remote mail agent, requiring a signed nonce in the HTTP headers. However, this nonce is only used for verifying the signature locally. The mail agent itself is unable to independently confirm the authenticity of notifications because it lacks information about their origin.<a href="#section-11.1-3" class="pilcrow">¶</a></p>
 <p id="section-11.1-4">If the reader configures their home agent to accept notifications exclusively from their own connection identifiers, the mail agent may decline notification requests, essentially also preventing the acceptance of new contact requests.<a href="#section-11.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="lifetime-1">
+<div id="identifier">
 <section id="section-11.2">
-        <h3 id="name-lifetime-2">
-<a href="#section-11.2" class="section-number selfRef">11.2. </a><a href="#name-lifetime-2" class="section-name selfRef">Lifetime</a>
+        <h3 id="name-identifier">
+<a href="#section-11.2" class="section-number selfRef">11.2. </a><a href="#name-identifier" class="section-name selfRef">Identifier</a>
         </h3>
-<p id="section-11.2-1">Notification lifetime is consistent with the messages lifetime and is valid for exactly 7 days (168 hours) upon recieving. Should a known link (known author) repeat the notification, an existing notification SHOULD be reinstated for another notification lifetime, non-cumulatively, as if it were non-existing.<a href="#section-11.2-1" class="pilcrow">¶</a></p>
-<p id="section-11.2-2">Notifications of unknown (non-approved) authors be repeated, the notification MAY NOT be prolonged.<a href="#section-11.2-2" class="pilcrow">¶</a></p>
+<p id="section-11.2-1">Upon accepting a notification, mail agents are expected to assign a unique, local identifier to each notification. The notification identifier MUST be generated locally after the acceptance of the notification and cannot be part of the incoming notification. Identifiers help mail clients keep state of already seen notifications.<a href="#section-11.2-1" class="pilcrow">¶</a></p>
+<p id="section-11.2-2">The notification identifier MUST be an alpha-numeric string of no more than 32 characters. The identifier may be a counter or generated random string and MUST be unique locally for each notification of a given link.<a href="#section-11.2-2" class="pilcrow">¶</a></p>
+<p id="section-11.2-3">Overwriting an existing notification assigns a new identifier.<a href="#section-11.2-3" class="pilcrow">¶</a></p>
+<p id="section-11.2-4">The identifier is expected to be returned in the list notifications private API call.<a href="#section-11.2-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="lifetime-1">
+<section id="section-11.3">
+        <h3 id="name-lifetime-2">
+<a href="#section-11.3" class="section-number selfRef">11.3. </a><a href="#name-lifetime-2" class="section-name selfRef">Lifetime</a>
+        </h3>
+<p id="section-11.3-1">Notifications SHOULD be kept for at least 7 days (168 hours) upon recieving by mail agents.<a href="#section-11.3-1" class="pilcrow">¶</a></p>
+<p id="section-11.3-2">Should a known link (known author) repeat a notification, an existing notification SHOULD be overwritten and its lifetime reset. Such updated state would help indicate mail clients presence of new messages.<a href="#section-11.3-2" class="pilcrow">¶</a></p>
+<p id="section-11.3-3">Should notifications of unknown (non-approved) authors be repeated, existing notification MAY NOT be overwritten or itslifetame prolonged. After expiry, it may be repeated.<a href="#section-11.3-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="verification">
+<section id="section-11.4">
+        <h3 id="name-verification">
+<a href="#section-11.4" class="section-number selfRef">11.4. </a><a href="#name-verification" class="section-name selfRef">Verification</a>
+        </h3>
+<p id="section-11.4-1">The authenticity of notifications is not verified by mail agents and must be completed by mail agents upon retrieval.<a href="#section-11.4-1" class="pilcrow">¶</a></p>
+<p id="section-11.4-2">Each notification MUST result in:<a href="#section-11.4-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-11.4-3.1">notification identifier<a href="#section-11.4-3.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-11.4-3.2">author's encrypted address as payload<a href="#section-11.4-3.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-11.4-3.3">author's signing fingerprint used to deliver the notification<a href="#section-11.4-3.3" class="pilcrow">¶</a>
+</li>
+        </ul>
+<p id="section-11.4-4">The authenticity is verified by:<a href="#section-11.4-4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-11.4-5.1">decrypting the notification payload, resulting into author's address<a href="#section-11.4-5.1" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-11.4-5.2">ensuring author's address is valid<a href="#section-11.4-5.2" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-11.4-5.3">ensuring notification link is matching for the author's and own address<a href="#section-11.4-5.3" class="pilcrow">¶</a>
+</li>
+          <li class="normal" id="section-11.4-5.4">fetching author's profile and comparing signing fingerprint with the one of the actual or last public signing key<a href="#section-11.4-5.4" class="pilcrow">¶</a>
+</li>
+        </ul>
+<p id="section-11.4-6">Should any step fail, the notification is to be considered bogus.<a href="#section-11.4-6" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="suppressions">
+<section id="section-11.5">
+        <h3 id="name-suppressions">
+<a href="#section-11.5" class="section-number selfRef">11.5. </a><a href="#name-suppressions" class="section-name selfRef">Suppressions</a>
+        </h3>
+<p id="section-11.5-1">Mail agents MAY implement supressions for selected links (connection identifiers). Notifying on a suppressed link would be refused, without determining existance of the link. Suppressions may be used for silencing contact requests from specific identities directly on the mail agent.<a href="#section-11.5-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2574,7 +2632,7 @@ Message-Envelope-Order: Message-Id,Message-Stream,Message-Size,Message-Checksum,
         <li class="normal" id="section-12-3.6">A poor man's mailing list, where the list of members (readers) is always contained in one address.<a href="#section-12-3.6" class="pilcrow">¶</a>
 </li>
       </ul>
-<p id="section-12-4">While SMTP-email forwarding happens on relays, Mail/HTTPS provides for similar result but directly within email client by reading the address expansions from the address' public profile. This permits end-to-end encryption and full knowledge of the final readers by the author.<a href="#section-12-4" class="pilcrow">¶</a></p>
+<p id="section-12-4">While SMTP-email forwarding happens on relays, Mail/HTTPS provides for similar result but directly within mail client by reading the address expansions from the address' public profile. This permits end-to-end encryption and full knowledge of the final readers by the author.<a href="#section-12-4" class="pilcrow">¶</a></p>
 <div id="envelope-1">
 <section id="section-12.1">
         <h3 id="name-envelope-2">
@@ -2594,7 +2652,7 @@ Message-Envelope-Order: Message-Id,Message-Stream,Message-Size,Message-Checksum,
 Readers: reader1@domain1.tld, reader2@domain2.tld, expanded.reader@domain3.tld (reader4@somewhereelse.tld, reader5@somewhereelse2.tld)
 </pre><a href="#section-12.2-2" class="pilcrow">¶</a>
 </div>
-<p id="section-12.2-3">Presence of the original expansion in content headers permits authored replies to re-evaluate the expansion based on actual settings. Expanded addresses SHOULD be distinguished in email clients.<a href="#section-12.2-3" class="pilcrow">¶</a></p>
+<p id="section-12.2-3">Presence of the original expansion in content headers permits authored replies to re-evaluate the expansion based on actual settings. Expanded addresses SHOULD be distinguished in mail clients.<a href="#section-12.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2619,7 +2677,7 @@ Readers: reader1@domain1.tld, reader2@domain2.tld, expanded.reader@domain3.tld (
 </li>
         </ul>
 <p id="section-13.1-3">Automatic replies by intermediating relays are not supported by design, as the reply SHOULD come from the end user.<a href="#section-13.1-3" class="pilcrow">¶</a></p>
-<p id="section-13.1-4">Mail/HTTPS provides address status before sending to it. Should the address profile indicate that the user is away, the email client SHOULD suggest delivery at a later time along with the away message from address profile. If an authored message however is picked up by the designated reader, the pickup is itself the confirmation of final delivery. In both cases, no automatic reply is neccessary anymore.<a href="#section-13.1-4" class="pilcrow">¶</a></p>
+<p id="section-13.1-4">Mail/HTTPS provides address status before sending to it. Should the address profile indicate that the user is away, the mail client SHOULD suggest delivery at a later time along with the away message from address profile. If an authored message however is picked up by the designated reader, the pickup is itself the confirmation of final delivery. In both cases, no automatic reply is neccessary anymore.<a href="#section-13.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2645,7 +2703,7 @@ When authenticating as author, the home server permits uploading and controlling
           </h4>
 <p id="section-14.1.1-1">The SOTN authenticating scheme expects three values to be transferred in the 'Authorization' header:<a href="#section-14.1.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-14.1.1-2.1">A random nonce, as field 'nonce', generated locally in the email client. The nonce is a random string of no less than 32 ASCII characters. The nonce may not repeat for at least 24 hours with the same service.<a href="#section-14.1.1-2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-14.1.1-2.1">A random nonce, as field 'nonce', generated locally in the mail client. The nonce is a random string of no less than 32 ASCII characters. The nonce may not repeat for at least 24 hours with the same service.<a href="#section-14.1.1-2.1" class="pilcrow">¶</a>
 </li>
             <li class="normal" id="section-14.1.1-2.2">The signing algorithm as field 'algorithm', consistent with the Mail/HTTPS signing algorithms.<a href="#section-14.1.1-2.2" class="pilcrow">¶</a>
 </li>
@@ -2736,21 +2794,21 @@ HTTPS GET  https://MAIL_AGENT_HOSTNAME/mail/HOST_PART/LOCAL_PART
           <h4 id="name-provisioning">
 <a href="#section-14.2.2" class="section-number selfRef">14.2.2. </a><a href="#name-provisioning" class="section-name selfRef">Provisioning</a>
           </h4>
-<p id="section-14.2.2-1">Mail agents MAY permit registering of new accounts publicly on their selection of domains. If permitted, use of the following simple generic account provisioning API is RECOMMENDED as it would permit direct provisioning from email clients.<a href="#section-14.2.2-1" class="pilcrow">¶</a></p>
+<p id="section-14.2.2-1">Mail agents MAY permit registering of new accounts publicly on their selection of domains. If permitted, use of the following simple generic account provisioning API is RECOMMENDED as it would permit direct provisioning from mail clients.<a href="#section-14.2.2-1" class="pilcrow">¶</a></p>
 <p id="section-14.2.2-2">Abuse prevention mechanisms are beyond the scope of this document, but mail agents would typically restrict provisioning via Turing tests or rate limits based on IP addresses for example.<a href="#section-14.2.2-2" class="pilcrow">¶</a></p>
 <div id="create">
 <section id="section-14.2.2.1">
             <h5 id="name-create">
 <a href="#section-14.2.2.1" class="section-number selfRef">14.2.2.1. </a><a href="#name-create" class="section-name selfRef">Create</a>
             </h5>
-<p id="section-14.2.2.1-1">To provision a new account on a selected mail agent, the email client MUST generate encryption and signing key pairs locally.<a href="#section-14.2.2.1-1" class="pilcrow">¶</a></p>
-<p id="section-14.2.2.1-2">Using the generated keys, the signing key in particular, the email client SHOULD post profile data of the account being provisioned with address LOCAL_PART@HOST_PART in an authenticated request to URI:<a href="#section-14.2.2.1-2" class="pilcrow">¶</a></p>
+<p id="section-14.2.2.1-1">To provision a new account on a selected mail agent, the mail client MUST generate encryption and signing key pairs locally.<a href="#section-14.2.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-14.2.2.1-2">Using the generated keys, the signing key in particular, the mail client SHOULD post profile data of the account being provisioned with address LOCAL_PART@HOST_PART in an authenticated request to URI:<a href="#section-14.2.2.1-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-14.2.2.1-3">
 <pre>
 HTTPS POST /account/HOST_PART/LOCAL_PART
 </pre><a href="#section-14.2.2.1-3" class="pilcrow">¶</a>
 </div>
-<p id="section-14.2.2.1-4">The Signing-Key profile attribute is required and MUST match the authentication public signing key as a proof of profile and private key ownership. While the Signing-Key is the only required profile attribute, email clients will typically provide with a more complete profile information, including Name, Encryption-Key etc.<a href="#section-14.2.2.1-4" class="pilcrow">¶</a></p>
+<p id="section-14.2.2.1-4">The Signing-Key profile attribute is required and MUST match the authentication public signing key as a proof of profile and private key ownership. While the Signing-Key is the only required profile attribute, mail clients will typically provide with a more complete profile information, including Name, Encryption-Key etc.<a href="#section-14.2.2.1-4" class="pilcrow">¶</a></p>
 <p id="section-14.2.2.1-5">If an account with existing address exists already on the mail agent, an HTTP error status of 409 Conflict is expected. A successful provisioning returns HTTP 200 status code with an empty body.<a href="#section-14.2.2.1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2807,7 +2865,7 @@ HTTPS GET /mail/HOST_PART/LOCAL_PART/link/LINK
           </h4>
 <p id="section-14.2.6-1">Once an author makes a message available to readers, the author is expected to notify readers' mail agents of the presence of new messages.<a href="#section-14.2.6-1" class="pilcrow">¶</a></p>
 <p id="section-14.2.6-2">The notifications MUST be made available over HTTPS PUT requests requiring nonce (SOTN) authentication. The payload of the request is the address of the notifier, encrypted anonymously using the reader's public encryption key, as described previously in asymmetric ciphers part of this document.<a href="#section-14.2.6-2" class="pilcrow">¶</a></p>
-<p id="section-14.2.6-3">Notifee's mail agent does not have enough data to verify the notification request and should accept the request even if unverified. The verification always happens locally on email clients using actual profile data.<a href="#section-14.2.6-3" class="pilcrow">¶</a></p>
+<p id="section-14.2.6-3">Notifee's mail agent does not have enough data to verify the notification request and should accept the request even if unverified. The verification always happens locally on mail clients using actual profile data.<a href="#section-14.2.6-3" class="pilcrow">¶</a></p>
 <p id="section-14.2.6-4">For a given reader's address of LOCAL_PART@HOST_PART and connection identifier LINK between notifier (author) and reader, the notify request is to be made at path:<a href="#section-14.2.6-4" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-14.2.6-5">
 <pre>
@@ -2827,7 +2885,7 @@ HTTPS PUT /mail/HOST_PART/LOCAL_PART/link/LINK/notifications
           <h4 id="name-messages">
 <a href="#section-14.2.7" class="section-number selfRef">14.2.7. </a><a href="#name-messages" class="section-name selfRef">Messages</a>
           </h4>
-<p id="section-14.2.7-1">Mail/HTTPS messages API is stateless. The responsibility of keeping state and not re-downloading already fetched messages is shifted completely to the email clients.<a href="#section-14.2.7-1" class="pilcrow">¶</a></p>
+<p id="section-14.2.7-1">Mail/HTTPS messages API is stateless. The responsibility of keeping state and not re-downloading already fetched messages is shifted completely to the mail clients.<a href="#section-14.2.7-1" class="pilcrow">¶</a></p>
 <div id="private-messages-1">
 <section id="section-14.2.7.1">
             <h5 id="name-private-messages-2">
@@ -2900,7 +2958,7 @@ HTTPS GET /mail/HOST_PART/LOCAL_PART/streams/:stream/messages
 </div>
 <p id="section-14.2.7.2.1-5">Common HTTP status responses apply. The plaintext response body is expected only with a HTTP 200 status, as a list
 of message identifiers, each identifier on its own line.<a href="#section-14.2.7.2.1-5" class="pilcrow">¶</a></p>
-<p id="section-14.2.7.2.1-6">It is important that email clients preserve state of already fetched messages so that repeated fetches of same user does not result in duplicated messages. The mail agents are stateless and do not keep state of messages already fetched. The mail agent vault may be used for caching such data though.<a href="#section-14.2.7.2.1-6" class="pilcrow">¶</a></p>
+<p id="section-14.2.7.2.1-6">It is important that mail clients preserve state of already fetched messages so that repeated fetches of same user does not result in duplicated messages. The mail agents are stateless and do not keep state of messages already fetched. The mail agent vault may be used for caching such data though.<a href="#section-14.2.7.2.1-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="fetch-1">
@@ -2929,7 +2987,7 @@ HTTPS GET /mail/HOST_PART/LOCAL_PART/messages/MESSAGE_ID
         <h3 id="name-private-api">
 <a href="#section-14.3" class="section-number selfRef">14.3. </a><a href="#name-private-api" class="section-name selfRef">Private API</a>
         </h3>
-<p id="section-14.3-1">While the public mail agent API defines interoperability between clients and mail agents of contacts, the private API defines a universal email clients communication with home mail agents.<a href="#section-14.3-1" class="pilcrow">¶</a></p>
+<p id="section-14.3-1">While the public mail agent API defines interoperability between clients and mail agents of contacts, the private API defines a universal mail clients communication with home mail agents.<a href="#section-14.3-1" class="pilcrow">¶</a></p>
 <p id="section-14.3-2">All private mail API requests are under the path /home and MUST be authenticated. In the following examples, it is assumed that the user's address is LOCAL_PART@HOST_PART.<a href="#section-14.3-2" class="pilcrow">¶</a></p>
 <div id="notifications-2">
 <section id="section-14.3.1">
@@ -3119,7 +3177,7 @@ HTTPS DELETE /home/HOST_PART/LOCAL_PART/links/LINK
           </h4>
 <p id="section-14.3.6-1">Each mail agent allows storing arbitrary data in a key/value storage. The data SHOULD always be stored encrypted.
 The minimum total vault storage that each mail agent MUST permit is 128 MB.<a href="#section-14.3.6-1" class="pilcrow">¶</a></p>
-<p id="section-14.3.6-2">The vault is intended as an aid for synchronizing already fetched messages among multiple clients, storing caches of profiles and images, email client settings, stream subscriptions etc.<a href="#section-14.3.6-2" class="pilcrow">¶</a></p>
+<p id="section-14.3.6-2">The vault is intended as an aid for synchronizing already fetched messages among multiple clients, storing caches of profiles and images, mail client settings, stream subscriptions etc.<a href="#section-14.3.6-2" class="pilcrow">¶</a></p>
 <div id="store-1">
 <section id="section-14.3.6.1">
             <h5 id="name-store-2">
