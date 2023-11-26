@@ -1205,7 +1205,7 @@ li > p:last-of-type:only-child {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Strbac</td>
-<td class="center">Expires 25 May 2024</td>
+<td class="center">Expires 29 May 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1218,12 +1218,12 @@ li > p:last-of-type:only-child {
 <dd class="internet-draft">draft-strbac-mailhttps-00.txt</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-11-22" class="published">22 November 2023</time>
+<time datetime="2023-11-26" class="published">26 November 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-05-25">25 May 2024</time></dd>
+<dd class="expires"><time datetime="2024-05-29">29 May 2024</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1257,7 +1257,7 @@ li > p:last-of-type:only-child {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 25 May 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 29 May 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1924,15 +1924,23 @@ otherdomain2.tld
 <p id="section-7.3.1-2">A standard public email profile should include, at a minimum, the following essential attributes:<a href="#section-7.3.1-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-7.3.1-3.1">
-              <p id="section-7.3.1-3.1.1">Signing-Key: This attribute provides information about the user's public signing key, utilized to prove authored message authenticity. Digital signatures enable readers to validate that a message indeed originated from the claimed sender and has remained unaltered during transmission. Signing key attribute MUST NOT be empty. Profiles without a signing key SHOULD be considerd invalid. The signing key data is provided via attributes "algorithm", indicating the signing key type being used by the profile owner, and "data" attribute, holding the Base64 encoded key data. Example:<a href="#section-7.3.1-3.1.1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-7.3.1-3.1.2">
+              <p id="section-7.3.1-3.1.1">Signing-Key: This attribute provides information about the user's public signing key, utilized to prove authored message authenticity. Digital signatures enable readers to validate that a message indeed originated from the claimed sender and has remained unaltered during transmission. Signing key attribute MUST NOT be empty. Profiles without a signing key SHOULD be considerd invalid. The following attributes hold the key data:<a href="#section-7.3.1-3.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-7.3.1-3.1.2.1">"algorithm": indicating the igning algorithm for which the key is suitable. By default Mail/HTTPS uses "ed25519" algorithm which will be assumed if the attribute is not present.<a href="#section-7.3.1-3.1.2.1" class="pilcrow">¶</a>
+</li>
+                <li class="normal" id="section-7.3.1-3.1.2.2">"value": contains the Base64 encoded public key data.<a href="#section-7.3.1-3.1.2.2" class="pilcrow">¶</a>
+</li>
+              </ul>
+<p id="section-7.3.1-3.1.3">
+Example:<a href="#section-7.3.1-3.1.3" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-7.3.1-3.1.4">
 <pre>
-Signing-Key: algorithm=ed25519; data=AwzDTCM2GQu56oyFrek0XskQ5FbVHYD8TaFGm/w/kqc=
-</pre><a href="#section-7.3.1-3.1.2" class="pilcrow">¶</a>
+Signing-Key: algorithm=ed25519; value=AwzDTCM2GQu56oyFrek0XskQ5FbVHYD8TaFGm/w/kqc=
+</pre><a href="#section-7.3.1-3.1.4" class="pilcrow">¶</a>
 </div>
 </li>
             <li class="normal" id="section-7.3.1-3.2">
-              <p id="section-7.3.1-3.2.1">Updated: The ISO 8601 UTC formatted timestamp indicates the time of the last profile update. When using multiple agents, the profile timestamp permits to identify the most actual data after potential infrastructure issues. Example:<a href="#section-7.3.1-3.2.1" class="pilcrow">¶</a></p>
+              <p id="section-7.3.1-3.2.1">Updated: The ISO 8601 UTC formatted timestamp indicates the time of the last profile update and SHOULD always be present. When using multiple agents, the profile timestamp permits to identify the most actual data after potential infrastructure issues. Example:<a href="#section-7.3.1-3.2.1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-7.3.1-3.2.2">
 <pre>
 Updated: 2023-10-24T19:04:31Z
@@ -1955,7 +1963,7 @@ Updated: 2023-10-24T19:04:31Z
 </li>
             <li class="normal" id="section-7.3.2-4.2">Address-Expansion: If the address serves as a grouping of other addresses, or is a pointer for forwarding further, this attribute holds comma separated destination addresses. If the profile address is meant to receive a copy too, it is expected to be included in the expansion list.<a href="#section-7.3.2-4.2" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.3.2-4.3">Away-Until: If set, the attribute indicates that the user may not read messages until the date given in ISO 8601 format (YYYYMMDD). Mail clients SHOULD warn authors from authoring messages for away readers. Address-Expansion MAY be used for indicating delegations.<a href="#section-7.3.2-4.3" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.3.2-4.3">Away: If set, the attribute indicates that the user may not read messages until the away status is removed. Mail clients SHOULD warn authors from authoring messages for away readers. Address-Expansion MAY be used for indicating delegations.<a href="#section-7.3.2-4.3" class="pilcrow">¶</a>
 </li>
             <li class="normal" id="section-7.3.2-4.4">Away-Warning: If set, an attempt to author a message for away reader SHOULD bring up the custom warning which SHOULD be displayed by mail clients.<a href="#section-7.3.2-4.4" class="pilcrow">¶</a>
 </li>
@@ -1972,14 +1980,14 @@ Updated: 2023-10-24T19:04:31Z
 <ul class="normal">
 <li class="normal" id="section-7.3.2-4.9.2.1">"algorithm": indicating the encryption algorithm for which the key is suitable. By default Mail/HTTPS uses "curve25519xsalsa20poly1305" algorithm which will be assumed if the attribute is not present.<a href="#section-7.3.2-4.9.2.1" class="pilcrow">¶</a>
 </li>
-                <li class="normal" id="section-7.3.2-4.9.2.2">"data": contais the Base64 encoded public key data.<a href="#section-7.3.2-4.9.2.2" class="pilcrow">¶</a>
+                <li class="normal" id="section-7.3.2-4.9.2.2">"value": contains the Base64 encoded public key data.<a href="#section-7.3.2-4.9.2.2" class="pilcrow">¶</a>
 </li>
               </ul>
 <p id="section-7.3.2-4.9.3">
 Example:<a href="#section-7.3.2-4.9.3" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-7.3.2-4.9.4">
 <pre>
-Encryption-Key: algorithm=curve25519xsalsa20poly1305; data=AwzDTCM2GQu56oyFrek0XskQ5FbVHYD8TaFGm/w/kqc=
+Encryption-Key: algorithm=curve25519xsalsa20poly1305; value=AwzDTCM2GQu56oyFrek0XskQ5FbVHYD8TaFGm/w/kqc=
 </pre><a href="#section-7.3.2-4.9.4" class="pilcrow">¶</a>
 </div>
 </li>
@@ -2003,7 +2011,7 @@ Last-Seen-Public: Yes
               <p id="section-7.3.2-4.15.1">Last-Signing-Key: This attribute provides user's previous signing key and SHOULD be present after key rotations. The attribute serves the purpose of verifying messages that were authored during key rotations, as well as verifying the user's own API requests on mail agents from their mail clients that are still awaiting key updates. Note that unlike the signing key, the last encryption key is not needed after rotations and SHOULD NOT be present in the profile. Temporary storage of the last encryption key is responsibility of email clients.<a href="#section-7.3.2-4.15.1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-7.3.2-4.15.2">
 <pre>
-Last-Signing-Key: algorithm=ed25519; data=AwzDTCM2GQu56oyFrek0XskQ5FbVHYD8TaFGm/w/kqc=
+Last-Signing-Key: algorithm=ed25519; value=AwzDTCM2GQu56oyFrek0XskQ5FbVHYD8TaFGm/w/kqc=
 </pre><a href="#section-7.3.2-4.15.2" class="pilcrow">¶</a>
 </div>
 </li>
@@ -2192,10 +2200,10 @@ Message-Encryption: algorithm=xchacha20poly1305
               <h6 id="name-xchacha20poly1305-2">
 <a href="#section-8.3.1.2.1" class="section-number selfRef">8.3.1.2.1. </a><a href="#name-xchacha20poly1305-2" class="section-name selfRef">xchacha20poly1305</a>
               </h6>
-<p id="section-8.3.1.2.1-1">When used in headers, the XChaCha20Poly1305 encrypted data is encoded using basic Base64 encoding with padding and given in the attribute "data" along with the attribute algorithm with value "xchacha20poly1305". For example:<a href="#section-8.3.1.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-8.3.1.2.1-1">When used in headers, the XChaCha20Poly1305 encrypted data is encoded using basic Base64 encoding with padding and given in the attribute "value" along with the attribute algorithm with value "xchacha20poly1305". For example:<a href="#section-8.3.1.2.1-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-8.3.1.2.1-2">
 <pre>
-Message-Headers: algorithm=xchacha20poly1305 data=jErGXHXfee517zia2tO2Z+a2gTmL...
+Message-Headers: algorithm=xchacha20poly1305 value=jErGXHXfee517zia2tO2Z+a2gTmL...
 </pre><a href="#section-8.3.1.2.1-2" class="pilcrow">¶</a>
 </div>
 </section>
@@ -2241,7 +2249,7 @@ Message-Encryption: algorithm=secretstream_xchacha20poly1305; chunk-size=4096
 </li>
             <li class="normal" id="section-8.3.2-6.2">"key": Public encryption key fingerprint, used to encrypt the message and needed to identify the needed reader's key pair to decrypt the message.<a href="#section-8.3.2-6.2" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-8.3.2-6.3">"data": The encrypted data in Base64 encoding. The data includes already the anonymized public key needed for decrypting, conveniently embedded by the anonymous box cipher.<a href="#section-8.3.2-6.3" class="pilcrow">¶</a>
+            <li class="normal" id="section-8.3.2-6.3">"value": The encrypted data in Base64 encoding. The data includes already the anonymized public key needed for decrypting, conveniently embedded by the anonymous box cipher.<a href="#section-8.3.2-6.3" class="pilcrow">¶</a>
 </li>
           </ul>
 <p id="section-8.3.2-7">The algorithm tag and the public key fingerprint MUST be considered case-insensitive, while the encrypted data, being Base64 encoded, MUST be considered case sensitive.<a href="#section-8.3.2-7" class="pilcrow">¶</a></p>
@@ -2369,7 +2377,7 @@ If the message content is determined not to be of text content type, the content
 <p id="section-9.5-1">HTTP headers of the message object play a critical role in providing information about the transfer, payload, and nature of messages within the Mail/HTTPS system. These headers are essential for various purposes, including determining the authenticity of messages, establishing fetching rights for readers, and understanding the overall nature of the messages being exchanged.<a href="#section-9.5-1" class="pilcrow">¶</a></p>
 <p id="section-9.5-2">Confidential metadata is encapsulated within an encrypted object. The object is encrypted using the same randomly generated password that is used for encrypting the message content and is found in the "Message-Content-Headers" HTTP header.<a href="#section-9.5-2" class="pilcrow">¶</a></p>
 <p id="section-9.5-3">Reusing the same random password for encrypting both the content and metadata ensures consistency and simplifies the encryption process. It avoids the need for separate passwords and allows for efficient decryption of both the message content and metadata using the same shared key.<a href="#section-9.5-3" class="pilcrow">¶</a></p>
-<p id="section-9.5-4">Headers MUST be treated as case insensitive. both in envelope and within embedded content headers. The order of headers is irrelevant except for the calculation of envelope checksums in which case the header values should be summed using the defined order in the header 'Message-Envelope-Order'.<a href="#section-9.5-4" class="pilcrow">¶</a></p>
+<p id="section-9.5-4">Headers MUST be treated as case insensitive. both in envelope and within embedded content headers. The order of headers is irrelevant except for the calculation of envelope checksums in which case the header values should be summed using the defined order in the attribute order of header 'Message-Checksum'.<a href="#section-9.5-4" class="pilcrow">¶</a></p>
 <div id="reserved-headers">
 <section id="section-9.5.1">
           <h4 id="name-reserved-headers">
@@ -2387,26 +2395,26 @@ If the message content is determined not to be of text content type, the content
 <li class="normal" id="section-9.5.1.1-3.1">Message-Id: The unique message identifier.<a href="#section-9.5.1.1-3.1" class="pilcrow">¶</a>
 </li>
               <li class="normal" id="section-9.5.1.1-3.2">
-                <p id="section-9.5.1.1-3.2.1">Message-Headers: Base64 encoded data of either encrypted headers in private messages, or of plaintext headers in broadcast messages. Base64 data is given in attribute "data", while the attribute "seal" indicates the encryption algorithm used or value "none" if the data is not encrypted, only encoded.<a href="#section-9.5.1.1-3.2.1" class="pilcrow">¶</a></p>
+                <p id="section-9.5.1.1-3.2.1">Message-Headers: Base64 encoded data of either encrypted headers in private messages, or of plaintext headers in broadcast messages. Base64 data is given in attribute "value", while the attribute "algorithm" indicates the encryption algorithm used or value "none" if the data is not encrypted, only encoded.<a href="#section-9.5.1.1-3.2.1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-9.5.1.1-3.2.2">
 <pre>
-Message-Headers: seal=xchacha20poly1305; data=2+WifyY8sHXYp2pLW...
+Message-Headers: algorithm=xchacha20poly1305; value=2+WifyY8sHXYp2pLW...
 </pre><a href="#section-9.5.1.1-3.2.2" class="pilcrow">¶</a>
 </div>
 </li>
               <li class="normal" id="section-9.5.1.1-3.3">
-                <p id="section-9.5.1.1-3.3.1">Message-Checksum: Checksum information of these envelope headers. Attribute "algorithm" indicates the hashing algorithm used for calculating the checksum, defaulting to "sha256" <span>[<a href="#RFC6234" class="cite xref">RFC6234</a>]</span>. Since the order of headers may not be guaranteed during transfers, the attribute "order" lists the sequence of headers, separated by a colon ":" character. The sum is calculated on concatenated headers values without any separators in given order, and finally presented in attribute "sum". Example:<a href="#section-9.5.1.1-3.3.1" class="pilcrow">¶</a></p>
+                <p id="section-9.5.1.1-3.3.1">Message-Checksum: Checksum information of these envelope headers. Attribute "algorithm" indicates the hashing algorithm used for calculating the checksum, defaulting to "sha256" <span>[<a href="#RFC6234" class="cite xref">RFC6234</a>]</span>. Since the order of headers may not be guaranteed during transfers, the attribute "order" lists the sequence of headers, separated by a colon ":" character. The sum is calculated on concatenated headers values without any separators in given order, and finally presented in attribute "value". Example:<a href="#section-9.5.1.1-3.3.1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-9.5.1.1-3.3.2">
 <pre>
-Message-Checksum: algorithm=sha256; order=message-id:message-payload-cipher:message-access:message-headers; sum=31edfd4d63fc0be44196...
+Message-Checksum: algorithm=sha256; order=message-id:message-payload-cipher:message-access:message-headers; value=31edfd4d63fc0be44196...
 </pre><a href="#section-9.5.1.1-3.3.2" class="pilcrow">¶</a>
 </div>
 </li>
               <li class="normal" id="section-9.5.1.1-3.4">
-                <p id="section-9.5.1.1-3.4.1">Message-Signature: The checksum data previously calculated in the "Message-Checksum" as attribute "sum", is signed using author's private signing key and presented in the "Message-Signature". The attribute "algorithm" indicates signing algorithm used, while the resulting signature is presented in the attribute "data". To determine the right signing key during possible key rotations, attribute "key" holds the fingerprint of the public counterpart signing key. Example:<a href="#section-9.5.1.1-3.4.1" class="pilcrow">¶</a></p>
+                <p id="section-9.5.1.1-3.4.1">Message-Signature: The checksum data previously calculated in the "Message-Checksum" as attribute "sum", is signed using author's private signing key and presented in the "Message-Signature". The attribute "algorithm" indicates signing algorithm used, while the resulting signature is presented in the attribute "value". To determine the right signing key during possible key rotations, attribute "key" holds the fingerprint of the public counterpart signing key. Example:<a href="#section-9.5.1.1-3.4.1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-9.5.1.1-3.4.2">
 <pre>
-Message-Signature: algorithm=ed25519; data=rIIOtOnidYQ1V1DCvX739qOvAnaYRlv9; key=742e0d26134797bd
+Message-Signature: algorithm=ed25519; value=rIIOtOnidYQ1V1DCvX739qOvAnaYRlv9; key=742e0d26134797bd
 </pre><a href="#section-9.5.1.1-3.4.2" class="pilcrow">¶</a>
 </div>
 <p id="section-9.5.1.1-3.4.3">
@@ -2416,15 +2424,15 @@ Note that the signature is calculated on the checksum binary data represented he
 <p id="section-9.5.1.1-4">The following envelope headers depend on the nature of the message:<a href="#section-9.5.1.1-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-9.5.1.1-5.1">
-                <p id="section-9.5.1.1-5.1.1">Message-Access: This header is present only on private messages and it distinguishes message from broadcasts. It contains a list of attribute groups containing connection identifiers (links), public keys and encrypted passwords for determining access rights. Each group identifies single reader. As standard HTTP header attributes, they are are separated using a semicolumn within the group while groups are coma separated. Each message SHOULD have at least two access groups, one for the author and one for the reader, except when the reader is the same as the author in which case a single group is permitted. Each group MUST include the following attributes:<a href="#section-9.5.1.1-5.1.1" class="pilcrow">¶</a></p>
+                <p id="section-9.5.1.1-5.1.1">Message-Access: This header is present only on private messages and it distinguishes message from broadcasts. It contains a list of attribute groups containing connection identifiers (links), public keys and encrypted passwords for determining access rights. Each group identifies single reader. As standard HTTP header attributes, they are are separated using a semicolumn within the group while groups are coma separated. Each message MUST have at least one access group for the author. Each reader MUST have own access group. Each group MUST include the following attributes:<a href="#section-9.5.1.1-5.1.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-9.5.1.1-5.1.2.1">"link": The connection identifier for the author and designated reader.<a href="#section-9.5.1.1-5.1.2.1" class="pilcrow">¶</a>
 </li>
-                  <li class="normal" id="section-9.5.1.1-5.1.2.2">"nonce-key": Fingerprint of reader's public signing key. To fetch the message, reader must identify via a signed nonce and a key. The fingerprint by the provided public signing key for the nonce must match the "nonce-key" in order for mail agent to permit message download.<a href="#section-9.5.1.1-5.1.2.2" class="pilcrow">¶</a>
+                  <li class="normal" id="section-9.5.1.1-5.1.2.2">"access-key": Fingerprint of reader's public signing key. To fetch the message, reader must identify via a signed nonce and a key. The fingerprint by the provided public signing key for the nonce must match the "access-key" in order for mail agent to permit message download.<a href="#section-9.5.1.1-5.1.2.2" class="pilcrow">¶</a>
 </li>
                   <li class="normal" id="section-9.5.1.1-5.1.2.3">"algorithm": The encryption algorithm used to encrypt the symmetric key. By default, Mail/HTTPS uses "curve25519xsalsa20poly1305".<a href="#section-9.5.1.1-5.1.2.3" class="pilcrow">¶</a>
 </li>
-                  <li class="normal" id="section-9.5.1.1-5.1.2.4">"data": The encrypted symmetric key, Base64 encoded.<a href="#section-9.5.1.1-5.1.2.4" class="pilcrow">¶</a>
+                  <li class="normal" id="section-9.5.1.1-5.1.2.4">"value": The encrypted symmetric key, Base64 encoded.<a href="#section-9.5.1.1-5.1.2.4" class="pilcrow">¶</a>
 </li>
                   <li class="normal" id="section-9.5.1.1-5.1.2.5">"key": Fingerprint of the public encryption key, counterpart of the private key used for encryption.<a href="#section-9.5.1.1-5.1.2.5" class="pilcrow">¶</a>
 </li>
@@ -2433,7 +2441,7 @@ Note that the signature is calculated on the checksum binary data represented he
 Example:<a href="#section-9.5.1.1-5.1.3" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-9.5.1.1-5.1.4">
 <pre>
-  Message-Access: link=b3185f54673a93d8cb0ed2688d17592cb04720418b33992acf992fcd602325d8; nonce-key=298b0eca1e6721d8; algorithm=curve25519xsalsa20poly1305; data=9bUJsKNLYAxe8+hRmP8UjzCZLJtsucsmrMr/4NkomASdOmOczAsoUX4K5pdz1LpizAdDpu7JsQTImWWISlp12Lm6rYHenKo1yhtW716P5YU=;  key=4ec9b6b0f558b9f4, link=ca1451339611240e5790b9724c4228f562b426e24882c2a20d3abde2bcb06c2e; nonce-key=030cc34c2336190b; algorithm=curve25519xsalsa20poly1305; data=KG+7A6QznRcO67DYm0iVM7PzuZE5VrRNWxP9eAxWlgyFChQXSvAB3WgnGk+jCFwHmry37aWxO8cKM0Mrmd5ETdAkY35inyvAisBL0FuWCpk=; key=ed43833649d1ccd5
+  Message-Access: link=b3185f54673a93d8cb0ed2688d17592cb04720418b33992acf992fcd602325d8; access-key=298b0eca1e6721d8; algorithm=curve25519xsalsa20poly1305; value=9bUJsKNLYAxe8+hRmP8UjzCZLJtsucsmrMr/4NkomASdOmOczAsoUX4K5pdz1LpizAdDpu7JsQTImWWISlp12Lm6rYHenKo1yhtW716P5YU=;  key=4ec9b6b0f558b9f4, link=ca1451339611240e5790b9724c4228f562b426e24882c2a20d3abde2bcb06c2e; access-key=030cc34c2336190b; algorithm=curve25519xsalsa20poly1305; value=KG+7A6QznRcO67DYm0iVM7PzuZE5VrRNWxP9eAxWlgyFChQXSvAB3WgnGk+jCFwHmry37aWxO8cKM0Mrmd5ETdAkY35inyvAisBL0FuWCpk=; key=ed43833649d1ccd5
 </pre><a href="#section-9.5.1.1-5.1.4" class="pilcrow">¶</a>
 </div>
 </li>
@@ -2489,11 +2497,18 @@ Example:<a href="#section-9.5.1.1-5.1.3" class="pilcrow">¶</a></p>
             </ul>
 <p id="section-9.5.1.2-4">The following content headers depend on the nature of the message:<a href="#section-9.5.1.2-4" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-9.5.1.2-5.1">Readers: The addresses of the readers, comma separated, used for expanding the Message-Access envelope header. MUST be present in private messages. Expanded addresses MUST BE displayed in parentheses following the original address.<a href="#section-9.5.1.2-5.1" class="pilcrow">¶</a>
+<li class="normal" id="section-9.5.1.2-5.1">
+                <p id="section-9.5.1.2-5.1.1">Readers: The addresses of the readers, comma separated, used for expanding the Message-Access envelope header. MUST be present in private messages.<a href="#section-9.5.1.2-5.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-9.5.1.2-5.1.2.1">Expanded addresses MUST BE displayed in parentheses following the original address.<a href="#section-9.5.1.2-5.1.2.1" class="pilcrow">¶</a>
+</li>
+                  <li class="normal" id="section-9.5.1.2-5.1.2.2">Author's address SHOULD NOT be preset among readers. It is present in access links, but a reader role is implicit.<a href="#section-9.5.1.2-5.1.2.2" class="pilcrow">¶</a>
+</li>
+                </ul>
 </li>
               <li class="normal" id="section-9.5.1.2-5.2">File: If the message payload is a file, the "File" header MAY be present. Following optional attributes are permitted: "name" - case sensitive file name; "type" - representing the MIME type of the file; "modified" - the file's last modification date at origin. File name SHOULD NOT include special or whitespace characters, but the final decision on permitted filenames rests with mail clients which MAY sanitize and rename file names.<a href="#section-9.5.1.2-5.2" class="pilcrow">¶</a>
 </li>
-              <li class="normal" id="section-9.5.1.2-5.3">Parent-Message-Id: If the payload is a part of another message, such as attachment, this header contains the Id of the parent message. The relation between multiple messages MAY be re-established only if the related messages were all authored by the same author as the parent message.<a href="#section-9.5.1.2-5.3" class="pilcrow">¶</a>
+              <li class="normal" id="section-9.5.1.2-5.3">Parent-Id: If the payload is a part of another message, such as attachment, this header contains the Id of the parent message. The relation between multiple messages MAY be re-established only if the related messages were all authored by the same author as the parent message.<a href="#section-9.5.1.2-5.3" class="pilcrow">¶</a>
 </li>
             </ul>
 </section>
@@ -2724,7 +2739,7 @@ Readers: reader1@domain1.tld, reader2@domain2.tld, expanded.reader@domain3.tld:r
       </h2>
 <p id="section-13-1">In SMTP-email, Reply-To header is a technical detail and causes confusion. It causes disparity between what is assumed and what is actually happening. When a reply is made by a recipient, the assumption is often that the reply is made to the original author (sender), present in the 'From' header. The 'Reply-To' address requested by the original sender may easily be overlooked by the reader.<a href="#section-13-1" class="pilcrow">¶</a></p>
 <p id="section-13-2">Mail/HTTPS does not have support for Reply-To headers. Should a reply be required to another address, that address SHOULD be included in the original message as an additional reader. The obvious behaviour SHOULD always be the assumed one.<a href="#section-13-2" class="pilcrow">¶</a></p>
-<p id="section-13-3">Upon replying, the Subject-Id of the message being replied MUST be taken over as Subject-Id of the reply. The Subject line MAY be altered. Parent-Message-Id MUST NOT be ever taken over in replies.<a href="#section-13-3" class="pilcrow">¶</a></p>
+<p id="section-13-3">Upon replying, the Subject-Id of the message being replied MUST be taken over as Subject-Id of the reply. The Subject line MAY be altered. Parent-Id MUST NOT be ever taken over in replies.<a href="#section-13-3" class="pilcrow">¶</a></p>
 <div id="automatic-replies">
 <section id="section-13.1">
         <h3 id="name-automatic-replies">
