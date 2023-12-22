@@ -2348,10 +2348,11 @@ Message-Encryption: algorithm=secretstream_xchacha20poly1305; chunk-size=4096
           <h4 id="name-files-attachments">
 <a href="#section-9.4.3" class="section-number selfRef">9.4.3. </a><a href="#name-files-attachments" class="section-name selfRef">Files (Attachments)</a>
           </h4>
-<p id="section-9.4.3-1">Mail/HTTPS allows including files into messages, commonly considered "attachments". While SMTP-based email embeds such files into multi-body messages, Mail/HTTPS transfers each file in a single one or multiple messages referencing the parent message containing the body.<a href="#section-9.4.3-1" class="pilcrow">¶</a></p>
-<p id="section-9.4.3-2">While NOT RECOMMENDED, an only-files message is technically possible. Single file message is trivial. However, if the message contains multiple files, one of the resulting file-messages MUST become the parent message referenced by other file messages.<a href="#section-9.4.3-2" class="pilcrow">¶</a></p>
-<p id="section-9.4.3-3">When a message is impracticaly large, it is split into parts which are transfered as own messages. The latter are re-assembled by readers' clients.<a href="#section-9.4.3-3" class="pilcrow">¶</a></p>
-<p id="section-9.4.3-4">Splitting larger files into smaller messages brings benefits of parallel message transfers.<a href="#section-9.4.3-4" class="pilcrow">¶</a></p>
+<p id="section-9.4.3-1">Mail/HTTPS allows including files into messages, commonly considered "attachments". While SMTP-based email embeds such files into single multi-body messages, Mail/HTTPS transfers each file in a single one or multiple messages referencing the parent message containing the body. Such "message-group" is expected to be downloaded in its entirety and message reconstructed in the reader's email client. The parent message serves as an anchor for the rest of the message parts and describes the message composition at the source.<a href="#section-9.4.3-1" class="pilcrow">¶</a></p>
+<p id="section-9.4.3-2">In a message group, there MAY be only a single parent message which serves as a source of truth on the origin message structure. The content header Parent-Id indicates the message is not to be considered on its own and is a part of a message group. Along the same logic, any message not including a Parent-Id header SHOULD be considered a representable message. A message group fragment MAY be referenced and presented only via the parent message and its "Files" header. For the relation to be established, the referencing message' Parent-Id header must match the parent Message-Id, and both messages must be authored by the same user, at the very same time, using the same keys. Relation between messages in a group MAY NOT be established between messages authored at different times or not part of the original message group.<a href="#section-9.4.3-2" class="pilcrow">¶</a></p>
+<p id="section-9.4.3-3">No single message MAY contain both embedded content and file contents. Such restriction is practical as the body payload itself is indistinguishable from file payloads in messages. To provide an illusion of presence of both in reader's email client, only the parent message is expected to include a representable body, while the referencing messages provide files' contents.<a href="#section-9.4.3-3" class="pilcrow">¶</a></p>
+<p id="section-9.4.3-4">Parent message MAY NOT be of "file" type even if the embedded body is empty. Any reference to a parent of "file" type, containing a "File" header or a non-representable body SHOULD be ignored. It is RECOMMENDED for email clients to suggest deletion or manual inspection of such messages to the reader.<a href="#section-9.4.3-4" class="pilcrow">¶</a></p>
+<p id="section-9.4.3-5">When a message is impracticaly large, it MAY be split into parts which are transfered as own messages. The latter are re-assembled by readers' clients. Splitting larger files into smaller messages brings benefits of parallel message transfers.<a href="#section-9.4.3-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="size">
@@ -2478,7 +2479,7 @@ Example:<a href="#section-9.5.1-6.1.3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-9.5.1.2-3.1">Id: Message identifier, SHOULD match the envelope Message-ID unless the message is forwarded in which case it MAY differ.<a href="#section-9.5.1.2-3.1" class="pilcrow">¶</a>
 </li>
-              <li class="normal" id="section-9.5.1.2-3.2">Author: The address of the author as a valid Mail/HTTPS address.<a href="#section-9.5.1.2-3.2" class="pilcrow">¶</a>
+              <li class="normal" id="section-9.5.1.2-3.2">Author: The address of the message author as a valid Mail/HTTPS address.<a href="#section-9.5.1.2-3.2" class="pilcrow">¶</a>
 </li>
               <li class="normal" id="section-9.5.1.2-3.3">Date: The authored-on date in ISO 8601 UTC format, for example "2023-10-24T19:04:31Z".<a href="#section-9.5.1.2-3.3" class="pilcrow">¶</a>
 </li>
@@ -2493,7 +2494,7 @@ Example:<a href="#section-9.5.1-6.1.3" class="pilcrow">¶</a></p>
               <li class="normal" id="section-9.5.1.2-3.8">Category: Categorization of the message (see below).<a href="#section-9.5.1.2-3.8" class="pilcrow">¶</a>
 </li>
             </ul>
-<p id="section-9.5.1.2-4">The following content headers depend on the nature of the message:<a href="#section-9.5.1.2-4" class="pilcrow">¶</a></p>
+<p id="section-9.5.1.2-4">The following content headers depend on the message nature:<a href="#section-9.5.1.2-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-9.5.1.2-5.1">
                 <p id="section-9.5.1.2-5.1.1">Readers: The addresses of the readers, comma separated, used for expanding the Message-Access envelope header. MUST be present in private messages.<a href="#section-9.5.1.2-5.1.1" class="pilcrow">¶</a></p>
@@ -2505,7 +2506,7 @@ Example:<a href="#section-9.5.1-6.1.3" class="pilcrow">¶</a></p>
                 </ul>
 </li>
               <li class="normal" id="section-9.5.1.2-5.2">
-                <p id="section-9.5.1.2-5.2.1">File: If the message payload is a file (attachment), the "File" header MUST be present describing the file. Following attributes are permitted:<a href="#section-9.5.1.2-5.2.1" class="pilcrow">¶</a></p>
+                <p id="section-9.5.1.2-5.2.1">File: if the message payload is a file (attachment), the "File" header MUST be present describing the file. The header MAY not be present on parent messages. Following attributes are permitted:<a href="#section-9.5.1.2-5.2.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-9.5.1.2-5.2.2.1">"name": case sensitive file name, it SHOULD NOT include special or whitespace characters, but the final decision on permitted filenames rests with mail clients which MAY sanitize and rename file names.<a href="#section-9.5.1.2-5.2.2.1" class="pilcrow">¶</a>
 </li>
@@ -2522,30 +2523,32 @@ File: name=my_large_recording_02.mp3; type=audio/mp3; size=172556326; part=1/3; 
 </li>
                 </ul>
 </li>
-              <li class="normal" id="section-9.5.1.2-5.3">
-                <p id="section-9.5.1.2-5.3.1">Files: If the origin message includes multiple files, all those MUST be listed in the parent message only. The "Files" header gives a hint of how the original message was structured upon authoring as well how the message should be re-assembled upon retrieval. The header is very similar to the "File" attribute. Following optional attributes are mandatory and MUST be present:<a href="#section-9.5.1.2-5.3.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="section-9.5.1.2-5.3">File-Description: an optional free form note describing the file beyond its name. The header MAY not be present on parent messages.<a href="#section-9.5.1.2-5.3" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-9.5.1.2-5.4">
+                <p id="section-9.5.1.2-5.4.1">Files: if the origin message includes multiple files, all those MUST be listed in the parent message only in the "Files" header. The "Files" header gives a hint of how the original message was structured upon authoring as well how the message should be re-assembled upon retrieval. The header is very similar to the "File" attribute. Following optional attributes are mandatory and MUST be present:<a href="#section-9.5.1.2-5.4.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-9.5.1.2-5.3.2.1">"name": case sensitive file name, it SHOULD NOT include special or whitespace characters, but the final decision on permitted filenames rests with mail clients which MAY sanitize and rename file names.<a href="#section-9.5.1.2-5.3.2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-9.5.1.2-5.4.2.1">"name": case sensitive file name, it SHOULD NOT include special or whitespace characters, but the final decision on permitted filenames rests with mail clients which MAY sanitize and rename file names.<a href="#section-9.5.1.2-5.4.2.1" class="pilcrow">¶</a>
 </li>
-                  <li class="normal" id="section-9.5.1.2-5.3.2.2">"type": representing the MIME type of the file. The MIME type helps client represent the nature of the file.<a href="#section-9.5.1.2-5.3.2.2" class="pilcrow">¶</a>
+                  <li class="normal" id="section-9.5.1.2-5.4.2.2">"type": representing the MIME type of the file. The MIME type helps client represent the nature of the file.<a href="#section-9.5.1.2-5.4.2.2" class="pilcrow">¶</a>
 </li>
-                  <li class="normal" id="section-9.5.1.2-5.3.2.3">"size": the file size in bytes.<a href="#section-9.5.1.2-5.3.2.3" class="pilcrow">¶</a>
+                  <li class="normal" id="section-9.5.1.2-5.4.2.3">"size": the file size in bytes.<a href="#section-9.5.1.2-5.4.2.3" class="pilcrow">¶</a>
 </li>
-                  <li class="normal" id="section-9.5.1.2-5.3.2.4">"part": if the payload is a segment of a larger payload, the segment number and total number of segments are expected.<a href="#section-9.5.1.2-5.3.2.4" class="pilcrow">¶</a>
+                  <li class="normal" id="section-9.5.1.2-5.4.2.4">"part": if the payload is a segment of a larger payload, the segment number and total number of segments are expected.<a href="#section-9.5.1.2-5.4.2.4" class="pilcrow">¶</a>
 </li>
-                  <li class="normal" id="section-9.5.1.2-5.3.2.5">
-                    <p id="section-9.5.1.2-5.3.2.5.1">"id": the message id containing the file payload. Mail clients will use this id to check if the message is present in its entirety.<a href="#section-9.5.1.2-5.3.2.5.1" class="pilcrow">¶</a></p>
-<p id="section-9.5.1.2-5.3.2.5.2">
+                  <li class="normal" id="section-9.5.1.2-5.4.2.5">
+                    <p id="section-9.5.1.2-5.4.2.5.1">"id": the message id containing the file payload. Mail clients will use this id to check if the message is present in its entirety.<a href="#section-9.5.1.2-5.4.2.5.1" class="pilcrow">¶</a></p>
+<p id="section-9.5.1.2-5.4.2.5.2">
 Files: name=my_recording_01.mp3; type=audio/mp3; size=56321; id=1a24e40aa77824272489324dc36d96c9a0a7d5792ee4467c7bee570d4205267d,
 name=my_large_recording_02.mp3; type=audio/mp3; size=172556326; part=1/3; id=1a24e40aa77824272489324dc36d96c9a0a7d5792ee4467c7bee570d4205267d;
 name=my_large_recording_02.mp3; type=audio/mp3; size=172556326; part=2/3; id=1a24e40aa77824272489324dc36d96c9a0a7d5792ee4467c7bee570d4205267d;
-name=my_large_recording_02.mp3; type=audio/mp3; size=172556326; part=3/3; id=1a24e40aa77824272489324dc36d96c9a0a7d5792ee4467c7bee570d4205267d;<a href="#section-9.5.1.2-5.3.2.5.2" class="pilcrow">¶</a></p>
+name=my_large_recording_02.mp3; type=audio/mp3; size=172556326; part=3/3; id=1a24e40aa77824272489324dc36d96c9a0a7d5792ee4467c7bee570d4205267d;<a href="#section-9.5.1.2-5.4.2.5.2" class="pilcrow">¶</a></p>
 </li>
                 </ul>
-<p id="section-9.5.1.2-5.3.3">
-It can be observed that the information of a given file is present both in the parent message in the "Files" header, as well in the message containing actual file payload, in the "File" header. This is intentional as dependent messages are often not retrieved at the exact same time. Each message MUST be able to describe the payload it caries.<a href="#section-9.5.1.2-5.3.3" class="pilcrow">¶</a></p>
+<p id="section-9.5.1.2-5.4.3">
+It can be observed that the information of a given file is present both in the parent message in the "Files" header, as well in the message containing actual file payload, in the "File" header. This is intentional as dependent messages are often not retrieved at the exact same time. Each message MUST be able to describe the payload it caries.<a href="#section-9.5.1.2-5.4.3" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-9.5.1.2-5.4">Parent-Id: contains the Id of the parent message if the payload contained should be treated as an "attached" file and part of the parent message. The relation between messages CAN be re-established only if the related messages were all authored by the same author as the parent message and the parent references this message from its Files header.<a href="#section-9.5.1.2-5.4" class="pilcrow">¶</a>
+              <li class="normal" id="section-9.5.1.2-5.5">Parent-Id: contains the Id of the parent message if the payload contained should be treated as an "attached" file and part of another "parent" message. Parent messages MAY either exclude the header or include it while referencing own Message-Id.<a href="#section-9.5.1.2-5.5" class="pilcrow">¶</a>
 </li>
             </ul>
 </section>
