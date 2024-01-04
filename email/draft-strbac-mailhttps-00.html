@@ -2529,7 +2529,7 @@ File: name=my_large_recording_02.mp3; type=audio/mp3; size=172556326; part=1/3; 
               <li class="normal" id="section-9.5.1.2-5.3">File-Description: an optional free form note describing the file beyond its name. The header MAY not be present on parent messages.<a href="#section-9.5.1.2-5.3" class="pilcrow">¶</a>
 </li>
               <li class="normal" id="section-9.5.1.2-5.4">
-                <p id="section-9.5.1.2-5.4.1">Files: if the origin message includes multiple files, all those MUST be listed in the parent message only in the "Files" header. The "Files" header gives a hint of how the original message was structured upon authoring as well how the message should be re-assembled upon retrieval. The header is very similar to the "File" attribute. Following optional attributes are mandatory and MUST be present:<a href="#section-9.5.1.2-5.4.1" class="pilcrow">¶</a></p>
+                <p id="section-9.5.1.2-5.4.1">Files: a parent message only header. If the origin message includes multiple files, all those MUST be listed in the parent message only in the "Files" header. The header gives a hint of how the original message was structured upon authoring as well how the message should be re-assembled upon retrieval. The header is very similar to the "File" attribute. Following optional attributes are mandatory and MUST be present:<a href="#section-9.5.1.2-5.4.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-9.5.1.2-5.4.2.1">"name": case sensitive file name. Any special character in the file name MUST be URL encoded.<a href="#section-9.5.1.2-5.4.2.1" class="pilcrow">¶</a>
 </li>
@@ -2542,16 +2542,16 @@ File: name=my_large_recording_02.mp3; type=audio/mp3; size=172556326; part=1/3; 
                   <li class="normal" id="section-9.5.1.2-5.4.2.5">
                     <p id="section-9.5.1.2-5.4.2.5.1">"id": the message id containing the file payload. Mail clients will use this id to check if the message is present in its entirety.<a href="#section-9.5.1.2-5.4.2.5.1" class="pilcrow">¶</a></p>
 <p id="section-9.5.1.2-5.4.2.5.2">
-Files: name=my_recording_01.mp3; type=audio/mp3; size=56321; id=1a24e40aa77824272489324dc36d96c9a0a7d5792ee4467c7bee570d4205267d,
-name=my_large_recording_02.mp3; type=audio/mp3; size=172556326; part=1/3; id=1a24e40aa77824272489324dc36d96c9a0a7d5792ee4467c7bee570d4205267d;
-name=my_large_recording_02.mp3; type=audio/mp3; size=172556326; part=2/3; id=1a24e40aa77824272489324dc36d96c9a0a7d5792ee4467c7bee570d4205267d;
-name=my_large_recording_02.mp3; type=audio/mp3; size=172556326; part=3/3; id=1a24e40aa77824272489324dc36d96c9a0a7d5792ee4467c7bee570d4205267d;<a href="#section-9.5.1.2-5.4.2.5.2" class="pilcrow">¶</a></p>
+Files: name=my_recording_01.mp3; type=audio/mp3; size=56321; id=93255731471fc77858bbb8931a51cb578d0eca6e0784717f4bf58415455f6db7,
+name=my_large_recording_02.mp3; type=audio/mp3; size=104857600; part=1/3; id=49c93c23fa2ada78dd321bf9611ff400a67c615d9115c5a1a1063433e8b50ebf;
+name=my_large_recording_02.mp3; type=audio/mp3; size=104857600; part=2/3; id=caa58f0bf6896cd6ed9abce0e8e1bacdc65b0283966e1bee0f2e8216dff2cdc5;
+name=my_large_recording_02.mp3; type=audio/mp3; size=2556326; part=3/3; id=1a24e40aa77824272489324dc36d96c9a0a7d5792ee4467c7bee570d4205267d;<a href="#section-9.5.1.2-5.4.2.5.2" class="pilcrow">¶</a></p>
 </li>
                 </ul>
 <p id="section-9.5.1.2-5.4.3">
 It can be observed that the information of a given file is present both in the parent message in the "Files" header, as well in the message containing actual file payload, in the "File" header. This is intentional as dependent messages are often not retrieved at the exact same time. Each message MUST be able to describe the payload it caries.<a href="#section-9.5.1.2-5.4.3" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-9.5.1.2-5.5">Parent-Id: contains the Id of the parent message if the payload contained should be treated as an "attached" file and part of another "parent" message. Parent messages MAY either exclude the header or include it while referencing own Message-Id.<a href="#section-9.5.1.2-5.5" class="pilcrow">¶</a>
+              <li class="normal" id="section-9.5.1.2-5.5">Parent-Id: contains the Message-Id of the parent message if the payload contained should be treated as an "attached" file and part of another "parent" message. Parent messages MAY either exclude the header or include it while referencing own Message-Id.<a href="#section-9.5.1.2-5.5" class="pilcrow">¶</a>
 </li>
             </ul>
 </section>
@@ -2567,31 +2567,31 @@ It can be observed that the information of a given file is present both in the p
 <p id="section-9.5.2-2">By pre-categorizing messages by authors, it becomes possible to enhance how mail clients display and handle these messages. Additionally, it enables better decision-making regarding whether or not to save them in archives.<a href="#section-9.5.2-2" class="pilcrow">¶</a></p>
 <p id="section-9.5.2-3">We define standard categories for mail objects:<a href="#section-9.5.2-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-9.5.2-4.1">"personal": Messages from the private circles that are likely to be saved for future reference.<a href="#section-9.5.2-4.1" class="pilcrow">¶</a>
+<li class="normal" id="section-9.5.2-4.1">"personal": Messages from private circles, the default type of messages. These messages SHOULD be archived.<a href="#section-9.5.2-4.1" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-9.5.2-4.2">"chat": Short, off-the-record messages that are typically not saved individually.<a href="#section-9.5.2-4.2" class="pilcrow">¶</a>
+            <li class="normal" id="section-9.5.2-4.2">"chat": Short messages for a less formal conversation type. These messages SHOULD NOT be archived and treated as off-the-record.<a href="#section-9.5.2-4.2" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-9.5.2-4.3">"transitory": TOTP, one time access links etc. These messages are not be saved by default.<a href="#section-9.5.2-4.3" class="pilcrow">¶</a>
+            <li class="normal" id="section-9.5.2-4.3">"transitory": TOTP, one time access links etc. These messages SHOULD not be archived due to their limited time scope.<a href="#section-9.5.2-4.3" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-9.5.2-4.4">"notification": Information of an event occurrence such as system alert, sensor information, security notification, parcel shipping status etc. These messages are not to be saved by default.<a href="#section-9.5.2-4.4" class="pilcrow">¶</a>
+            <li class="normal" id="section-9.5.2-4.4">"notification": Information of an event occurrence such as system alert, sensor information, security notification, parcel shipping status etc. These messages SHOULD not be archived by default.<a href="#section-9.5.2-4.4" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-9.5.2-4.5">"transaction": Messages related to a private or commercial transaction, such as order confirmation, receipt, refund etc. These messages are valuable and are saved by default.<a href="#section-9.5.2-4.5" class="pilcrow">¶</a>
+            <li class="normal" id="section-9.5.2-4.5">"transaction": Messages related to a private or commercial transaction, such as order confirmation, receipt, refund etc. These messages are valuable and SHOULD be archived.<a href="#section-9.5.2-4.5" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-9.5.2-4.6">"promotion": Messages informing of new offerings, sales events etc. These messages are not to be saved by default.<a href="#section-9.5.2-4.6" class="pilcrow">¶</a>
+            <li class="normal" id="section-9.5.2-4.6">"promotion": Messages informing of new offerings, sales events etc. These messages SHOULD NOT be archived.<a href="#section-9.5.2-4.6" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-9.5.2-4.7">"letter": Official communication from organizations, government as well anything that would have been sent as postal mail. These messages are usually valuable and are saved by default. While the term "letter" may evoke the idea of a PDF format, it's important to clarify that in this context, the message type does not specifically refer to PDFs. Instead, it pertains to plain text messages where the content is expected to be in the form of plain text within the message body. However, it is possible to include a PDF file as an additional message of type "file," which could be associated with the "letter" message. In such cases, the PDF file would appear as an attachment or related document, similar to how attachments are typically displayed in legacy email.<a href="#section-9.5.2-4.7" class="pilcrow">¶</a>
+            <li class="normal" id="section-9.5.2-4.7">"letter": Official communication from organizations, government as well anything that would have been sent as postal mail. These messages are usually valuable and are saved by default. While the term "letter" may evoke the idea of a PDF format, it's important to clarify that in this context, the message type does not specifically refer to PDFs. Instead, it pertains to plain text messages where the content is expected to be in the form of plain text within the message body. However, it is possible to include a PDF file as an additional message of type "file," which could be associated with the "letter" message. In such cases, the PDF file would appear as an attachment or related document, similar to how attachments are typically displayed in legacy email. These messages SHOULD be archived by default.<a href="#section-9.5.2-4.7" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-9.5.2-4.8">"file": Messages containing a single file of any file type. These messages are to be saved by default.<a href="#section-9.5.2-4.8" class="pilcrow">¶</a>
+            <li class="normal" id="section-9.5.2-4.8">"file": Messages containing a single file of any file type. These messages SHOULD be archived by default.<a href="#section-9.5.2-4.8" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-9.5.2-4.9">"informational": Messages that are announcements, commonly broadcast that cannot be classified under any other categories.<a href="#section-9.5.2-4.9" class="pilcrow">¶</a>
+            <li class="normal" id="section-9.5.2-4.9">"informational": Messages that are announcements, commonly broadcast that cannot be classified under any other categories. These messages SHOULD be archived by default.<a href="#section-9.5.2-4.9" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-9.5.2-4.10">"pass": Messages containing a pass, such as as airplane tickets, theater tickets, invitations etc. The messages may be referenced by other messages containing pass files such as PDF, PKPASS etc.<a href="#section-9.5.2-4.10" class="pilcrow">¶</a>
+            <li class="normal" id="section-9.5.2-4.10">"pass": Messages containing a pass, such as as airplane tickets, theater tickets, invitations etc. The messages may be referenced by other messages containing pass files such as PDF, PKPASS etc. These messages SHOULD be archived by default.<a href="#section-9.5.2-4.10" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-9.5.2-4.11">"funds": This category serves as a placeholder for future developments and potential inclusion of such digital currency-related messages. It anticipates the possibility of incorporating messages that involve digital currency transactions, loyalty program points, or electronic cash in the future.<a href="#section-9.5.2-4.11" class="pilcrow">¶</a>
+            <li class="normal" id="section-9.5.2-4.11">"funds": This category serves as a placeholder for future developments and potential inclusion of such digital currency-related messages. It anticipates the possibility of incorporating messages that involve digital currency transactions, loyalty program points, or electronic cash in the future. These messages SHOULD be archived by default.<a href="#section-9.5.2-4.11" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-9.5.2-4.12">"encryption-key": Special messages containing a replacement private encryption key. These messages must be authored by the reader, duly encrypted and signed with current keys, and retrieved only from the user's own email agent. Email clients MUST refuse to retrieve remote messages of other authors of this type.<a href="#section-9.5.2-4.12" class="pilcrow">¶</a>
+            <li class="normal" id="section-9.5.2-4.12">"encryption-key": Special messages containing a replacement private encryption key. These messages must be authored by the reader, duly encrypted and signed with current keys, and retrieved only from the user's own email agent. Email clients MUST refuse to retrieve remote messages of other authors of this type. These messages SHOULD NOT be archived.<a href="#section-9.5.2-4.12" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-9.5.2-4.13">"signing-key": Special messages containing a replacement private signing key. These messages must be authored by the reader, duly encrypted and signed with current keys, and retrieved only from the user's own email agent. Email clients MUST refuse to retrieve remote messages of other authors of this type.<a href="#section-9.5.2-4.13" class="pilcrow">¶</a>
+            <li class="normal" id="section-9.5.2-4.13">"signing-key": Special messages containing a replacement private signing key. These messages must be authored by the reader, duly encrypted and signed with current keys, and retrieved only from the user's own email agent. Email clients MUST refuse to retrieve remote messages of other authors of this type. These messages SHOULD NOT be archived.<a href="#section-9.5.2-4.13" class="pilcrow">¶</a>
 </li>
           </ul>
 </section>
