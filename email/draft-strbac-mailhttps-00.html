@@ -1205,7 +1205,7 @@ li > p:last-of-type:only-child {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Strbac</td>
-<td class="center">Expires 7 July 2024</td>
+<td class="center">Expires 10 July 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1218,12 +1218,12 @@ li > p:last-of-type:only-child {
 <dd class="internet-draft">draft-strbac-mailhttps-00.txt</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-01-04" class="published">4 January 2024</time>
+<time datetime="2024-01-07" class="published">7 January 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-07-07">7 July 2024</time></dd>
+<dd class="expires"><time datetime="2024-07-10">10 July 2024</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1257,7 +1257,7 @@ li > p:last-of-type:only-child {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 7 July 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 10 July 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1459,7 +1459,7 @@ li > p:last-of-type:only-child {
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
-            <p id="section-toc.1-1.10.1"><a href="#section-10" class="auto internal xref">10</a>. <a href="#name-public-links" class="internal xref">Public Links</a></p>
+            <p id="section-toc.1-1.10.1"><a href="#section-10" class="auto internal xref">10</a>. <a href="#name-mail-agent-links" class="internal xref">Mail Agent Links</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.1">
                 <p id="section-toc.1-1.10.2.1.1"><a href="#section-10.1" class="auto internal xref">10.1</a>.  <a href="#name-link-sniffing" class="internal xref">Link Sniffing</a></p>
@@ -1924,28 +1924,30 @@ otherdomain2.tld
 <p id="section-7.3.1-1">Public email profiles offer more than just convenience; they also play a crucial role in facilitating message encryption and validation through the exposure of public keys.<a href="#section-7.3.1-1" class="pilcrow">¶</a></p>
 <p id="section-7.3.1-2">A standard public email profile should include, at a minimum, the following essential attributes:<a href="#section-7.3.1-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-7.3.1-3.1">
-              <p id="section-7.3.1-3.1.1">Signing-Key: This attribute provides information about the user's public signing key, utilized to prove authored message authenticity. Digital signatures enable readers to validate that a message indeed originated from the claimed sender and has remained unaltered during transmission. Signing key attribute MUST NOT be empty. Profiles without a signing key SHOULD be considered invalid. The following attributes hold the key data:<a href="#section-7.3.1-3.1.1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-7.3.1-3.1.2.1">"algorithm": indicating the signing algorithm for which the key is suitable. By default, Mail/HTTPS uses "ed25519" algorithm which will be assumed if the attribute is not present.<a href="#section-7.3.1-3.1.2.1" class="pilcrow">¶</a>
-</li>
-                <li class="normal" id="section-7.3.1-3.1.2.2">"value": contains the Base64 encoded public key data.<a href="#section-7.3.1-3.1.2.2" class="pilcrow">¶</a>
-</li>
-              </ul>
-<p id="section-7.3.1-3.1.3">
-Example:<a href="#section-7.3.1-3.1.3" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-7.3.1-3.1.4">
-<pre>
-Signing-Key: algorithm=ed25519; value=AwzDTCM2GQu56oyFrek0XskQ5FbVHYD8TaFGm/w/kqc=
-</pre><a href="#section-7.3.1-3.1.4" class="pilcrow">¶</a>
-</div>
+<li class="normal" id="section-7.3.1-3.1">Name: This attribute represents the display name associated with the address. Previously, in SMTP-email it was typically written as "name" &lt;address&gt;. The name helps identify the user or entity behind the address.<a href="#section-7.3.1-3.1" class="pilcrow">¶</a>
 </li>
             <li class="normal" id="section-7.3.1-3.2">
-              <p id="section-7.3.1-3.2.1">Updated: The ISO 8601 UTC formatted timestamp indicates the time of the last profile update and SHOULD always be present. When using multiple agents, the profile timestamp permits to identify the most actual data after potential infrastructure issues. Example:<a href="#section-7.3.1-3.2.1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-7.3.1-3.2.2">
+              <p id="section-7.3.1-3.2.1">Signing-Key: This attribute provides information about the user's public signing key, utilized to prove authored message authenticity. Digital signatures enable readers to validate that a message indeed originated from the claimed sender and has remained unaltered during transmission. Signing key attribute MUST NOT be empty. Profiles without a signing key SHOULD be considered invalid. The following attributes hold the key data:<a href="#section-7.3.1-3.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-7.3.1-3.2.2.1">"algorithm": indicating the signing algorithm for which the key is suitable. By default, Mail/HTTPS uses "ed25519" algorithm which will be assumed if the attribute is not present.<a href="#section-7.3.1-3.2.2.1" class="pilcrow">¶</a>
+</li>
+                <li class="normal" id="section-7.3.1-3.2.2.2">"value": contains the Base64 encoded public key data.<a href="#section-7.3.1-3.2.2.2" class="pilcrow">¶</a>
+</li>
+              </ul>
+<p id="section-7.3.1-3.2.3">
+Example:<a href="#section-7.3.1-3.2.3" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-7.3.1-3.2.4">
+<pre>
+Signing-Key: algorithm=ed25519; value=AwzDTCM2GQu56oyFrek0XskQ5FbVHYD8TaFGm/w/kqc=
+</pre><a href="#section-7.3.1-3.2.4" class="pilcrow">¶</a>
+</div>
+</li>
+            <li class="normal" id="section-7.3.1-3.3">
+              <p id="section-7.3.1-3.3.1">Updated: The ISO 8601 UTC formatted timestamp indicates the time of the last profile update and SHOULD always be present. When using multiple agents, the profile timestamp permits to identify the most actual data after potential infrastructure issues. Example:<a href="#section-7.3.1-3.3.1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-7.3.1-3.3.2">
 <pre>
 Updated: 2023-10-24T19:04:31Z
-</pre><a href="#section-7.3.1-3.2.2" class="pilcrow">¶</a>
+</pre><a href="#section-7.3.1-3.3.2" class="pilcrow">¶</a>
 </div>
 </li>
           </ul>
@@ -2024,35 +2026,33 @@ Last-Signing-Key: algorithm=ed25519; value=AwzDTCM2GQu56oyFrek0XskQ5FbVHYD8TaFGm
 </li>
             <li class="normal" id="section-7.3.2-4.19">Music: The attribute indicates the profile owner's preferred music genres, artists, or songs. It is a free-form attribute.<a href="#section-7.3.2-4.19" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.3.2-4.20">Name: This attribute represents the display name associated with the address. Previously, in SMTP-email it was typically written as "name" &lt;address&gt;. The name helps identify the user or entity behind the address and its presence is RECOMMENDED.<a href="#section-7.3.2-4.20" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.3.2-4.20">Notes: The attribute allows for additional remarks or notes about the profile owner, such as preferences, interests, or specific instructions. It is a free-form attribute.<a href="#section-7.3.2-4.20" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.3.2-4.21">Notes: The attribute allows for additional remarks or notes about the profile owner, such as preferences, interests, or specific instructions. It is a free-form attribute.<a href="#section-7.3.2-4.21" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.3.2-4.21">Organization: The attribute denotes the name of the company, organization, or institution the profile owner is affiliated with. It is a free-form attribute.<a href="#section-7.3.2-4.21" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.3.2-4.22">Organization: The attribute denotes the name of the company, organization, or institution the profile owner is affiliated with. It is a free-form attribute.<a href="#section-7.3.2-4.22" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.3.2-4.22">Phone: The attribute represents the contact numbers associated with the profile owner. It is a free-form attribute.<a href="#section-7.3.2-4.22" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.3.2-4.23">Phone: The attribute represents the contact numbers associated with the profile owner. It is a free-form attribute.<a href="#section-7.3.2-4.23" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.3.2-4.23">Places-Lived: The attribute encompasses information about the profile owner's previous or current places of residence or significant locations in their life. This attribute is designed to be free-form, meaning that there are no specific formatting requirements or constraints imposed. Users have the flexibility to input the relevant location data in a way that best suits their preferences, allowing for a customizable representation of their lived experiences and important geographical information.<a href="#section-7.3.2-4.23" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.3.2-4.24">Places-Lived: The attribute encompasses information about the profile owner's previous or current places of residence or significant locations in their life. This attribute is designed to be free-form, meaning that there are no specific formatting requirements or constraints imposed. Users have the flexibility to input the relevant location data in a way that best suits their preferences, allowing for a customizable representation of their lived experiences and important geographical information.<a href="#section-7.3.2-4.24" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.3.2-4.24">Public-Access: The attribute indicates whether the profile owner accepts notifications from unknown links as contact requests. Mail agents of the profile owner implement this policy upon notifications requests. Possible values are "Yes" and "No". The attribute SHOULD assume default value "Yes" if not present.<a href="#section-7.3.2-4.24" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.3.2-4.25">Public-Access: The attribute indicates whether the profile owner accepts notifications from unknown links as contact requests. Mail agents of the profile owner implement this policy upon notifications requests. Possible values are "Yes" and "No". The attribute SHOULD assume default value "Yes" if not present.<a href="#section-7.3.2-4.25" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.3.2-4.25">Relationship-Status: The attribute is a free-form attribute and indicates the current relationship status of the profile owner (e.g., single, in a relationship, married, looking, etc.).<a href="#section-7.3.2-4.25" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.3.2-4.26">Relationship-Status: The attribute is a free-form attribute and indicates the current relationship status of the profile owner (e.g., single, in a relationship, married, looking, etc.).<a href="#section-7.3.2-4.26" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.3.2-4.26">Sports: The attribute is a free-form and may lists sports activities or teams that the profile owner follows or participates in.<a href="#section-7.3.2-4.26" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.3.2-4.27">Sports: The attribute is a free-form and may lists sports activities or teams that the profile owner follows or participates in.<a href="#section-7.3.2-4.27" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.3.2-4.27">Status: The attribute provides the current status message of the profile owner. It is a free-form attribute.<a href="#section-7.3.2-4.27" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.3.2-4.28">Status: The attribute provides the current status message of the profile owner. It is a free-form attribute.<a href="#section-7.3.2-4.28" class="pilcrow">¶</a>
-</li>
-            <li class="normal" id="section-7.3.2-4.29">
-              <p id="section-7.3.2-4.29.1">Streams: The attribute provides a coma separated collection of free-form stream tags that readers can use to filter messages during the message pulling process. These tags allow for flexible categorization and organization of messages and can include various labels such as "~family-photos," "~notes," "~events," "~location" etc. Example:<a href="#section-7.3.2-4.29.1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-7.3.2-4.29.2">
+            <li class="normal" id="section-7.3.2-4.28">
+              <p id="section-7.3.2-4.28.1">Streams: The attribute provides a coma separated collection of free-form stream tags that readers can use to filter messages during the message pulling process. These tags allow for flexible categorization and organization of messages and can include various labels such as "~family-photos," "~notes," "~events," "~location" etc. Example:<a href="#section-7.3.2-4.28.1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-7.3.2-4.28.2">
 <pre>
 Streams: ~writing, ~family-photos
-</pre><a href="#section-7.3.2-4.29.2" class="pilcrow">¶</a>
+</pre><a href="#section-7.3.2-4.28.2" class="pilcrow">¶</a>
 </div>
 </li>
-            <li class="normal" id="section-7.3.2-4.30">Website: The attribute represents the website associated with the profile owner.<a href="#section-7.3.2-4.30" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.3.2-4.29">Website: The attribute represents the website associated with the profile owner.<a href="#section-7.3.2-4.29" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-7.3.2-4.31">Work: The attribute provides details about the professional work experience of the profile owner. It is a free-form attribute.<a href="#section-7.3.2-4.31" class="pilcrow">¶</a>
+            <li class="normal" id="section-7.3.2-4.30">Work: The attribute provides details about the professional work experience of the profile owner. It is a free-form attribute.<a href="#section-7.3.2-4.30" class="pilcrow">¶</a>
 </li>
           </ul>
 </section>
@@ -2348,7 +2348,7 @@ Message-Encryption: algorithm=secretstream_xchacha20poly1305; chunk-size=4096
           <h4 id="name-files-attachments">
 <a href="#section-9.4.3" class="section-number selfRef">9.4.3. </a><a href="#name-files-attachments" class="section-name selfRef">Files (Attachments)</a>
           </h4>
-<p id="section-9.4.3-1">Mail/HTTPS allows including files into messages, commonly considered "attachments". While SMTP-based email embeds such files into single multi-body messages, Mail/HTTPS transfers each file in a single one or multiple messages referencing the parent message containing the body. Such "message-group" is expected to be downloaded in its entirety and message reconstructed in the reader's email client. The parent message serves as an anchor for the rest of the message parts and describes the message composition at the source.<a href="#section-9.4.3-1" class="pilcrow">¶</a></p>
+<p id="section-9.4.3-1">Mail/HTTPS allows including files into messages, commonly considered "attachments". While SMTP-based email embeds such files into single multi-body messages, Mail/HTTPS transfers each file in a single one or multiple messages referencing the parent message containing the body. Such "message-group" is expected to be downloaded in its entirety and message reconstructed in the reader's email client. The parent message serves as an anchor ("root") for the rest of the message parts and describes the message structure on author's side.<a href="#section-9.4.3-1" class="pilcrow">¶</a></p>
 <p id="section-9.4.3-2">In a message group, there MAY be only a single parent message which serves as a source of truth on the origin message structure. The content header Parent-Id indicates the message is not to be considered on its own and is a part of a message group. Along the same logic, any message not including a Parent-Id header SHOULD be considered a representable message. A message group fragment MAY be referenced and presented only via the parent message and its "Files" header. For the relation to be established, the referencing message' Parent-Id header must match the parent Message-Id, and both messages must be authored by the same user, at the very same time, using the same keys. Relation between messages in a group MAY NOT be established between messages authored at different times or not part of the original message group.<a href="#section-9.4.3-2" class="pilcrow">¶</a></p>
 <p id="section-9.4.3-3">No single message MAY contain both embedded content and file contents. Such restriction is practical as the body payload itself is indistinguishable from file payloads in messages. To provide an illusion of presence of both in reader's email client, only the parent message is expected to include a representable body, while the referencing messages provide files' contents.<a href="#section-9.4.3-3" class="pilcrow">¶</a></p>
 <p id="section-9.4.3-4">Parent message MAY NOT be of "file" type even if the embedded body is empty. Any reference to a parent of "file" type, containing a "File" header or a non-representable body SHOULD be ignored. It is RECOMMENDED for email clients to suggest deletion or manual inspection of such messages to the reader.<a href="#section-9.4.3-4" class="pilcrow">¶</a></p>
@@ -2421,7 +2421,7 @@ Message-Signature: algorithm=ed25519; value=rIIOtOnidYQ1V1DCvX739qOvAnaYRlv9; ke
 </pre><a href="#section-9.5.1-4.5.2" class="pilcrow">¶</a>
 </div>
 <p id="section-9.5.1-4.5.3">
-Note that the signature is calculated on the checksum binary data represented hexadecimally, and not on the resulting hexadecimal string value.<a href="#section-9.5.1-4.5.3" class="pilcrow">¶</a></p>
+Note that the signature is calculated on the binary checksum data represented hexadecimally, and not on the hexadecimal string value.<a href="#section-9.5.1-4.5.3" class="pilcrow">¶</a></p>
 </li>
           </ul>
 <p id="section-9.5.1-5">The following envelope headers depend on the nature of the message:<a href="#section-9.5.1-5" class="pilcrow">¶</a></p>
@@ -2618,14 +2618,15 @@ It can be observed that the information of a given file is present both in the p
 </div>
 </section>
 </div>
-<div id="public-links">
+<div id="mail-agent-links">
 <section id="section-10">
-      <h2 id="name-public-links">
-<a href="#section-10" class="section-number selfRef">10. </a><a href="#name-public-links" class="section-name selfRef">Public Links</a>
+      <h2 id="name-mail-agent-links">
+<a href="#section-10" class="section-number selfRef">10. </a><a href="#name-mail-agent-links" class="section-name selfRef">Mail Agent Links</a>
       </h2>
-<p id="section-10-1">Connection links on the mail agent are anonymized contact identifiers that have multiple uses.<a href="#section-10-1" class="pilcrow">¶</a></p>
-<p id="section-10-2">Should the user desire such setup, the connection links serve as filters for notifications, allowing only notifications from known connections to be accepted on the mail agent. It's important to note though that the mail agent itself is not capable of verifying the notifications authenticity since it cannot determine their origin. The verification process takes place in the mail client, where notifications are checked for authenticity and validity before being processed.<a href="#section-10-2" class="pilcrow">¶</a></p>
-<p id="section-10-3">These links MAY be queried publicly for their existence only, without revealing any additional information. It is RECOMMENDED that such querying is enabled by default on mail agents as they do not leak any private information.<a href="#section-10-3" class="pilcrow">¶</a></p>
+<p id="section-10-1">Mail agents permit storing connection links along with respective encrypted addresses. This opens new contact interaction schemes while preserving privacy.<a href="#section-10-1" class="pilcrow">¶</a></p>
+<p id="section-10-2">The stored links resemble anonymized address book and permit all user's mail clients to synchronize contacts between them.<a href="#section-10-2" class="pilcrow">¶</a></p>
+<p id="section-10-3">In addition, should the user desire such setup, the connection links MAY serve also as filters for notifications, allowing only notifications from known connections to be accepted on the mail agent. It is important to note though that the mail agent itself is not capable of verifying the notifications authenticity since it cannot determine their origin. The verification process takes place only in the mail client, where notifications are checked for authenticity and validity before being accepted and processed.<a href="#section-10-3" class="pilcrow">¶</a></p>
+<p id="section-10-4">Finally, links MAY be queried publicly for their existence, a contact discovery without revealing any private information. It is RECOMMENDED that such querying is enabled by default on user profiles.<a href="#section-10-4" class="pilcrow">¶</a></p>
 <div id="link-sniffing">
 <section id="section-10.1">
         <h3 id="name-link-sniffing">
@@ -2841,7 +2842,7 @@ When authenticating as author, the home server permits uploading and controlling
 </li>
             <li class="normal" id="section-14.1.1-2.3">The signing algorithm as field 'algorithm', consistent with the Mail/HTTPS signing algorithms.<a href="#section-14.1.1-2.3" class="pilcrow">¶</a>
 </li>
-            <li class="normal" id="section-14.1.1-2.4">Signature using user's private signing key of the concatenated values of host and nonce, without any separators, and provided as field 'signature'. Unlike the Mail/HTTPS signatures, the SOTN signature does not include embedded algorithm and cipher as these are provided as separate fields.<a href="#section-14.1.1-2.4" class="pilcrow">¶</a>
+            <li class="normal" id="section-14.1.1-2.4">Signature using user's private signing key of the concatenated values of host and nonce in that order, without any separators, and provided as field 'signature'. Signature MUST be in detached mode.<a href="#section-14.1.1-2.4" class="pilcrow">¶</a>
 </li>
             <li class="normal" id="section-14.1.1-2.5">The public signing key of the user as field 'key', needed for verifying the signature. The public key MUST be simple Base64 encoded with padding.<a href="#section-14.1.1-2.5" class="pilcrow">¶</a>
 </li>
@@ -2866,11 +2867,11 @@ When authenticating as author, the home server permits uploading and controlling
 <div class="alignLeft art-text artwork" id="section-14.1.1.1-1">
 <pre>
 Authorization: SOTN
-  nonce="7ypf/xlj9XXwfDPEoM4URrv/xwf94BcCAzFZH4GiTo0v",
-  host=destination.host.tld,
-  algorithm="ed25519",
-  signature="pWHxd1/jCwkO5Ao5+sc+xDI01DWER2VAYBKCDEK/LgPBBwohiAcBENmy32Dhj0sqCAuME87couIue5dTF1b4AEUyg",
-  key="ZjoCijxLNI2ts3NgQKNyxNR3E+gROmyEFsI8YUGJGZs="
+  nonce=7ypf/xlj9XXwfDPEoM4URrv/xwf94BcCAzFZH4GiTo0v;
+  host=destination.host.tld;
+  algorithm=ed25519;
+  signature=pWHxd1/jCwkO5Ao5+sc+xDI01DWER2VAYBKCDEK/LgPBBw;
+  key=ZjoCijxLNI2ts3NgQKNyxNR3E+gROmyEFsI8YUGJGZs
 </pre><a href="#section-14.1.1.1-1" class="pilcrow">¶</a>
 </div>
 </section>
@@ -3004,20 +3005,41 @@ HTTPS GET /mail/HOST_PART/LOCAL_PART/link/LINK
 <a href="#section-14.2.6" class="section-number selfRef">14.2.6. </a><a href="#name-notifications-2" class="section-name selfRef">Notifications</a>
           </h4>
 <p id="section-14.2.6-1">Once an author makes a message available to readers, the author is expected to notify readers' mail agents of the presence of new messages.<a href="#section-14.2.6-1" class="pilcrow">¶</a></p>
-<p id="section-14.2.6-2">The notifications MUST be made available over HTTPS PUT requests requiring nonce (SOTN) authentication. The payload of the request is the address of the notifier, encrypted anonymously using the reader's public encryption key, as described previously in asymmetric ciphers part of this document.<a href="#section-14.2.6-2" class="pilcrow">¶</a></p>
-<p id="section-14.2.6-3">Mail agent of the user being notified does not have enough data to verify the notification request and should accept the request even if unverified. The verification always happens locally on mail clients using actual profile data.<a href="#section-14.2.6-3" class="pilcrow">¶</a></p>
-<p id="section-14.2.6-4">For a given reader's address of LOCAL_PART@HOST_PART and connection identifier LINK between notifier (author) and reader, the notify request is to be made at path:<a href="#section-14.2.6-4" class="pilcrow">¶</a></p>
+<p id="section-14.2.6-2">The notifications MUST be made available over a HTTPS HEAD or GET request with a mandatory nonce (SOTN) authentication. The following header MUST be present in the request:<a href="#section-14.2.6-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-14.2.6-3.1">
+              <p id="section-14.2.6-3.1.1">Notifier-Encrypted: transmitting the encrypted notifier email address and information on the encryption used. The following attributes are expected:<a href="#section-14.2.6-3.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-14.2.6-3.1.2.1">"algorithm": indicating the encryption algorithm used for encrypting the address.<a href="#section-14.2.6-3.1.2.1" class="pilcrow">¶</a>
+</li>
+                <li class="normal" id="section-14.2.6-3.1.2.2">"value": contains the Base64 encoded encrypted data.<a href="#section-14.2.6-3.1.2.2" class="pilcrow">¶</a>
+</li>
+                <li class="normal" id="section-14.2.6-3.1.2.3">"key-fingerprint": contains the fingerprint of the public encryption key of the notification recipient, used for encrypting the email address. The fingerprint helps recipient identify the decryption key.<a href="#section-14.2.6-3.1.2.3" class="pilcrow">¶</a>
+</li>
+              </ul>
+</li>
+          </ul>
+<p id="section-14.2.6-4">Example:<a href="#section-14.2.6-4" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-14.2.6-5">
 <pre>
-HTTPS PUT /mail/HOST_PART/LOCAL_PART/link/LINK/notifications
+  Notifier-Encrypted: algorithm=xchacha20poly1305; value=AwzDTCM2GQu56oyFrek0XskQ5FbVHYD8TaFGm/w/kqc=; key-fingerprint=sha256:d745ae1d3af3bbd4f86e1c184c6c1e6cdd8ed77a64316e12ed0f6a1
 </pre><a href="#section-14.2.6-5" class="pilcrow">¶</a>
 </div>
-<p id="section-14.2.6-6">Response body is always ignored.<a href="#section-14.2.6-6" class="pilcrow">¶</a></p>
-<p id="section-14.2.6-7">Accepted notify requests are confirmed with a HTTP 201 Created status.<a href="#section-14.2.6-7" class="pilcrow">¶</a></p>
-<p id="section-14.2.6-8">Repeated requests for the same link, which exists in the reader's links, SHOULD extend the lifetime of the initial notification just as if the previous notification did not exist. Such repeated requests are confirmed with HTTP 208 Already Reported status.<a href="#section-14.2.6-8" class="pilcrow">¶</a></p>
-<p id="section-14.2.6-9">Repeated requests for non-existing links SHOULD NOT extend the lifetime of the initial notification.<a href="#section-14.2.6-9" class="pilcrow">¶</a></p>
-<p id="section-14.2.6-10">Notifications past their lifetime are silently dropped on the mail agent.<a href="#section-14.2.6-10" class="pilcrow">¶</a></p>
-<p id="section-14.2.6-11">If the reader does not accept public contact requests and the connection identifier (link) is not known to the reader, the home agent MUST return HTTP 403 Forbidden status.<a href="#section-14.2.6-11" class="pilcrow">¶</a></p>
+<p id="section-14.2.6-6">Any payload sent in the request MUST be ignored by mail agents.<a href="#section-14.2.6-6" class="pilcrow">¶</a></p>
+<p id="section-14.2.6-7">Mail agent of the user being notified does not have enough data to verify the notification request and SHOULD accept the request even if unverified. The verification always happens locally on mail clients using actual profile data.<a href="#section-14.2.6-7" class="pilcrow">¶</a></p>
+<p id="section-14.2.6-8">For a given reader's address of LOCAL_PART@HOST_PART and connection identifier LINK between notifier (author) and reader (notification recipient), the notification request is to be made at paths:<a href="#section-14.2.6-8" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-14.2.6-9">
+<pre>
+HTTPS HEAD /mail/HOST_PART/LOCAL_PART/link/LINK/notifications
+HTTPS GET  /mail/HOST_PART/LOCAL_PART/link/LINK/notifications
+</pre><a href="#section-14.2.6-9" class="pilcrow">¶</a>
+</div>
+<p id="section-14.2.6-10">Response body is always ignored.<a href="#section-14.2.6-10" class="pilcrow">¶</a></p>
+<p id="section-14.2.6-11">Accepted notification requests are confirmed by mail agents with a HTTP 200 Ok status.<a href="#section-14.2.6-11" class="pilcrow">¶</a></p>
+<p id="section-14.2.6-12">Repeated requests for the same link, which exists in the reader's links, SHOULD extend the lifetime of the initial notification just as if the previous notification did not exist.<a href="#section-14.2.6-12" class="pilcrow">¶</a></p>
+<p id="section-14.2.6-13">Repeated requests for non-existing links SHOULD NOT extend the lifetime of the initial notification.<a href="#section-14.2.6-13" class="pilcrow">¶</a></p>
+<p id="section-14.2.6-14">Notifications past their lifetime are silently dropped on the mail agent.<a href="#section-14.2.6-14" class="pilcrow">¶</a></p>
+<p id="section-14.2.6-15">If the reader does not accept public contact requests and the connection identifier (link) is not known to the reader, the home agent MUST respond with a HTTP 403 Forbidden status.<a href="#section-14.2.6-15" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="messages">
