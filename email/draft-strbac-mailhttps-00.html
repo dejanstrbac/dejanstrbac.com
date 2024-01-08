@@ -1205,7 +1205,7 @@ li > p:last-of-type:only-child {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Strbac</td>
-<td class="center">Expires 10 July 2024</td>
+<td class="center">Expires 11 July 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1218,12 +1218,12 @@ li > p:last-of-type:only-child {
 <dd class="internet-draft">draft-strbac-mailhttps-00.txt</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-01-07" class="published">7 January 2024</time>
+<time datetime="2024-01-08" class="published">8 January 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-07-10">10 July 2024</time></dd>
+<dd class="expires"><time datetime="2024-07-11">11 July 2024</time></dd>
 <dt class="label-authors">Author:</dt>
 <dd class="authors">
 <div class="author">
@@ -1257,7 +1257,7 @@ li > p:last-of-type:only-child {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 10 July 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 11 July 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -2129,7 +2129,7 @@ Streams: ~writing, ~family-photos
         </h3>
 <p id="section-8.1-1">After keys rotation, each user keeps previous encryption and signing keys for at least one maximum duration of a message. The previous signing key is published in the user's profile, alongside the actual signing key. The previous public encryption key needs no publishing; its private counterpart should be kept locally in email clients to read messages authored by others shortly before rotation.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
 <p id="section-8.1-2">Public key fingerprints are used to identify the key which is needed in a crypto operation, whether decryption or signature verification, without futilely trying multiple keys.<a href="#section-8.1-2" class="pilcrow">¶</a></p>
-<p id="section-8.1-3">The fingerprint is simply the SHA256 hash of the key bytes in hex encoding. The resulting fingerprint is precisely 64 characters long and MUST be considered case-insensitive.<a href="#section-8.1-3" class="pilcrow">¶</a></p>
+<p id="section-8.1-3">The fingerprint is simply a cryptographical hash of the key bytes in hex encoding. SHA256 MUST be used for fingerprint hashes. No other hashing algorithms MAY be used. The resulting fingerprint is precisely 64 characters long and MUST be considered case-insensitive.<a href="#section-8.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="signing">
@@ -2230,16 +2230,7 @@ Message-Encryption: algorithm=secretstream_xchacha20poly1305; chunk-size=4096
 <p id="section-8.3.2-2">Mail/HTTPS utilizes LibSodium library and its anonymous-box primitives based on Curve25519, XSalsa20 and Poly1305 for asymmetric key encryption of small data, identified by "curve25519xsalsa20poly1305". Using LibSodium is not a requirement and any asymmetric public cryptographic cipher could be used in the future.<a href="#section-8.3.2-2" class="pilcrow">¶</a></p>
 <p id="section-8.3.2-3">Anonymous box uses readers public key and a freshly generated key pair for encryption. The newly generated public key required for decrypting the message is embedded in the encrypted message itself. Such anonymization shifts the responsibility for the message to the reader, as solely the reader's private key is able to decrypt the message. In addition, it theoretically permits that author and reader use different encryption algorithms, as long as they are both based on asymmetric public key cryptography.<a href="#section-8.3.2-3" class="pilcrow">¶</a></p>
 <p id="section-8.3.2-4">Anonymous box does not authenticate messages. Authenticity is instead determined through the provided signature, available only after decrypting the content meta-data.<a href="#section-8.3.2-4" class="pilcrow">¶</a></p>
-<p id="section-8.3.2-5">To facilitate identification of the algorithm and encryption key used, additional data is provided along with the encrypted data in the form of header attributes:<a href="#section-8.3.2-5" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-8.3.2-6.1">"algorithm": Encryption algorithm tag, needed to identify the algorithm as it may change in the future. By default, 'curve25519xsalsa20poly1305' is used, identifying the anonymous box cipher.<a href="#section-8.3.2-6.1" class="pilcrow">¶</a>
-</li>
-            <li class="normal" id="section-8.3.2-6.2">"key": Public encryption key fingerprint, used to encrypt the message and needed to identify the needed reader's key pair to decrypt the message.<a href="#section-8.3.2-6.2" class="pilcrow">¶</a>
-</li>
-            <li class="normal" id="section-8.3.2-6.3">"value": The encrypted data in Base64 encoding. The data includes already the anonymized public key needed for decrypting, conveniently embedded by the anonymous box cipher.<a href="#section-8.3.2-6.3" class="pilcrow">¶</a>
-</li>
-          </ul>
-<p id="section-8.3.2-7">The algorithm tag and the public key fingerprint MUST be considered case-insensitive, while the encrypted data, being Base64 encoded, MUST be considered case sensitive.<a href="#section-8.3.2-7" class="pilcrow">¶</a></p>
+<p id="section-8.3.2-5">To facilitate identification of the encryption key used, additional information is provided along with the encrypted data in a form of header attributes.<a href="#section-8.3.2-5" class="pilcrow">¶</a></p>
 <div id="keys-rotations">
 <section id="section-8.3.2.1">
             <h5 id="name-keys-rotations">
@@ -2429,23 +2420,23 @@ Note that the signature is calculated on the binary checksum data represented he
 <li class="normal" id="section-9.5.1-6.1">
               <p id="section-9.5.1-6.1.1">Message-Access: This header is present only on private messages and it distinguishes message from broadcasts. It contains a list of attribute groups containing connection identifiers (links), public keys and encrypted passwords for determining access rights. Each group identifies single reader. As standard HTTP header attributes, they are are separated using a semi column within the group while groups are coma separated. Each message MUST have at least one access group for the author. Each reader MUST have own access group. Each group MUST include the following attributes:<a href="#section-9.5.1-6.1.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-9.5.1-6.1.2.1">"link": The connection identifier for the author and designated reader.<a href="#section-9.5.1-6.1.2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-9.5.1-6.1.2.1">"l": The connection identifier for the author and designated reader.<a href="#section-9.5.1-6.1.2.1" class="pilcrow">¶</a>
 </li>
-                <li class="normal" id="section-9.5.1-6.1.2.2">"access-key": Fingerprint of reader's public signing key. To retrieve the message, reader must identify via a signed nonce and a key. The fingerprint by the provided public signing key for the nonce must match the "access-key" in order for mail agent to permit message download.<a href="#section-9.5.1-6.1.2.2" class="pilcrow">¶</a>
+                <li class="normal" id="section-9.5.1-6.1.2.2">"s": Fingerprint of reader's public signing key. To retrieve the message, reader must identify via a signed nonce and a key. The fingerprint by the provided public signing key for the nonce must match the "access-key" in order for mail agent to permit message download.<a href="#section-9.5.1-6.1.2.2" class="pilcrow">¶</a>
 </li>
-                <li class="normal" id="section-9.5.1-6.1.2.3">"algorithm": The encryption algorithm used to encrypt the symmetric key. By default, Mail/HTTPS uses "curve25519xsalsa20poly1305".<a href="#section-9.5.1-6.1.2.3" class="pilcrow">¶</a>
+                <li class="normal" id="section-9.5.1-6.1.2.3">"k": The encrypted symmetric key, Base64 encoded.<a href="#section-9.5.1-6.1.2.3" class="pilcrow">¶</a>
 </li>
-                <li class="normal" id="section-9.5.1-6.1.2.4">"value": The encrypted symmetric key, Base64 encoded.<a href="#section-9.5.1-6.1.2.4" class="pilcrow">¶</a>
-</li>
-                <li class="normal" id="section-9.5.1-6.1.2.5">"key": Fingerprint of the public encryption key, counterpart of the private key used for encryption.<a href="#section-9.5.1-6.1.2.5" class="pilcrow">¶</a>
+                <li class="normal" id="section-9.5.1-6.1.2.4">"e": First 8 characters (4 bytes) of the public encryption key fingerprint, counterpart of the private key used for encryption. The use of the fingerprint is only to hint reader on the key to be used for decryption.<a href="#section-9.5.1-6.1.2.4" class="pilcrow">¶</a>
 </li>
               </ul>
 <p id="section-9.5.1-6.1.3">
-Example:<a href="#section-9.5.1-6.1.3" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-9.5.1-6.1.4">
+Shortened attributes are used to optimize for maximum header length restrictions present in some services and browsers in web environments.<a href="#section-9.5.1-6.1.3" class="pilcrow">¶</a></p>
+<p id="section-9.5.1-6.1.4">
+Example:<a href="#section-9.5.1-6.1.4" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-9.5.1-6.1.5">
 <pre>
-  Message-Access: link=b3185f54673a93d8cb0ed2688d17592cb04720418b33992acf992fcd602325d8; access-key=298b0eca1e6721d8; algorithm=curve25519xsalsa20poly1305; value=9bUJsKNLYAxe8+hRmP8UjzCZLJtsucsmrMr/4NkomASdOmOczAsoUX4K5pdz1LpizAdDpu7JsQTImWWISlp12Lm6rYHenKo1yhtW716P5YU=;  key=4ec9b6b0f558b9f4, link=ca1451339611240e5790b9724c4228f562b426e24882c2a20d3abde2bcb06c2e; access-key=030cc34c2336190b; algorithm=curve25519xsalsa20poly1305; value=KG+7A6QznRcO67DYm0iVM7PzuZE5VrRNWxP9eAxWlgyFChQXSvAB3WgnGk+jCFwHmry37aWxO8cKM0Mrmd5ETdAkY35inyvAisBL0FuWCpk=; key=ed43833649d1ccd5
-</pre><a href="#section-9.5.1-6.1.4" class="pilcrow">¶</a>
+  Message-Access: l=b3185f54673a93d8cb0ed2688d17592cb04720418b33992acf992fcd602325d8; s=d1bc8d3ba4afc7e109612cb73acbdddac052c93025aa1f82942edabb7deb82a1; k=9bUJsKNLYAxe8+hRmP8UjzCZLJtsucsmrMr/4NkomASdOmOczAsoUX4K5pdz1LpizAdDpu7JsQTImWWISlp12Lm6rYHenKo1yhtW716P5YU=; e=4ec9b6b0, l=ca1451339611240e5790b9724c4228f562b426e24882c2a20d3abde2bcb06c2e; s=7a78229c522d665eca25c2b935bfc00deee00abf3b961337c0b5ef1341d66938; k=KG+7A6QznRcO67DYm0iVM7PzuZE5VrRNWxP9eAxWlgyFChQXSvAB3WgnGk+jCFwHmry37aWxO8cKM0Mrmd5ETdAkY35inyvAisBL0FuWCpk=; e=9d1ccd54
+</pre><a href="#section-9.5.1-6.1.5" class="pilcrow">¶</a>
 </div>
 </li>
             <li class="normal" id="section-9.5.1-6.2">
@@ -3010,11 +3001,9 @@ HTTPS GET /mail/HOST_PART/LOCAL_PART/link/LINK
 <li class="normal" id="section-14.2.6-3.1">
               <p id="section-14.2.6-3.1.1">Notifier-Encrypted: transmitting the encrypted notifier email address and information on the encryption used. The following attributes are expected:<a href="#section-14.2.6-3.1.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-14.2.6-3.1.2.1">"algorithm": indicating the encryption algorithm used for encrypting the address.<a href="#section-14.2.6-3.1.2.1" class="pilcrow">¶</a>
+<li class="normal" id="section-14.2.6-3.1.2.1">"v": contains the Base64 encoded encrypted data.<a href="#section-14.2.6-3.1.2.1" class="pilcrow">¶</a>
 </li>
-                <li class="normal" id="section-14.2.6-3.1.2.2">"value": contains the Base64 encoded encrypted data.<a href="#section-14.2.6-3.1.2.2" class="pilcrow">¶</a>
-</li>
-                <li class="normal" id="section-14.2.6-3.1.2.3">"key-fingerprint": contains the fingerprint of the public encryption key of the notification recipient, used for encrypting the email address. The fingerprint helps recipient identify the decryption key.<a href="#section-14.2.6-3.1.2.3" class="pilcrow">¶</a>
+                <li class="normal" id="section-14.2.6-3.1.2.2">"e": contains the first 8 characters (4 bytes) of the fingerprint of the public encryption key of the notification recipient, used for encrypting the email address. The fingerprint hints the recipient to identify the decryption key.<a href="#section-14.2.6-3.1.2.2" class="pilcrow">¶</a>
 </li>
               </ul>
 </li>
@@ -3022,7 +3011,7 @@ HTTPS GET /mail/HOST_PART/LOCAL_PART/link/LINK
 <p id="section-14.2.6-4">Example:<a href="#section-14.2.6-4" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-14.2.6-5">
 <pre>
-  Notifier-Encrypted: algorithm=xchacha20poly1305; value=AwzDTCM2GQu56oyFrek0XskQ5FbVHYD8TaFGm/w/kqc=; key-fingerprint=sha256:d745ae1d3af3bbd4f86e1c184c6c1e6cdd8ed77a64316e12ed0f6a1
+  Notifier-Encrypted: v=AwzDTCM2GQu56oyFrek0XskQ5FbVHYD8TaFGm/w/kqc=; e=d745ae1d
 </pre><a href="#section-14.2.6-5" class="pilcrow">¶</a>
 </div>
 <p id="section-14.2.6-6">Any payload sent in the request MUST be ignored by mail agents.<a href="#section-14.2.6-6" class="pilcrow">¶</a></p>
